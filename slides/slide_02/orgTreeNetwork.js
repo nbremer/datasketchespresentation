@@ -19,7 +19,7 @@ pt.orgTreeNetwork.init = function(graph) {
 	pt.orgTreeNetwork.height = $(".slides").height()*0.9 - margin.top - margin.bottom;
 				
 	//SVG container
-	pt.orgTreeNetwork.svg = d3.select('#org-tree-network #orgTreeNetwork')
+	pt.orgTreeNetwork.svg = d3v3.select('#org-tree-network #orgTreeNetwork')
 		.append("svg")
 		.attr("width", pt.orgTreeNetwork.width + margin.left + margin.right)
 		.attr("height", pt.orgTreeNetwork.height + margin.top + margin.bottom);
@@ -37,9 +37,9 @@ pt.orgTreeNetwork.init = function(graph) {
   pt.orgTreeNetwork.networkData = JSON.parse(JSON.stringify(graph));
 
 	pt.orgTreeNetwork.nodes = flatten(pt.orgTreeNetwork.networkData);
-  pt.orgTreeNetwork.links = d3.layout.tree().links(pt.orgTreeNetwork.nodes);
+  pt.orgTreeNetwork.links = d3v3.layout.tree().links(pt.orgTreeNetwork.nodes);
 
-  pt.orgTreeNetwork.force = d3.layout.force()
+  pt.orgTreeNetwork.force = d3v3.layout.force()
       .size([pt.orgTreeNetwork.width, pt.orgTreeNetwork.height])
       .nodes(pt.orgTreeNetwork.nodes)
       .links(pt.orgTreeNetwork.links)

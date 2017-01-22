@@ -14,9 +14,6 @@ function endall(transition, callback) {
 		.each("end", function() { if (!--n) callback.apply(this, arguments); }); 
 }//endall
 
-//Parses a string into a date
-var parseDate = d3.time.format("%Y-%m-%d").parse;
-
 //Normal random
 //http://jsfiddle.net/guffa/tvt5k/
 function rnd2() {

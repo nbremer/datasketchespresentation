@@ -62,9 +62,9 @@ pt.organogramIntro.init = function(graph) {
 	///////////////////////////////////////////////////////////////////////////	
 
 	var nodes = flatten(networkData),
-      	links = d3.layout.tree().links(nodes);
+      	links = d3v3.layout.tree().links(nodes);
 
-    var force = d3.layout.force()
+    var force = d3v3.layout.force()
         .gravity(.075)
 	    .charge(-80)
 	    .linkDistance(10)
@@ -208,7 +208,7 @@ pt.organogramIntro.createClippingPaths = function(node) {
 //Figure out the voronoi shape to use for the clip path
 //http://bl.ocks.org/couchand/6420534
 pt.organogramIntro.recenterVoronoi = function(nodes) {
-    var voronoi = d3.geom.voronoi()
+    var voronoi = d3v3.geom.voronoi()
         .x(function(d) { return d.x; })
         .y(function(d) { return d.y; });
 
