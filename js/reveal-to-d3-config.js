@@ -3,21 +3,33 @@
 var pt = pt || {};
 
 pt.slideIdToFunctions = {
-  'intro-organogram': {
+  'olympic-intro': {
     'init': function() {
-      pt.organogramIntro.init(graph);
-    }
-  },
-  'org-tree-network': {
-    'init': function() {
-      pt.orgTreeNetwork.init(graph);
+      pt.olympicIntro.init(olympicData);
     },
     '-1': function() {
-      pt.orgTreeNetwork.treeNetwork();
+      pt.olympicIntro.smallStart();
     },
     0: function() {
-      pt.orgTreeNetwork.normalNetwork();
-    }
+      pt.olympicIntro.bigEnd();
+    },
+  },
+  'olympic-buildup': {
+    'init': function() {
+      pt.olympicBuildUp.init(olympicData);
+    },
+    '-1': function() {
+      pt.olympicBuildUp.initializeCircles();
+    },
+    0: function() {
+      pt.olympicBuildUp.rotateFeathers();
+    },
+    1: function() {
+      pt.olympicBuildUp.outwardEditions();
+    },
+    2: function() {
+      pt.olympicBuildUp.outwardMedals();
+    },
   },
 };
 
@@ -25,8 +37,7 @@ function removeSVGs() {
 
   //Remove (heavy) all existing svg currently running
 
-  //Organogram
-  d3.select('#intro-organogram #organogramIntro svg').remove();
-  d3.select('#org-tree-network #orgTreeNetwork svg').remove();
+  d3.select('#olympic-intro #olympicIntro svg').remove();
+  d3.select('#olympic-buildup #olympicBuildUp svg').remove();
 
 }//removeSVGs

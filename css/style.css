@@ -1,7 +1,6 @@
 /**
  *
- * White theme for reveal.js. This is the opposite of the 'black' theme.
- *
+ * White theme for reveal.js.
  * By Hakim El Hattab, http://hakim.se
  *
  * Adjusted by Nadieh Bremer
@@ -12,53 +11,91 @@
  * PERSONAL STYLES
  *********************************************/
 
-.slide-title-image,
-.slide-title-full-image .title {
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 70px;
-  font-weight: 300;
-} 
-
-.slide-title-image .sub-title {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 28px;
-  color: #a5a5a5;
+@import url(../lib/font/quicksand/quicksand.css);
+@import url(../lib/font/tinos/tinos.css);
+@font-face {
+  font-family: "King Basil";
+  src: url("../lib/font/king-basil/King-Basil.ttf");
 }
 
-.slide-title-image .slide-title {
-  font-family: 'Yanone Kaffeesatz', sans-serif;
-  font-size: 70px;
-  font-weight: 300;
-  display: inline-block;
-  vertical-align: middle;
-  width: 30%;
-} 
-
-.slide-title-image  .slide-image {
-  display: inline-block;
-  vertical-align: middle;
-  width: 60%;
+/* slow transition of fragments */
+.reveal .slides section .fragment.slow {
+    -webkit-transition: all 0.75s ease;
+    transition: all 0.75s ease;
 }
 
-.slide-image .img-stack {
+/* fix something in the center of the page */
+.reveal .center-fix {
     position: absolute; 
     top: 50%; 
     left: 50%; 
     transform: translate(-50%, -50%);
 }
 
-.slide-credit span {
-  font-family: 'Open Sans', sans-serif;
-  font-size: 14px;
-  color: #a5a5a5; 
+/* for the data | sketch | code main slide */
+.reveal .section-title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 200px;
+    /*font-weight: 300;*/
+    color: #33383b;
+    line-height: 100px; 
+    height: 150px;
 }
 
-.reveal .slide-credit a {
-  color: #a5a5a5; 
+/* css for the "lesson" slides */
+.reveal .lesson-title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 120px;
+    color: #33383b;
+    max-width: 80%;
+    margin-left: auto;
+    margin-right: auto;
+    line-height: 1em;
+}
+.reveal .lesson-number {
+    font-family: 'King Basil', cursive;
+    font-size: 45px;
+    color: #e0a390;
+    margin-bottom: 30px;
+}
+.reveal .lesson-sub-title {
+    font-family: 'Quicksand', sans-serif;
+    font-size: 40px;
+    color: #a6a6a6;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 35px;
+    max-width: 60%;
+    line-height: 1.1em;
 }
 
-section.has-dark-background, section.has-dark-background h1, section.has-dark-background h2, section.has-dark-background h3, section.has-dark-background h4, section.has-dark-background h5, section.has-dark-background h6 {
-  color: #fff; }
+.reveal .divider {
+    font-family: 'Quicksand', sans-serif !important;
+    font-weight: 400;
+    color: #a6a6a6;
+}
+
+.kingBasil {
+  font-family: "King Basil", cursive !important;
+}
+.quicksand {
+  font-family: 'Quicksand', sans-serif !important;
+}
+.tinos {
+  font-family: 'Tinos', serif !important;
+}
+.peach {
+  color: #f5c2b1 !important;
+}
+.dark-pink {
+  color: #e0a390 !important;
+}
+.light-grey {
+    color: #a6a6a6 !important;
+}
+.dark-grey {
+  color: #33383b !important;
+}
 
 /*********************************************
  * GLOBAL STYLES

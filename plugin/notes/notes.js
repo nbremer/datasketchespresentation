@@ -11,10 +11,15 @@
  */
 var RevealNotes = (function() {
 
-	function openNotes() {
-		var jsFileLocation = document.querySelector('script[src$="notes.js"]').src;  // this js file path
-		jsFileLocation = jsFileLocation.replace(/notes\.js(\?.*)?$/, '');   // the js folder path
-		var notesPopup = window.open( jsFileLocation + 'notes.html', 'reveal.js - Notes', 'width=1100,height=700' );
+	function openNotes( notesFilePath ) {
+
+		if( !notesFilePath ) {
+			var jsFileLocation = document.querySelector('script[src$="notes.js"]').src;  // this js file path
+			jsFileLocation = jsFileLocation.replace(/notes\.js(\?.*)?$/, '');   // the js folder path
+			notesFilePath = jsFileLocation + 'notes.html';
+		}
+
+		var notesPopup = window.open( notesFilePath, 'reveal.js - Notes', 'width=1100,height=700' );
 
 		/**
 		 * Connect to the notes window through a postmessage handshake.
@@ -45,7 +50,7 @@ var RevealNotes = (function() {
 		/**
 		 * Posts the current slide data to the notes window
 		 */
-		function post() {
+		function post(event) {
 
 			var slideElement = Reveal.getCurrentSlide(),
 				notesElement = slideElement.querySelector( 'aside.notes' );
@@ -58,6 +63,15 @@ var RevealNotes = (function() {
 				whitespace: 'normal',
 				state: Reveal.getState()
 			};
+
+			// Look for notes defined in a fragment, if it is a fragmentshown event
+			if (event && event.hasOwnProperty('fragment')) {
+				var innerNotes = event.fragment.querySelector( 'aside.notes' );
+
+				if ( innerNotes) {
+					notesElement = innerNotes;
+				}
+			}
 
 			// Look for notes defined in a slide attribute
 			if( slideElement.hasAttribute( 'data-notes' ) ) {
@@ -96,6 +110,7 @@ var RevealNotes = (function() {
 		}
 
 		connect();
+
 	}
 
 	if( !/receiver/i.test( window.location.search ) ) {
@@ -119,6 +134,9 @@ var RevealNotes = (function() {
 				openNotes();
 			}
 		}, false );
+
+		// Show our keyboard shortcut in the reveal.js help overlay
+		if( window.Reveal ) Reveal.registerKeyboardShortcut( 'S', 'Speaker notes view' );
 
 	}
 

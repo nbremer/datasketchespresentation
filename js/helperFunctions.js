@@ -33,6 +33,14 @@ function toRadians (angle) {
 	return angle * (Math.PI / 180); 
 }//toRadians
 
+//Replaces spaces, - and & for use in classes
+function removeSpace(str) {
+str = str.replace(/\s+/g, '-');
+str = str.replace(/&/g, '');
+str = str.replace(/\./g,'').toLowerCase();
+return str;
+}//removeSpace
+  
 
 //Taken from http://bl.ocks.org/mbostock/7555321
 //Wraps SVG text	
