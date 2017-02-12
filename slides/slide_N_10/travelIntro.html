@@ -1,0 +1,31 @@
+<style>
+	#travel-intro {
+		top: 0%;
+	}
+	#travel-intro .slide-image {
+		height: 2038px;
+		position: relative; 
+		margin: 0 auto;
+	}
+	#travel-intro .slide-image img {
+		top: -50%;
+		transform: translate(-50%, 0%);
+		-webkit-animation: move 15s linear;
+    	animation: move 15s linear;
+	}
+
+	@-webkit-keyframes move {
+	    from { top: 0; }
+	    to { top: -50%; }
+	}
+	@keyframes move {
+	    from { top: 0; }
+	    to { top: -50%; }
+	}
+</style>
+
+<section id="travel-intro">
+	<div class="slide-image">
+		<img class="center-fix" data-src="slides/slide_N_10/my_life_in_vacations.png" />
+	</div>
+</section>

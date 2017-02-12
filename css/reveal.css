@@ -361,8 +361,8 @@ body {
           transition-duration: 400ms; }
 
 .reveal .slides section[data-transition-speed="slow"] {
-  -webkit-transition-duration: 1200ms;
-          transition-duration: 1200ms; }
+  -webkit-transition-duration: 1200ms !important;
+          transition-duration: 1200ms !important; }
 
 .reveal .slides > section.stack {
   padding-top: 0;
@@ -738,6 +738,14 @@ body {
 /*********************************************
  * FADE TRANSITION
  *********************************************/
+/*.reveal .slides section[data-transition-speed=slow],
+.reveal.fade .slides section[data-transition-speed=slow],
+.reveal.fade .slides > section > section[data-transition-speed=slow] {
+  -webkit-transform: none;
+          transform: none;
+  -webkit-transition: opacity 3.5s;
+          transition: opacity 3.5s; }*/
+
 .reveal .slides section[data-transition=fade],
 .reveal.fade .slides section:not([data-transition]),
 .reveal.fade .slides > section > section:not([data-transition]) {

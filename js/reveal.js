@@ -2888,7 +2888,7 @@
 			if( currentVideo ) {
 
 				var startVideo = function() {
-					currentVideo.currentTime = 0;
+					//currentVideo.currentTime = 0;
 					currentVideo.play();
 					currentVideo.removeEventListener( 'loadeddata', startVideo );
 				};

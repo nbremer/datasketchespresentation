@@ -40,22 +40,22 @@ str = str.replace(/&/g, '');
 str = str.replace(/\./g,'').toLowerCase();
 return str;
 }//removeSpace
-  
 
-//Taken from http://bl.ocks.org/mbostock/7555321
-//Wraps SVG text	
+/*Taken from http://bl.ocks.org/mbostock/7555321
+//Wraps SVG text*/
 function wrap(text, width) {
-	var text = d3.select(this[0][0]),
+  text.each(function() {
+	var text = d3.select(this),
 		words = text.text().split(/\s+/).reverse(),
 		word,
 		line = [],
 		lineNumber = 0,
-		lineHeight = 1.4, // ems
-		y = text.attr("y"),
-		x = text.attr("x"),
+		lineHeight = 1.2, // ems
+		y = parseFloat(text.attr("y")),
+		x = parseFloat(text.attr("x")),
 		dy = parseFloat(text.attr("dy")),
 		tspan = text.text(null).append("tspan").attr("x", x).attr("y", y).attr("dy", dy + "em");
-		
+
 	while (word = words.pop()) {
 	  line.push(word);
 	  tspan.text(line.join(" "));
@@ -65,8 +65,9 @@ function wrap(text, width) {
 		line = [word];
 		tspan = text.append("tspan").attr("x", x).attr("y", y).attr("dy", ++lineNumber * lineHeight + dy + "em").text(word);
 	  }
-	}  
-};
+	}
+  });
+}//wrap
 
 
 //https://books.google.nl/books?id=kc4iT8lfEQYC&pg=PA467&lpg=PA467&dq=ease+in+html5+canvas&source=bl&ots=x290WCqkpM&sig=K9O3ovZ3CsdTyCx5zWvyNv1UcKc&hl=nl&sa=X&ved=0ahUKEwjA1vejuunNAhWDWRoKHe1QCsIQ6AEIajAJ#v=onepage&q=ease%20in%20html5%20canvas&f=false

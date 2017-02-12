@@ -31,6 +31,33 @@ pt.slideIdToFunctions = {
       pt.olympicBuildUp.outwardMedals();
     },
   },
+  'lotr-intro': {
+    'init': function() {
+      pt.lotrIntro.init(lotrWords);
+    }
+  },
+  'chord-to-loom-1': {
+    'init': function() {
+      pt.chordToLoom.init();
+    },
+    '-1': function() {
+      pt.chordToLoom.normalChord();
+    },
+    0: function() {
+      pt.chordToLoom.adjustedChord();
+    },
+    1: function() {
+      pt.chordToLoom.adjustedArc();
+    }
+  },
+  'chord-to-loom-2': {
+    'init': function() {
+      pt.chordToLoom2.init();
+    },
+    '-1': function() {
+      pt.chordToLoom2.adjustedData(lotrWords);
+    },
+  },
 };
 
 function removeSVGs() {
