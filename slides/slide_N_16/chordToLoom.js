@@ -99,9 +99,19 @@ pt.chordToLoom.init = function() {
 	    .style("stroke", function(d) { return d3.rgb(pt.chordToLoom.color(d.target.index)).darker(); })
 	    .attr("d", pt.chordToLoom.ribbon);
 
+	pt.chordToLoom.direction = "forward";
+
+	//Adjust the top title
+	d3.select("#chord-to-loom-1 .chord-steps").text("Basic chord diagram");
+
 }//init
 
 pt.chordToLoom.normalChord = function() {
+
+	//Adjust the top title
+	d3.select("#chord-to-loom-1 .chord-steps").text("Basic chord diagram");
+
+	//Adjust the chords
 	pt.chordToLoom.chords
 		.transition().duration(1000)
       	.attrTween("d", function(d) {
@@ -130,9 +140,14 @@ pt.chordToLoom.normalChord = function() {
 		      return t < 1 ? "M" + points.map(function(p) { return p(t); }).join("L") : d1;
 		    };
 	    });
+
+	//if(pt.chordToLoom.direction === "forward") d3.select("#chord-to-loom-1").attr("data-autoslide", 3000);
 }//normalChord
 
 pt.chordToLoom.adjustedChord = function() {
+
+	//Adjust the title
+	pt.chordToLoom.changeTitle("chord-to-loom-1", "Pull chords to the center");
 
 	//Adjust the arcs to their original state (in case you move backward)
 	pt.chordToLoom.arcs
@@ -170,10 +185,14 @@ pt.chordToLoom.adjustedChord = function() {
 		      return t < 1 ? "M" + points.map(function(p) { return p(t); }).join("L") : d1;
 		    };
 	    });
+
 }//adjustedChord
 
 //Not really what is done, but visually gives the right idea
 pt.chordToLoom.adjustedArc = function() {
+
+	//Adjust the title
+	pt.chordToLoom.changeTitle("chord-to-loom-1", "Change formula to remove excess space");
 
 	//Adjust the arcs to have no leftover
 	pt.chordToLoom.arcs
@@ -211,7 +230,27 @@ pt.chordToLoom.adjustedArc = function() {
 		      return t < 1 ? "M" + points.map(function(p) { return p(t); }).join("L") : d1;
 		    };
 	    });
+
+	pt.chordToLoom.direction = "backward";
+	d3.select("#chord-to-loom-1").attr("data-autoslide", 0);
 }//adjustedArc
+
+
+///////////////////////////////////////////////////////////////////////////
+///////////////////////////// Extra functions /////////////////////////////
+///////////////////////////////////////////////////////////////////////////	
+
+pt.chordToLoom.changeTitle = function(section, text) {
+	d3.select("#" + section + " .chord-steps")
+		.transition("hide").duration(500)
+		.style("opacity", 0)
+		.on("end", function() {
+			d3.select(this)
+				.text(text)
+				.transition("show").duration(500)
+				.style("opacity", 1)
+		});
+}//changeTitle
 
 pt.chordToLoom.adjustedRibbonFunction = function() {
   	var halfPi$2 = Math.PI / 2;

@@ -273,9 +273,17 @@ pt.chordToLoom2.init = function(data) {
 	    .style("opacity", 0)
 	    .text(function(d,i) { return d.name; })
 
+	//Adjust the top title
+	d3.select("#chord-to-loom-2 .chord-steps").text("Insert the LotR data...");
+
+	pt.chordToLoom2.direction = "forward";
+	pt.chordToLoom2.previousStep = "init";
 }//init
 
 pt.chordToLoom2.adjustedData = function() {
+
+	//Adjust the top title
+	d3.select("#chord-to-loom-2 .chord-steps").text("Insert the LotR data...");
 
 	//Back to defaults colors
 	pt.chordToLoom2.arcs
@@ -290,10 +298,15 @@ pt.chordToLoom2.adjustedData = function() {
 	    .style("stroke", function(d) { return d3.rgb(pt.chordToLoom2.colorOld(d.outer.index)).darker(); })
 	    .style("stroke-opacity", 1);
 
+	//if(pt.chordToLoom2.direction === "forward") d3.select("#chord-to-loom-2").attr("data-autoslide", 3000);
+
 }//function adjustedData
 
 //Adjust the colors to the lotr final version
 pt.chordToLoom2.adjustedColors = function(data) {
+
+	//Adjust the top title
+	pt.chordToLoom.changeTitle("chord-to-loom-2", "...and apply more LotR-y colors");
 
 	//In case you move back
 	pt.chordToLoom2.innerLabels
@@ -321,6 +334,9 @@ pt.chordToLoom2.adjustedColors = function(data) {
 //Move the inner locations apart for each fellowship member
 pt.chordToLoom2.innerLocation = function(data) {
 
+	//Adjust the top title
+	pt.chordToLoom.changeTitle("chord-to-loom-2", "Divide inner chords amongst the characters");
+
     //Adjust the strings so that the middle moves apart
 	pt.chordToLoom2.ribbons
 		.data(pt.chordToLoom2.loom2(data))
@@ -332,11 +348,16 @@ pt.chordToLoom2.innerLocation = function(data) {
 	    .transition("move").duration(1000)
 	    .attr("y", function(d,i) { return d.y; })
 	    .style("opacity", 1);
+
+	pt.chordToLoom2.previousStep = "innerLocation";
         
 }//innerLocation
 
 //Adjust the string shape to the final one
 pt.chordToLoom2.stringShape = function(data) {
+
+	//Adjust the top title
+	pt.chordToLoom.changeTitle("chord-to-loom-2", "Create more natural chord shapes");
 
 	//In case you move backward
 	pt.chordToLoom2.arcs
@@ -352,17 +373,40 @@ pt.chordToLoom2.stringShape = function(data) {
 		.transition("fade").duration(500)
 	    .style("opacity", 0);
 
-    //Adjust the strings to their new shape
-	pt.chordToLoom2.ribbons
-		.data(pt.chordToLoom2.loom2(data))
-		.style("stroke", null)
-	    .transition("string").duration(1000).delay(function(d,i) { return i*10; })
-	    .attr("d", pt.chordToLoom2.string2);
+	if(pt.chordToLoom2.previousStep === "innerLocation") {
+	    //Adjust the strings to their new shape
+		pt.chordToLoom2.ribbons
+			.data(pt.chordToLoom2.loom2(data))
+			.style("stroke", null)
+		    .transition("string").duration(1000).delay(function(d,i) { return i*10; })
+		    .attr("d", pt.chordToLoom2.string2);
+	} else {
+    	//In case you move back
+		pt.chordToLoom2.ribbons
+			.data(pt.chordToLoom2.loom2(data))
+			.style("stroke", null)
+		    .transition("string").duration(500)
+		    .attr("d", pt.chordToLoom2.string2);		
+	}//else
+	pt.chordToLoom2.previousStep = "stringShape";
 
 }//stringShape
 
 //Move the two halves apart
 pt.chordToLoom2.moveApart = function(data) {
+
+	//Adjust the top title
+	d3.select("#chord-to-loom-2 .chord-steps")
+			.transition("hide").duration(500)
+			.style("opacity", 0)
+			.on("end", function() {
+				d3.select(this)
+					.text("Move the two halves farther apart")
+					.transition("show").duration(500)
+					.style("opacity", 1)
+					.transition("show").duration(1500).delay(1000)
+					.style("opacity", 0);
+			});
 
 	//In case you come from the next slide backwards
 	pt.chordToLoom2.innerLabels
@@ -397,6 +441,10 @@ pt.chordToLoom2.moveApart = function(data) {
 	pt.chordToLoom2.ringWrapper
 		.transition("fade").duration(2000).delay(750)
 	    .style("opacity", 1);
+
+	pt.chordToLoom2.direction = "backward";
+	d3.select("#chord-to-loom-2").attr("data-autoslide", 0);
+	pt.chordToLoom2.previousStep === "moveApart";
     
 }//moveApart
 
