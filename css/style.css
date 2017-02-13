@@ -17,6 +17,23 @@
   font-family: "King Basil";
   src: url("../lib/font/king-basil/King-Basil.ttf");
 }
+/* for the Lotr visual */
+@font-face {
+  font-family: "Aniron";
+  src: url("../lib/font/lotr/Aniron.ttf");
+}
+@font-face {
+  font-family: "Bilbo";
+  src: url("../lib/font/lotr/Bilbo.ttf");
+}
+@font-face {
+  font-family: "Elvish";
+  src: url("../lib/font/lotr/Elvish.ttf");
+}
+@font-face {
+  font-family: "Dwarfish";
+  src: url("../lib/font/lotr/Dwarfish.ttf");
+}
 
 /* slow transition of fragments */
 .reveal .slides section .fragment.slow {

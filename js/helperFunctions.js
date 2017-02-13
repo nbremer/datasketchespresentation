@@ -20,6 +20,11 @@ function rnd2() {
     return ((Math.random() + Math.random() + Math.random() + Math.random() + Math.random() + Math.random()) - 3) / 3;
 }
 
+//Round number to 2 behind the decimal
+function round2(num) {
+	return (Math.round((num + 0.00001) * 100)/100);
+}//round2
+
 function getRandomNumber(start, end) {
     return ((Math.random() * (end-start)) + start);
 }	
@@ -35,10 +40,10 @@ function toRadians (angle) {
 
 //Replaces spaces, - and & for use in classes
 function removeSpace(str) {
-str = str.replace(/\s+/g, '-');
-str = str.replace(/&/g, '');
-str = str.replace(/\./g,'').toLowerCase();
-return str;
+	str = str.replace(/\s+/g, '-');
+	str = str.replace(/&/g, '');
+	str = str.replace(/\./g,'').toLowerCase();
+	return str;
 }//removeSpace
 
 /*Taken from http://bl.ocks.org/mbostock/7555321
@@ -50,7 +55,7 @@ function wrap(text, width) {
 		word,
 		line = [],
 		lineNumber = 0,
-		lineHeight = 1.2, // ems
+		lineHeight = 1.4, // ems
 		y = parseFloat(text.attr("y")),
 		x = parseFloat(text.attr("x")),
 		dy = parseFloat(text.attr("dy")),

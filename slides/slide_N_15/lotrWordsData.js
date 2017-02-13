@@ -330,32 +330,32 @@ var lotrWords = [
     "words": 607
   },
   {
-    "location": "Fangorn",
+    "location": "Fangorn Forest",
     "character": "Gandalf",
     "words": 524
   },
   {
-    "location": "Fangorn",
+    "location": "Fangorn Forest",
     "character": "Legolas",
     "words": 73
   },
   {
-    "location": "Fangorn",
+    "location": "Fangorn Forest",
     "character": "Merry",
     "words": 297
   },
   {
-    "location": "Fangorn",
+    "location": "Fangorn Forest",
     "character": "Pippin",
     "words": 276
   },
   {
-    "location": "Fangorn",
+    "location": "Fangorn Forest",
     "character": "Aragorn",
     "words": 108
   },
   {
-    "location": "Fangorn",
+    "location": "Fangorn Forest",
     "character": "Gimli",
     "words": 89
   },

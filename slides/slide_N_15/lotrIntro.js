@@ -10,15 +10,15 @@ pt.lotrIntro.init = function(dataAgg) {
 	///////////////////////////////////////////////////////////////////////////	
 
 	var margin = {
-		top: 40,
-		right: 120,
-		bottom: 60,
-		left: 80
+		top: 120,
+		right: 200,
+		bottom: 120,
+		left: 160
 	};
 	var width = $(".slides").width() - margin.left - margin.right;
-	var height = $(".slides").height()*0.9 - margin.top - margin.bottom;
+	var height = $(".slides").height() - margin.top - margin.bottom;
 
-  var innerRadius = Math.min(width * 0.33, height * .45),
+  var innerRadius = Math.min(width * 0.33, height * .35),
       outerRadius = innerRadius * 1.05;
   
   //Recalculate the width and height now that we know the radius
@@ -60,7 +60,7 @@ pt.lotrIntro.init = function(dataAgg) {
   var loom = pt.lotrIntro.loom()
       .padAngle(0.05)
       .emptyPerc(0.2)
-      .widthOffsetInner(30)
+      .widthOffsetInner(50)
       //.widthOffsetInner(function(d) { return 6 * d.length; })
       .value(function(d) { return d.words; })
       .inner(function(d) { return d.character; })
@@ -101,7 +101,7 @@ pt.lotrIntro.init = function(dataAgg) {
   ////////////////////////////////////////////////////////////
           
   //Color for the unique locations
-  var locations = ["Bree", "Emyn Muil", "Fangorn", "Gondor",  "Isengard", "Lothlorien", "Misty Mountains", "Mordor",  "Moria",   "Parth Galen", "Rivendell", "Rohan",   "The Shire"];
+  var locations = ["Bree", "Emyn Muil", "Fangorn Forest", "Gondor",  "Isengard", "Lothlorien", "Misty Mountains", "Mordor",  "Moria",   "Parth Galen", "Rivendell", "Rohan",   "The Shire"];
   var colors = ["#5a3511", "#47635f",   "#223e15", "#C6CAC9", "#0d1e25",  "#53821a",    "#4387AA",         "#770000", "#373F41", "#602317",     "#8D9413",   "#c17924", "#3C7E16"];
   var color = d3.scaleOrdinal()
       .domain(locations)
@@ -128,7 +128,7 @@ pt.lotrIntro.init = function(dataAgg) {
   titles.append("text")
     .attr("class", "value-title")
     .attr("x", 0)
-    .attr("y", -innerRadius*5/6 + 25);
+    .attr("y", -innerRadius*5/6 + 35);
   
   //The character pieces  
   titles.append("text")
@@ -142,34 +142,30 @@ pt.lotrIntro.init = function(dataAgg) {
   ////////////////////////////////////////////////////////////
 
   var arcs = g.append("g")
-      .attr("class", "arcs")
+    .attr("class", "arcs")
     .selectAll("g")
-      .data(function(s) { 
-      return s.groups; 
-    })
+    .data(function(s) { return s.groups; })
     .enter().append("g")
     .attr("class", "arc-wrapper")
-      .each(function(d) { 
-      d.pullOutSize = (pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)) 
-    })
+    .each(function(d) { d.pullOutSize = (pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)) })
     .on("mouseover", function(d) {
       
       //Hide all other arcs 
       d3.selectAll(".arc-wrapper")
-            .transition()
-        .style("opacity", function(s) { return s.outername === d.outername ? 1 : 0.5; });
+        .transition()
+        .style("opacity", function(s) { return s.outername === d.outername ? 1 : fadeOpacity; });
       
       //Hide all other strings
-        d3.selectAll(".string")
-            .transition()
-            .style("opacity", function(s) { return s.outer.outername === d.outername ? 1 : fadeOpacity; });
+      d3.selectAll(".string")
+        .transition()
+        .style("opacity", function(s) { return s.outer.outername === d.outername ? 1 : fadeOpacity; });
         
       //Find the data for the strings of the hovered over location
       var locationData = loom(dataAgg).filter(function(s) { return s.outer.outername === d.outername; });
       //Hide the characters who haven't said a word
       d3.selectAll(".inner-label")
-            .transition()
-            .style("opacity", function(s) {
+          .transition()
+          .style("opacity", function(s) {
           //Find out how many words the character said at the hovered over location
           var char = locationData.filter(function(c) { return c.outer.innername === s.name; });
           return char.length === 0 ? 0.1 : 1;
@@ -192,14 +188,6 @@ pt.lotrIntro.init = function(dataAgg) {
             .transition()
             .style("opacity", 1);
     });
-
-  var outerArcs = arcs.append("path")
-    .attr("class", "arc")
-      .style("fill", function(d) { return color(d.outername); })
-      .attr("d", arc)
-    .attr("transform", function(d, i) { //Pull the two slices apart
-        return "translate(" + d.pullOutSize + ',' + 0 + ")";
-     });
               
   ////////////////////////////////////////////////////////////
   //////////////////// Draw outer labels /////////////////////
@@ -216,8 +204,17 @@ pt.lotrIntro.init = function(dataAgg) {
       + "rotate(" + (d.angle * 180 / Math.PI - 90) + ")"
       + "translate(" + 26 + ",0)"
       + (d.angle > Math.PI ? "rotate(180)" : "")
-    })
-    
+    });
+ 
+  var elvishName = ["175{#","7R`B4#6Y","x{#75$iY1","t%j4#7iT","93GlExj6T",
+                    "KiAZADDÚMU","j3Hj~N7`B5$","q7E3 xj#5$","t$I5 thUj",
+                    "79N5#","ex{#7Y5","x2{^6Y","t7Y46Y"];
+  //The outer name in Elvish 
+  outerLabels.append("text")
+    .attr("class", function(d,i) { return d.outername === "Moria" ? "dwarfish-outer-label" : "elvish-outer-label"; })
+    .attr("dy", ".15em")
+    .text(function(d,i){ return elvishName[i]; });
+
   //The outer name
   outerLabels.append("text")
     .attr("class", "outer-label")
@@ -227,25 +224,35 @@ pt.lotrIntro.init = function(dataAgg) {
   //The value below it
   outerLabels.append("text")
     .attr("class", "outer-label-value")
-    .attr("dy", "1.5em")
+    .attr("dy", "1.3em")
     .text(function(d,i){ return numFormat(d.value) + " words"; });
+
+  ////////////////////////////////////////////////////////////
+  /////////////////// Draw the outer arcs ////////////////////
+  ////////////////////////////////////////////////////////////
+
+  var outerArcs = arcs.append("path")
+    .attr("class", "arc")
+    .style("fill", function(d) { return color(d.outername); })
+    .attr("d", arc)
+    .attr("transform", function(d, i) { //Pull the two slices apart
+        return "translate(" + d.pullOutSize + ',' + 0 + ")";
+    });
 
   ////////////////////////////////////////////////////////////
   ////////////////// Draw inner strings //////////////////////
   ////////////////////////////////////////////////////////////
   
   var strings = g.append("g")
-      .attr("class", "stringWrapper")
+    .attr("class", "stringWrapper")
     .style("isolation", "isolate")
     .selectAll("path")
-      .data(function(strings) { 
-      return strings; 
-    })
+    .data(function(strings) { return strings; })
     .enter().append("path")
     .attr("class", "string")
     .style("mix-blend-mode", "multiply")
-      .attr("d", string)
-      .style("fill", function(d) { return d3.rgb( color(d.outer.outername) ).brighter(0.2) ; })
+    .attr("d", string)
+    .style("fill", function(d) { return d3.rgb( color(d.outer.outername) ).brighter(0.2) ; })
     .style("opacity", defaultOpacity);
     
   ////////////////////////////////////////////////////////////
@@ -257,16 +264,14 @@ pt.lotrIntro.init = function(dataAgg) {
   var innerLabels = g.append("g")
     .attr("class","inner-labels")
     .selectAll("text")
-      .data(function(s) { 
-      return s.innergroups; 
-    })
+    .data(function(s) { return s.innergroups; })
     .enter().append("text")
     .attr("class", "inner-label")
     .attr("x", function(d,i) { return d.x; })
     .attr("y", function(d,i) { return d.y; })
     .style("text-anchor", "middle")
     .attr("dy", ".35em")
-      .text(function(d,i) { return d.name; })
+    .text(function(d,i) { return d.name; })
     .on("mouseover", function(d) {
       
       //Show all the strings of the highlighted character and hide all else
@@ -309,7 +314,7 @@ pt.lotrIntro.init = function(dataAgg) {
       d3.select(".value-title")
         .text(function() {
           var words = dataChar.filter(function(s) { return s.key === d.name; });
-          return numFormat(words[0].value);
+          return numFormat(words[0].value) + " words";
         });
         
       //Show the character note
@@ -350,12 +355,6 @@ pt.lotrIntro.init = function(dataAgg) {
 ///////////////////// Extra functions //////////////////////
 ////////////////////////////////////////////////////////////
 
-// //Sort the locations in a particula order
-// pt.lotrIntro.sortLocation = function(a, b) {
-//   var locationOrder = ["The Shire", "Bree", "Isengard", "Rivendell", "Misty Mountains", "Moria", "Lothlorien", "Parth Galen", "Emyn Muil", "Rohan", "Fangorn", "Gondor", "Mordor"];
-//     return locationOrder.indexOf(a.location) - locationOrder.indexOf(b.location);
-// }//sortLocation
-
 //Sort alphabetically
 pt.lotrIntro.sortAlpha = function(a, b){
       if(a < b) return -1;
@@ -363,12 +362,6 @@ pt.lotrIntro.sortAlpha = function(a, b){
       return 0;
 }//sortAlpha
 
-// //Sort on the number of words
-// pt.lotrIntro.sortWords = function(a, b){
-//       if(a.words < b.words) return -1;
-//       if(a.words > b.words) return 1;
-//       return 0;
-// }//sortWords
 
 /*
 ** Based on the d3v4 d3.chord() function by Mike Bostock
@@ -388,7 +381,7 @@ pt.lotrIntro.loom = function() {
       widthOffsetInner = function() { return x; },
       emptyPerc = 0.2,
       value = function(d) { return d; },
-    inner = function(d) { return d.source; },
+      inner = function(d) { return d.source; },
       outer = function(d) { return d.target; };
 
   function loom(data) {
@@ -397,30 +390,30 @@ pt.lotrIntro.loom = function() {
     data = d3.nest().key(outer).entries(data);
     
     var n = data.length,
-      groupSums = [],
+        groupSums = [],
         groupIndex = d3.range(n),
         subgroupIndex = [],
         looms = [],
         groups = looms.groups = new Array(n),
         subgroups,
-    numSubGroups,
-      uniqueInner = looms.innergroups = [],
-      uniqueCheck = [],
-      emptyk,
+        numSubGroups,
+        uniqueInner = looms.innergroups = [],
+        uniqueCheck = [],
+        emptyk,
         k,
         x,
         x0,
         dx,
         i,
         j,
-      l,
-      m,
-      s,
-      v,
-      sum,
-      counter,
-    reverseOrder = false,
-      approxCenter;
+        l,
+        m,
+        s,
+        v,
+        sum,
+        counter,
+        reverseOrder = false,
+        approxCenter;
 
   //Loop over the outer groups and sum the values
   k = 0;
@@ -464,14 +457,14 @@ pt.lotrIntro.loom = function() {
   emptyk = k * emptyPerc / (1 - emptyPerc);
   k += emptyk;
 
-    // Convert the sum to scaling factor for [0, 2pi].
-    k = max$1(0, tau$3 - padAngle * n) / k;
-    dx = k ? padAngle : tau$3 / n;
+  // Convert the sum to scaling factor for [0, 2pi].
+  k = max$1(0, tau$3 - padAngle * n) / k;
+  dx = k ? padAngle : tau$3 / n;
   
-    // Compute the start and end angle for each group and subgroup.
-    // Note: Opera has a bug reordering object literal properties!
+  // Compute the start and end angle for each group and subgroup.
+  // Note: Opera has a bug reordering object literal properties!
   subgroups = new Array(numSubGroups);
-    x = emptyk * 0.25 * k; //quarter of the empty part //0;
+  x = emptyk * 0.25 * k; //quarter of the empty part //0;
   counter = 0;
   for(i = 0; i < n; i++) {
     var di = groupIndex[i],
@@ -487,41 +480,42 @@ pt.lotrIntro.loom = function() {
     for(j = 0; j < s; j++) {
             var dj = reverseOrder ? subgroupIndex[di][(s-1)-j] : subgroupIndex[di][j],
                 v = value(data[di].values[dj]),
-        innername = inner(data[di].values[dj]);
+                innername = inner(data[di].values[dj]);
                 a0 = x,
                 a1 = x += v * k;
-          subgroups[counter] = {
-                index: di,
-                subindex: dj,
-                startAngle: a0,
-                endAngle: a1,
-                value: v,
-          outername: outername,
-          innername: innername
-          };
+                subgroups[counter] = {
+                  index: di,
+                  subindex: dj,
+                  startAngle: a0,
+                  endAngle: a1,
+                  value: v,
+                  outername: outername,
+                  innername: innername
+                };
       
       //Check and save the unique inner names
-        if( !uniqueCheck[innername] ) {
-          uniqueCheck[innername] = true;
-          uniqueInner.push({name: innername});
+      if( !uniqueCheck[innername] ) {
+        uniqueCheck[innername] = true;
+        uniqueInner.push({name: innername});
       }//if
       
       counter += 1;
     }//for j
-        groups[di] = {
-            index: di,
-            startAngle: x0,
-            endAngle: x,
-            value: groupSums[di],
-      outername: outername
-        };
-        x += dx;    
+
+    groups[di] = {
+        index: di,
+        startAngle: x0,
+        endAngle: x,
+        value: groupSums[di],
+        outername: outername
+    };
+    x += dx;    
   }//for i
 
   //Sort the inner groups in the same way as the strings
-    uniqueInner.sort(function(a, b) {
+  uniqueInner.sort(function(a, b) {
       return sortSubgroups( a.name, b.name );
-    });
+  });
   //Find x and y locations of the inner categories
   //TODO: make x depend on length of inner name 
   m = uniqueInner.length
@@ -531,7 +525,7 @@ pt.lotrIntro.loom = function() {
     uniqueInner[i].offset = widthOffsetInner(uniqueInner[i].name, i, uniqueInner);
   }//for i
         
-    //Generate bands for each (non-empty) subgroup-subgroup link
+  //Generate bands for each (non-empty) subgroup-subgroup link
   counter = 0;
   for(i = 0; i < n; i++) {
     var di = groupIndex[i];
@@ -541,9 +535,9 @@ pt.lotrIntro.loom = function() {
       var innerTerm = outerGroup.innername;
       //Find the correct inner object based on the name
       var innerGroup = searchTerm(innerTerm, "name", uniqueInner);
-              if (outerGroup.value) {
-                looms.push({inner: innerGroup, outer: outerGroup});
-              }//if
+      if (outerGroup.value) {
+          looms.push({inner: innerGroup, outer: outerGroup});
+      }//if
       counter +=1;
     }//for j
   }//for i
@@ -607,11 +601,8 @@ pt.lotrIntro.loom = function() {
   
 }//loom
 
-
-/*
-** Based on the d3v4 d3.ribbon() function by Mike Bostock
-** Adjusted by Nadieh Bremer - July 2016
-*/
+//Adjusted string version for this presentation, because the Rohan to Legolas slice starts just on the right half
+//So I'm moving it to the left half for better animation in the whole sense
 pt.lotrIntro.string = function() {
 
   var slice$5 = Array.prototype.slice;
@@ -648,27 +639,35 @@ pt.lotrIntro.string = function() {
         sx1 = sr * cos(sa1),
         sy1 = sr * sin(sa1),
         tr = +radius.apply(this, (argv[0] = inn, argv)),
-      tx = x.apply(this, argv),
-      ty = y.apply(this, argv),
-      toffset = offset.apply(this, argv),
-      theight,
-      xco,
-      yco,
-      xci,
-      yci,
-      leftHalf,
-      pulloutContext;
+        tx = x.apply(this, argv),
+        ty = y.apply(this, argv),
+        toffset = offset.apply(this, argv),
+        theight,
+        xco,
+        yco,
+        xci,
+        yci,
+        leftHalf,
+        pulloutContext;
     
-    //Does the group lie on the left side
-    leftHalf = sa0+halfPi$2 > pi$3 && sa0+halfPi$2 < tau$3;
+
+    /////////////////////////////////////////////////////////////////////
+    ////// Adjusted part because of the one Rohan slice to Legolas //////
+    /////////////////////////////////////////////////////////////////////
+        //Does the group lie on the left side
+        //leftHalf = sa0+halfPi$2 > pi$3 && sa0+halfPi$2 < tau$3;
+        leftHalf = sa1+halfPi$2 > pi$3 && sa1+halfPi$2 < tau$3;
+    /////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
+    /////////////////////////////////////////////////////////////////////
+
     //If the group lies on the other side, switch the inner point offset
     if(leftHalf) toffset = -toffset;
     tx = tx + toffset;
     //And the height of the end point
     theight = leftHalf ? -heightInner : heightInner;
     
-
-        if (!context) context = buffer = d3.path();
+    if (!context) context = buffer = d3.path();
 
     //Change the pullout based on where the string is
     pulloutContext  = (leftHalf ? -1 : 1 ) * pullout;
@@ -676,12 +675,12 @@ pt.lotrIntro.string = function() {
     sx1 = sx1 + pulloutContext;
     
     //Start at smallest angle of outer arc
-        context.moveTo(sx0, sy0);
+    context.moveTo(sx0, sy0);
     //Circular part along the outer arc
-        context.arc(pulloutContext, 0, sr, sa0, sa1);
+    context.arc(pulloutContext, 0, sr, sa0, sa1);
     //From end outer arc to center (taking into account the pullout)
-        xco = d3.interpolateNumber(pulloutContext, sx1)(0.5);
-        yco = d3.interpolateNumber(0, sy1)(0.5);
+    xco = d3.interpolateNumber(pulloutContext, sx1)(0.5);
+    yco = d3.interpolateNumber(0, sy1)(0.5);
     if( (!leftHalf && sx1 < tx) || (leftHalf && sx1 > tx) ) {
       //If the outer point lies closer to the center than the inner point
       xci = tx + (tx - sx1)/2;
@@ -690,12 +689,12 @@ pt.lotrIntro.string = function() {
       xci = d3.interpolateNumber(tx, sx1)(0.25);
       yci = ty + theight/2;
     }//else
-        context.bezierCurveTo(xco, yco, xci, yci, tx, ty + theight/2);
+    context.bezierCurveTo(xco, yco, xci, yci, tx, ty + theight/2);
     //Draw a straight line up/down (depending on the side of the circle)
     context.lineTo(tx, ty - theight/2);
     //From center (taking into account the pullout) to start of outer arc
-        xco = d3.interpolateNumber(pulloutContext, sx0)(0.5);
-        yco = d3.interpolateNumber(0, sy0)(0.5);
+    xco = d3.interpolateNumber(pulloutContext, sx0)(0.5);
+    yco = d3.interpolateNumber(0, sy0)(0.5);
     if( (!leftHalf && sx0 < tx) || (leftHalf && sx0 > tx) ) { 
       //If the outer point lies closer to the center than the inner point
       xci = tx + (tx - sx0)/2;
@@ -708,7 +707,7 @@ pt.lotrIntro.string = function() {
     //Close path
     context.closePath();
 
-        if (buffer) return context = null, buffer + "" || null;
+    if (buffer) return context = null, buffer + "" || null;
   }//function string
 
   function constant$11(x) {

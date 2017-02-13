@@ -10,10 +10,10 @@ pt.chordToLoom.init = function() {
 	///////////////////////////////////////////////////////////////////////////	
 
 	var margin = {
-		top: 10,
-		right: 0,
-		bottom: 10,
-		left: 0
+		top: 0,
+		right: 100,
+		bottom: 0,
+		left: 100
 	};
 	var width = $(".slides").width()*0.95 - margin.left - margin.right;
 	var height = $(".slides").height() - margin.top - margin.bottom;
@@ -31,7 +31,7 @@ pt.chordToLoom.init = function() {
 	//////////////////////////// General variables ////////////////////////////
 	///////////////////////////////////////////////////////////////////////////	
 
-	var outerRadius = Math.min(width, height) * 0.5 - 40;
+	var outerRadius = 300; //Math.min(width, height) * 0.5 - 40;
 	pt.chordToLoom.innerRadius = outerRadius*0.96;
 
 	var chord = d3.chord()
@@ -137,13 +137,13 @@ pt.chordToLoom.adjustedChord = function() {
 	//Adjust the arcs to their original state (in case you move backward)
 	pt.chordToLoom.arcs
 	    .data(pt.chordToLoom.originalChordData.groups)
-	    .transition().duration(2000)
+	    .transition().duration(500)
 	    .attr("d", pt.chordToLoom.arc);
 
 	//Adjust the arcs to end in the middle
 	pt.chordToLoom.chords
 		.data(pt.chordToLoom.originalChordData)
-		.transition().duration(2000)
+		.transition().duration(1500)
       	.attrTween("d", function(d) {
       		//https://bl.ocks.org/mbostock/3916621
       		var d1 = pt.chordToLoom.adjustedRibbon(d), 
@@ -178,13 +178,13 @@ pt.chordToLoom.adjustedArc = function() {
 	//Adjust the arcs to have no leftover
 	pt.chordToLoom.arcs
 	    .data(pt.chordToLoom.newChordData.groups)
-	    .transition().duration(1500)
+	    .transition().duration(1000)
 	    .attr("d", pt.chordToLoom.arc);
 
 	//Adjust the chords to fit the new arcs
 	pt.chordToLoom.chords
 		.data(pt.chordToLoom.newChordData)
-		.transition().duration(1500)
+		.transition().duration(1000)
       	.attrTween("d", function(d) {
       		//https://bl.ocks.org/mbostock/3916621
       		var d1 = pt.chordToLoom.adjustedRibbon(d), 

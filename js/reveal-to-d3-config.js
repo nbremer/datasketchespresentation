@@ -52,10 +52,22 @@ pt.slideIdToFunctions = {
   },
   'chord-to-loom-2': {
     'init': function() {
-      pt.chordToLoom2.init();
+      pt.chordToLoom2.init(lotrWords);
     },
     '-1': function() {
-      pt.chordToLoom2.adjustedData(lotrWords);
+      pt.chordToLoom2.adjustedData();
+    },
+    0: function() {
+      pt.chordToLoom2.adjustedColors(lotrWords);
+    },
+    1: function() {
+      pt.chordToLoom2.innerLocation(lotrWords);
+    },
+    2: function() {
+      pt.chordToLoom2.stringShape(lotrWords);
+    },
+    3: function() {
+      pt.chordToLoom2.moveApart(lotrWords);
     },
   },
 };
