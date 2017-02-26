@@ -1,0 +1,493 @@
+body {
+	font-size: 14px;
+	font-family: 'PT Sans', sans-serif;
+}
+
+a, a:link, a:visited, a:active {
+  color: #f27c07;
+  border-bottom: 1px dotted rgba(203, 39, 46, .5);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid #f27c07;
+}
+
+a.image-link {
+	border-bottom: none;
+}
+
+.mobile {
+	display: none;
+}
+
+.outer-margin {
+	margin-left: 50px;
+	margin-right: 50px;
+}
+
+.vcenter {
+    display: inline-block;
+    vertical-align: middle;
+    float: none;
+}
+
+/* --- Intro --- */
+
+#intro {
+  max-width: 1000px;
+  padding-top: 35px;
+}
+
+
+#sub-title {
+  font-family: 'PT Sans Narrow', sans-serif;
+  font-size: 28px;
+  color: #FFC200;
+  margin-bottom: -15px;
+}
+
+#main-title {
+  /*font-family: 'Anton', sans-serif;*/
+  font-family: 'PT Sans Narrow', sans-serif;
+  font-weight: 700;
+  font-size: 50px;
+  color: #ff6c00;
+  text-transform: uppercase;
+  background: -webkit-linear-gradient(-45deg, #FFC200 0%,#ff6c00 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+@media screen and (max-width: 768px) {
+  #main-title {
+    background: -webkit-linear-gradient(-45deg, #FFC200 0%,#ff6c00 50%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+  }
+}
+
+.intro-text {
+  font-size: 13px;
+  line-height: 160%;
+  color: #292929;
+}
+
+.explanation-text {
+  font-size: 13px;
+  line-height: 160%;
+  color: #a5a5a5;
+  font-style: italic;
+  position: relative; /* So the SVG sits below them */
+}
+
+.visual-width {
+  margin-left: auto;
+  margin-right: auto;
+  /*padding-right: 15px;*/
+  /*padding-left: 15px;*/
+}
+
+#chrome-note,
+#mobile-note {
+  margin-top: 25px;
+  text-align: center;
+  color: #292929;
+  font-family: 'PT Sans Narrow', sans-serif;
+}
+#chrome-note {
+  font-size: 13px;
+}
+#mobile-note {
+  margin-bottom: 20px;
+  font-size: 15px;
+}
+
+/* --- Legends --- */
+
+#character-legends,
+#character-legend-protagonists,
+#character-legend-antagonists,
+#fight-legend,
+#chart, #chart svg {
+  text-align: center;
+  position: relative;
+}
+
+#character-legend-protagonists svg,
+#character-legend-antagonists svg,
+#fight-legend svg,
+#chart svg {
+  overflow:visible;
+}
+
+.divider {
+    font-family: 'PT Sans Narrow', sans-serif;
+    font-weight: 700;
+    font-size: 1em;
+    padding: 0px 5px;
+    font-style: normal;
+}
+.orange {
+    color: #f27c07;
+}
+.grey {
+  color: #c7c7c7;
+}
+
+.goku-bold {
+  color: #f27c07; 
+  font-weight: 700;
+}
+
+.vegeta-bold {
+  color: #1D75AD; 
+  font-weight: 700;
+}
+
+.character-legend-text {
+  font-size: 18px;
+  text-anchor: middle;
+  font-family: 'PT Sans Narrow', sans-serif;
+  fill: #f27c07;
+}
+
+.fight-legend-text {
+  font-size: 18px;
+  text-anchor: middle;
+  font-family: 'PT Sans Narrow', sans-serif;
+  fill: #252525;
+}
+
+.fight-legend-side-text {
+  font-size: 12px;
+  text-anchor: middle;
+  fill: #9f9f9f;
+}
+
+.fight-legend-circle-text {
+  font-size: 5px;
+  text-anchor: middle;
+  font-family: 'PT Sans Narrow', sans-serif;
+}
+
+/* --- Chart --- */
+
+@media screen and (max-width: 450px) {
+  #chart {
+    font-size: 8px !important;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #chart {
+    font-size: 12px !important;
+  }
+}
+#chart {
+  /*position: relative;*/
+	/*text-align: center;*/
+	font-size: calc(8px + (12 - 8) * (100vw - 450px)/(1000 - 450));
+	/*font-size: 12px;*/
+}
+
+.saga-line {
+    /*stroke: #e1e1e1;*/
+    stroke-width: 1px;
+    /*stroke-dasharray: 2 6;*/
+    stroke-linecap: round;
+    pointer-events: none;
+}
+.saga-legend-text {
+  text-anchor: middle;
+}
+.saga-line-legend {
+  stroke: #cccccc;
+  stroke-linecap: round;
+  /*shape-rendering: crispEdges;*/
+}
+.saga-line-legend-arrow {
+  fill: #cccccc;
+}
+
+.saga-name-group {
+	pointer-events: none;
+}
+.subsaga-name {
+	font-size: 1.5em;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+.saga-name {
+	font-size: 1em;
+	font-family: 'PT Sans', sans-serif;
+	fill: #a7a6a6;
+}
+.saga-episode {
+	font-size: 0.8em;
+	font-family: 'PT Sans', sans-serif;
+	fill: #777777;
+	font-style: italic;
+}
+
+.annotation-wrapper {
+	pointer-events: none;
+  cursor: default;
+}
+.annotation-text-wrapper {
+  position: absolute;
+  pointer-events: none;
+  cursor: default;
+}
+.annotation-text {
+  position: relative;
+	font-size: 1em;
+	font-family: 'PT Sans', sans-serif;
+	fill: #777777;
+}
+.annotation-line {
+	stroke-linecap: round;
+  shape-rendering: crispEdges;
+}
+.annotation-image-link {
+  cursor: pointer;
+  pointer-events: all;
+}
+.annotation-image-circle {
+  cursor: pointer;
+  pointer-events: all;
+}
+
+.character-line-wrapper {
+	isolation: isolate;
+}
+
+.character-path {
+	mix-blend-mode: multiply;
+}
+
+.fight-background {
+	pointer-events: all;
+	fill: none;
+}
+
+.fight-background-circle,
+.fight-background-circle-legend {
+	pointer-events: none;
+	fill: white;
+}
+
+#overlay-rect {
+	pointer-events: none;	
+	fill: white;
+}
+
+.character-circle,
+.character-circle-legend {
+	mix-blend-mode: multiply;
+	pointer-events: none;
+	opacity: 1;
+}
+
+.majin-text {
+	font-size: 0.5em;
+	text-anchor: middle;
+	pointer-events: none;
+}
+
+/* --- Fight map --- */
+
+#map { 
+  position: absolute; 
+  /*top: 0px;*/
+  /*right: 0px;*/
+  z-index: 1;
+}
+
+#map .character-line-wrapper, #map .fight-wrapper, #map .background-rect {
+  pointer-events: none;
+}
+
+.map-line-top, .map-line-bottom {
+  stroke: #b0b0b0;
+  stroke-linecap: round;
+  stroke-width: 2px;
+  shape-rendering: crispEdges;
+  opacity: 0.7;
+}
+
+/* --- Tooltip --- */
+
+.tooltip-wrapper-line {
+	pointer-events: none;
+	text-anchor: middle;
+	text-shadow: 0 1px 2px white, 1px 0 2px white, -1px 0 2px white, 0 -1px 2px white;
+}
+
+.tooltip-character-line {
+	font-size: 1.5em;
+	font-family: 'PT Sans Narrow', sans-serif;
+}
+
+
+@media screen and (max-width: 450px) {
+  #tooltip {
+    font-size: 8px !important;
+  }
+}
+
+@media screen and (min-width: 1000px) {
+  #tooltip {
+    font-size: 12px !important;
+  }
+}
+
+#tooltip,
+#tooltip-legend {
+  pointer-events: none;
+  text-align:center;  
+  z-index: 5;
+  position: absolute;
+  opacity: 0;
+  font-size: calc(8px + (12 - 8) * (100vw - 450px)/(1000 - 450));
+  cursor: default;
+}
+
+#tooltip .tooltip-container {
+  padding: 15px 25px;
+  top: 50%;
+  /*left: 50%;*/ /*Done in the code*/
+  transform: translate(-50%, -50%);
+  max-width: 300px;
+}
+
+@media screen and (max-width: 400px) {
+  #tooltip-legend .tooltip-container {
+    width: 160px !important;
+  }
+}
+#tooltip-legend .tooltip-container {
+  padding: 10px 15px;
+  transform: translate(-50%, -100%);
+  width: 300px;
+}
+
+.tooltip-container {
+  position: relative;
+  /*width: 230px;*/
+  /*left: -115px; /* 230/2*/
+  max-width: 300px;
+  min-width: 100px;
+  font-size: 1em;
+  /*padding: 15px 25px;*/
+  border-radius: 3px;
+  background: white;
+  color: #000;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.3);  
+  border: 1px solid rgba(200,200,200,0.7);
+}
+
+.tooltip-rule {
+  height: 1px;
+  margin: 1px auto 3px;
+  background: #ddd;
+  width: 100%;
+}
+
+.tooltip-saga {
+  text-transform: uppercase;
+  font-size: 0.8em;
+  /*margin-bottom: 0.5em;*/
+  color: #a4a4a4; 
+}
+
+.tooltip-characters {
+  color: #aeaeae;
+  font-size: 1.3em;  
+  font-family: 'PT Sans Narrow', sans-serif;  
+}
+.tooltip-characters.good {
+  margin-top: 0.7em;
+}
+.tooltip-characters.bad {   
+  margin-bottom: 0em;  
+}
+
+.tooltip-vs {
+  color: #a8a8a8;
+  font-size: 0.9em;   
+  margin-top: 0.3em;
+  margin-bottom: 0.2em; 
+}
+
+.tooltip-info {
+  color: #a8a8a8;
+  font-size: 0.8em;
+  font-style: italic;
+}
+
+.tooltip-extra {
+  color: #333333;
+  font-size: 0.9em; 
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+}
+
+/* ---- Character legend tooltip ---- */
+.tooltip-name {
+  font-family: 'PT Sans Narrow', sans-serif; 
+  font-size: 17px;
+}
+
+.tooltip-rule-max {
+  height: 1px;
+  max-width: 150px;
+  margin: 1px auto 3px;
+  background: #ddd;
+  width: 100%;
+}
+
+.tooltip-fights {
+  font-style: italic;
+  color: #b6b6b6;
+  font-size: 11px;
+  margin-bottom: 10px;
+}
+
+.tooltip-character-info {
+  font-size: 12px;
+}
+
+/* --- Credits --- */
+
+#credit {
+	padding-bottom: 25px;
+}
+
+.data-explanation {
+  color: #a5a5a5;
+  font-size: 12px;
+  padding-bottom: 20px;
+}
+
+#credit p {
+	margin-top: 0px;
+	margin-bottom: 3px;
+}
+
+.bold-start {
+  font-weight: 700;
+  color: black;
+}
+
+.credit-bold {
+	font-weight: 600;
+	font-size: 1em;
+}
+
+.credit-note {
+	line-height: 140%;
+	font-size: 0.8em;
+	font-weight: 400;
+	color: #656565;
+}

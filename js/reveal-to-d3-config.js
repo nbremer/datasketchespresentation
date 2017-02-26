@@ -63,12 +63,40 @@ pt.slideIdToFunctions = {
     1: function() {
       pt.chordToLoom2.innerLocation(lotrWords);
     },
-    2: function() {
+    3: function() {
       pt.chordToLoom2.stringShape(lotrWords);
     },
-    3: function() {
+    2: function() {
       pt.chordToLoom2.moveApart(lotrWords);
     },
+  },
+  'dbz-path-simple': {
+    'init': function() {
+      pt.dbzPathSimple.init(dbzFights);
+    },
+    '-1': function() {
+      pt.dbzPathSimple.showCirclesOnly();
+    },
+    0: function() {
+      pt.dbzPathSimple.showSimplePaths();
+    },
+    1: function() {
+      pt.dbzPathSimple.showAnchorPoints();
+    },
+    2: function() {
+      pt.dbzPathSimple.addSwoop();
+    },
+    3: function() {
+      pt.dbzPathSimple.addChangeSide();
+    },
+    4: function() {
+      pt.dbzPathSimple.hideAnchors();
+    },
+  },
+  'dbz-path-final': {
+    'init': function() {
+      pt.dbzPathFinal.init(dbzFights);
+    }
   },
 };
 

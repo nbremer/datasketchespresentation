@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+	<head>
+	    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+	    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+	    <meta name="viewport" content="width=device-width, initial-scale=1">
+	    <!-- <meta name="viewport" content="user-scalable = yes"> -->
+
+	    <title>All fights in Dragon Ball Z</title>
+	    <meta name="author" content="Nadieh Bremer">
+	    <meta name="description" content="Data Sketches - January - Nostalgia - Nadieh">
+	    <meta name="keywords" content="data, visualization, visualisation, data visualization, data visualisation, information, information visualization, information visualisation, dataviz, datavis, infoviz, infovis, collaboration, data art">
+		  
+		<!-- JavaScript files -->
+		<script src="js/d3.js"></script>
+
+		<!-- Styling -->
+		<link href="css/bootstrap.min.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+
+		<!-- Google fonts -->
+		<link href="https://fonts.googleapis.com/css?family=PT+Sans:400,400i,700,700i|PT+Sans+Narrow:400,700" rel="stylesheet">
+	
+	</head>
+	<body>
+
+		<!-- Intro & Legend -->
+		<div id="intro" class="container">
+        	<div class="row">
+          		<div class="col-xs-12 col-sm-6 col-md-4 col-lg-4">
+					<div id="sub-title">All fights from</div>
+					<div id="main-title">Dragon Ball Z</div>
+				</div>
+			
+				<div class="col-xs-12 col-sm-6 col-md-8 col-lg-8 intro-text">
+					<p class="bold-start">Based on the manga by Akira Toriyama, the first episode of <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z" target="_new">Dragon Ball Z</a> aired in Japan on April 26, 1989. Even after more than 25 years, the anime is still extremely popular, with <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z_Kai" target="_new">a filler-free refresh</a> of the series that came out in 2009 and <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z_Kai" target="_new">a follow-up series</a> airing right now.</p>
+					<p>Dragon Ball Z follows Goku and his family & friends as they fight ever more powerful foes that want to rule the Universe / want to show they're the best / destroy Earth. Being a <i>fighting</i> anime many battles take place during the 291 episodes. Characters get stronger through battles and training. A typical aspect of DBZ is that sudden increases of power can be unlocked through transformations, the different <a href="http://dragonball.wikia.com/wiki/Super_Saiyan" target="_new"><i>Super Saiyan</i></a> levels being the most well known. The first person to unlock a new transformation often achieves this through an intense event, such as the death of a friend in battle. Although successive characters typically manage to achieve the same level with less effort.</p>
+				</div>
+			</div>
+
+        	<div class="row">
+
+        		<div id="character-legends" class="row">
+        			<!-- Create div structure for the tooltip -->
+        			<div id="tooltip-legend">
+						<div class="tooltip-container">
+							<div class="tooltip-name"></div>
+							<div class="tooltip-rule-max"></div>
+							<div class="tooltip-fights"></div>
+							<div class="tooltip-character-info"></div>
+						</div>
+					</div>
+    				<div id="character-legend-protagonists" class="col-xs-12 col-md-6"></div>
+    				<div id="character-legend-antagonists" class="col-xs-12 col-md-6"></div>
+    			</div>
+
+        		<div class="visual-width">
+
+        			<div class="intro-text" style="position:relative; z-index: 3;">
+						<p>By following characters from fight to fight you can recognize distinct moments from Dragon Ball Z. Goku, although appearing in most fights overall, is still missing in action for very large periods of time. The reasons are the fact that he's dead during the start of the Vegeta saga, recovering from injuries (twice) during the Frieza arc, suffering from a heart disease at the start of the Cell arc, and, well, dead again during the start of the Buu arc.</p>
+						<p>And, if you've seen the show, were you aware of how often Krillin participates in a fight? Or that Gohan doesn't actually fight a bad guy in between the end of the Frieza saga and when he snaps and turns Super Saiyan 2 at the end of the Cell arc? (that's more than 50 episodes!) Browse through all ±200 fights below to investigate the path of your own favorite character or, if you're new to the show, get an understanding of <i>DBZ</i> through its fights.</p>
+					</div>
+
+
+					<div class="row">
+						<div class="explanation-text col-xs-12 col-md-6 vcenter">
+							<p style="position: relative;">Each group of circles is a fight, where one circle represents one fighter <span class="divider orange">  |  </span> The main characters have been given their own color; <span class="goku-bold">Goku</span> is the signature <span class="goku-bold">orange</span> color of his tunic, whereas <span class="vegeta-bold">Vegeta</span> is <span class="vegeta-bold">blue</span> of course <span class="divider orange">  |  </span> Sometimes the circles have added strokes. These indicate successively more advanced & powerful forms, such as the Super Saiyan base, 2 & 3 forms.</p>
+						</div><!--
+    					--><div id="fight-legend" class="col-xs-12 col-md-6 vcenter" style="position: initial;"></div>
+					</div>
+
+	          		<div class="explanation-text">
+						<p>The fights below are horizontally ordered per saga, with the first saga on the far left and last saga on the far right <span class="divider orange">  |  </span> The colored swooshing lines follow a character from fight to fight <span class="divider orange">  |  </span> A character fighting for evil has its swooshing line on the right side, while the good guys' lines are on the left <span class="desktop"><span class="divider orange">  |  </span> Hover over the fights & lines to see more information and discover who was fighting whom and in what other fights they appeared</span></p>
+					</div>
+
+					<div id="chrome-note" class="desktop">- Performs & looks better in Chrome -</div>
+					<div id="mobile-note" class="mobile">- See a fully interactive version on desktop -</div>
+
+				</div>
+			</div>
+		</div>	
+
+		<!-- The DBZ visual -->
+		<div id="chart">
+
+			<div id="fight-visual"></div>
+
+			<!-- Create div structure for the tooltip -->
+			<div id="tooltip">
+				<div class="tooltip-container">
+					<div class="tooltip-saga"></div>
+					<div class="tooltip-rule"></div>
+					<div class="tooltip-characters good"></div>
+					<div class="tooltip-vs">vs</div>
+					<div class="tooltip-characters bad"></div>
+					<div class="tooltip-info"></div>
+					<div class="tooltip-extra"></div>
+				</div>
+			</div>
+
+			<div id="map"></div>
+
+		</div>
+
+		
+		<!-- Credits & Data -->
+		<div id="credit" class="container">
+        	<div class="row">
+        		<div class="visual-width data-explanation">
+					<p>The fight info was taken from the Dragon Ball Wikia pages for each saga. For relevance, a few fights were taken out of the above visual; the <i>Garlic Jr.</i> and <i>Other World Tournament</i> filler sagas were completely removed. Also the ±5 fights that happened in the anime only <i>and</i> didn't feature any of the Z fighters, happened in a nightmare or flashback were taken out.</p>
+				</div>
+          		<div class="visual-width">
+					<p class="credit-bold" style="margin-bottom: 8px;">Created by <a href="https://twitter.com/NadiehBremer" target="_new">Nadieh Bremer</a> <span class="divider grey">|</span> <a href="http://www.visualcinnamon.com/" target="_new">Visual Cinnamon</a></p>
+					<p class="credit-note">Data from the very extensive <a href="http://dragonball.wikia.com/wiki/Dragon_Ball_Z" target="_new">Dragon Ball Wikia</a> <span class="divider grey">|</span> Go back to <a href="../..">datasketches' January month</a> to read about the data preparation & more</p>
+				</div>
+			</div>
+		</div>		
+
+		<script src="js/createCharacterLegend.js"></script>
+		<script src="js/createFightLegend.js"></script>
+		<script src="js/createFightMap.js"></script>
+		<script src="js/main.js"></script>
+
+	</body>
+</html>

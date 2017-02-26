@@ -1,1 +1,21 @@
-<section id="dbz-intro" data-background-video="slides/slide_N_23/dbz_intro.mp4" data-background-video-loop data-background-video-muted></section>
+<style>
+	#dbz-intro .iframe-container {
+		width: 1720px; 
+		height: 1080px; 
+		/*margin: 0 auto;*/
+		overflow: hidden;
+	}
+
+	#dbz-intro iframe {
+		width: 1920px; 
+		height: 1080px; 
+		max-width: none;
+	}
+</style>
+<section id="dbz-intro">
+	<!-- container around it to clip away the scrollbar visually-->
+	<div class="iframe-container">
+		<iframe id="dbz-local-copy" data-src="slides/slide_N_23/dbz/index.html" height="1080px"></iframe>
+	</div>
+</section>
+

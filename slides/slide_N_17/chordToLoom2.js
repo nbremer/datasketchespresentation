@@ -89,10 +89,9 @@ pt.chordToLoom2.init = function(data) {
 	      .radius(pt.chordToLoom2.innerRadius)
 	      .pullout(0);
 
-	//Loom function with the inner locations also spread out correctly
+	//Loom function with the inner locations spread out vertically
   	pt.chordToLoom2.loom2 = pt.chordToLoom2.loom()
       	.padAngle(0.05)
-      	//.sortSubgroups(pt.lotrIntro.sortAlpha)
       	.sortSubgroups(pt.chordToLoom2.sortCharacter)
       	.heightInner(pt.chordToLoom2.heightInner)
       	.emptyPerc(0)
@@ -101,10 +100,10 @@ pt.chordToLoom2.init = function(data) {
       	.inner(function(d) { return d.character; })
       	.outer(function(d) { return d.location; });
 
-    //String function with the correct and final shapes - no pullout
-	pt.chordToLoom2.string2 = pt.lotrIntro.string()
+    //String function with the basic shape, but with pull out
+	pt.chordToLoom2.string2 = pt.chordToLoom2.string()
 	      .radius(pt.chordToLoom2.innerRadius)
-	      .pullout(0);
+	      .pullout(pt.chordToLoom2.pullOutSize);
 
 	//Loom function that also has the pull out
   	pt.chordToLoom2.loom3 = pt.lotrIntro.loom()
@@ -117,7 +116,7 @@ pt.chordToLoom2.init = function(data) {
       	.inner(function(d) { return d.character; })
       	.outer(function(d) { return d.location; });
 
-	//String function that also includes the pull out
+	//Final string function that also includes the pull out
 	pt.chordToLoom2.string3 = pt.lotrIntro.string()
 	      .radius(pt.chordToLoom2.innerRadius)
 	      .pullout(pt.chordToLoom2.pullOutSize);
@@ -329,10 +328,20 @@ pt.chordToLoom2.adjustedColors = function(data) {
 	    .style("fill", function(d) { return d3.rgb( pt.chordToLoom2.color(d.outer.outername) ).brighter(0.2) ; })
 	    .style("stroke-opacity", 0);
 
+	pt.chordToLoom2.previousStep = "adjustedColors";
+
 }//adjustedColors
 
 //Move the inner locations apart for each fellowship member
 pt.chordToLoom2.innerLocation = function(data) {
+
+	//In case you move backward
+	pt.chordToLoom2.arcs
+		.data(pt.chordToLoom2.loom2(data).groups)
+		.style("stroke", null)
+		.transition("arc").duration(1000)
+		.attr("transform", "translate(0,0)")
+		.attr("d", pt.chordToLoom2.arc);
 
 	//Adjust the top title
 	pt.chordToLoom.changeTitle("chord-to-loom-2", "Divide inner chords amongst the characters");
@@ -353,19 +362,10 @@ pt.chordToLoom2.innerLocation = function(data) {
         
 }//innerLocation
 
-//Adjust the string shape to the final one
-pt.chordToLoom2.stringShape = function(data) {
-
-	//Adjust the top title
-	pt.chordToLoom.changeTitle("chord-to-loom-2", "Create more natural chord shapes");
+//Move the two halves apart
+pt.chordToLoom2.moveApart = function(data) {
 
 	//In case you move backward
-	pt.chordToLoom2.arcs
-		.data(pt.chordToLoom2.loom2(data).groups)
-		.style("stroke", null)
-		.transition("arc").duration(500)
-		.attr("transform", "translate(0,0)")
-		.attr("d", pt.chordToLoom2.arc);
 	pt.chordToLoom2.outerLabels
   		.transition("fade").duration(500)
 	    .style("opacity", 0);
@@ -373,54 +373,14 @@ pt.chordToLoom2.stringShape = function(data) {
 		.transition("fade").duration(500)
 	    .style("opacity", 0);
 
-	if(pt.chordToLoom2.previousStep === "innerLocation") {
-	    //Adjust the strings to their new shape
-		pt.chordToLoom2.ribbons
-			.data(pt.chordToLoom2.loom2(data))
-			.style("stroke", null)
-		    .transition("string").duration(1000).delay(function(d,i) { return i*10; })
-		    .attr("d", pt.chordToLoom2.string2);
-	} else {
-    	//In case you move back
-		pt.chordToLoom2.ribbons
-			.data(pt.chordToLoom2.loom2(data))
-			.style("stroke", null)
-		    .transition("string").duration(500)
-		    .attr("d", pt.chordToLoom2.string2);		
-	}//else
-	pt.chordToLoom2.previousStep = "stringShape";
-
-}//stringShape
-
-//Move the two halves apart
-pt.chordToLoom2.moveApart = function(data) {
-
 	//Adjust the top title
-	d3.select("#chord-to-loom-2 .chord-steps")
-			.transition("hide").duration(500)
-			.style("opacity", 0)
-			.on("end", function() {
-				d3.select(this)
-					.text("Move the two halves farther apart")
-					.transition("show").duration(500)
-					.style("opacity", 1)
-					.transition("show").duration(1500).delay(1000)
-					.style("opacity", 0);
-			});
-
-	//In case you come from the next slide backwards
-	pt.chordToLoom2.innerLabels
-	    .attr("y", function(d,i) { return d.y; })
-	    .style("opacity", 1);
+	pt.chordToLoom.changeTitle("chord-to-loom-2", "Move the two halves farther apart");
 
 	//Adjust the strings to move outward
 	pt.chordToLoom2.ribbons
 		.data(pt.chordToLoom2.loom3(data))
-		.style("fill", function(d) { return d3.rgb( pt.chordToLoom2.color(d.outer.outername) ).brighter(0.2) ; })
-		.style("stroke", null)
-		.style("opacity", pt.chordToLoom2.defaultOpacity)
 	    .transition("string").duration(1000)
-	    .attr("d", pt.chordToLoom2.string3);
+	    .attr("d", pt.chordToLoom2.string2);
 
 	//Adjust the arcs to move outward
 	pt.chordToLoom2.arcs
@@ -432,21 +392,64 @@ pt.chordToLoom2.moveApart = function(data) {
 		.attr("transform", function(d, i) { return "translate(" + d.pullOutSize + ',' + 0 + ")"; })
     	.attr("d", pt.chordToLoom2.arc);
 
+    pt.chordToLoom2.previousStep = "moveApart";
+    
+}//moveApart
+
+//Adjust the string shape to the final one
+pt.chordToLoom2.stringShape = function(data) {
+
+	//Adjust the top title
+	d3.select("#chord-to-loom-2 .chord-steps")
+			.transition("hide").duration(500)
+			.style("opacity", 0)
+			.on("end", function() {
+				d3.select(this)
+					.text("Create more natural chord shapes")
+					.transition("show").duration(500)
+					.style("opacity", 1)
+					.transition("show").duration(1500).delay(1500)
+					.style("opacity", 0);
+			});
+
+	//In case you come from the next slide backwards
+	pt.chordToLoom2.innerLabels
+	    .attr("y", function(d,i) { return d.y; })
+	    .style("opacity", 1);
+
+	pt.chordToLoom2.arcs
+		.data(pt.chordToLoom2.loom3(data).groups)
+		.each(function(d) { d.pullOutSize = (pt.chordToLoom2.pullOutSize * ( d.startAngle > Math.PI + 1e-2 ? -1 : 1)) })
+		.style("fill", function(d) { return pt.chordToLoom2.color(d.outername); })
+		.style("stroke", null)
+		.transition("arc").duration(1000)
+		.attr("transform", function(d, i) { return "translate(" + d.pullOutSize + ',' + 0 + ")"; })
+    	.attr("d", pt.chordToLoom2.arc);
+
+	//Adjust the strings to their new shape
+	pt.chordToLoom2.ribbons
+		.data(pt.chordToLoom2.loom3(data))
+		.style("fill", function(d) { return d3.rgb( pt.chordToLoom2.color(d.outer.outername) ).brighter(0.2) ; })
+		.style("stroke", null)
+		.style("opacity", pt.chordToLoom2.defaultOpacity)
+	    .transition("string").duration(1000).delay(function(d,i) { return i*10; })
+	    .attr("d", pt.chordToLoom2.string3);
+
    	//Show the outer labels
   	pt.chordToLoom2.outerLabels
-  		.transition("fade").duration(500).delay(500)
+  		.transition("fade").duration(1000).delay(1000)
 	    .style("opacity", 1);
 
 	//Show the ring inscription
 	pt.chordToLoom2.ringWrapper
-		.transition("fade").duration(2000).delay(750)
+		.transition("fade").duration(2000).delay(1500)
 	    .style("opacity", 1);
 
 	pt.chordToLoom2.direction = "backward";
 	d3.select("#chord-to-loom-2").attr("data-autoslide", 0);
-	pt.chordToLoom2.previousStep === "moveApart";
-    
-}//moveApart
+	pt.chordToLoom2.previousStep === "stringShape";
+
+}//stringShape
 
 //Slight adjustment so that Rohan is put on the left half, even though it starts slighty on the right half
 pt.chordToLoom2.loom = function() {
@@ -724,7 +727,8 @@ pt.chordToLoom2.string = function() {
       	ty = round2(y.apply(this, argv)),
       	toffset = offset.apply(this, argv),
       	theight,
-      	leftHalf;
+      	leftHalf,
+      	pullOutContext;
 
     //Does the group lie on the left side
     leftHalf = sa1+halfPi$2 > pi$3 && sa1+halfPi$2 < tau$3;
@@ -734,16 +738,24 @@ pt.chordToLoom2.string = function() {
 
     if (!context) context = buffer = d3.path();
     
+    //Change the pullout based on where the string is
+    pulloutContext  = (leftHalf ? -1 : 1 ) * pullout;
+    sx0 = sx0 + pulloutContext;
+    sx1 = sx1 + pulloutContext;
+    //Halfway in between the pull out and the arc
+    xCenter0 = d3.interpolateNumber(pulloutContext, sx0)(0.5);
+    xCenter1 = d3.interpolateNumber(pulloutContext, sx1)(0.5);
+
     //Start at smallest angle of outer arc
     context.moveTo(sx0, sy0);
     //Circular part along the outer arc
-    context.arc(0, 0, sr, sa0, sa1);
+    context.arc(pulloutContext, 0, sr, sa0, sa1);
     //From end outer arc to center (taking into account the pullout)
-    context.bezierCurveTo(sx1/2, sy1, sx1/2, ty, tx, ty);
+    context.bezierCurveTo(xCenter1, sy1, xCenter1, ty, tx, ty);
     //Draw a straight line up/down (depending on the side of the circle)
     context.lineTo(tx, ty);
     //From center (taking into account the pullout) to start of outer arc
-    context.bezierCurveTo(sx0/2, ty, sx0/2, sy0, sx0, sy0);
+    context.bezierCurveTo(xCenter0, ty, xCenter0, sy0, sx0, sy0);
     //Close path
     context.closePath();
 
