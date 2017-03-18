@@ -1,0 +1,319 @@
+<html lang="" itemscope="" itemtype="http://schema.org/WebPage">
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">  
+		<meta http-equiv="X-UA-Compatible" content="IE=edge"> 
+		<meta name="viewport" content="width=device-width,initial-scale=1"> 
+		 <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no"> -->
+
+		<title>in English | by Visual Cinnamon and Google News Lab</title> 
+		<meta name="title" content="in English — by Google News Lab and Visual Cinnamon">
+	    <meta name="author" content="Nadieh Bremer">
+		<meta name="description" content="Dive into the most popular words translated into English through Google Translate"> 
+		<!-- Styling -->
+		<link href="css/bootstrap-grid.css" rel="stylesheet">
+		<link href="css/style.css" rel="stylesheet">
+
+		<!-- Google fonts -->
+		<link href="https://fonts.googleapis.com/css?family=Dancing+Script&amp;subset=latin-ext" rel="stylesheet">
+		<link href="https://fonts.googleapis.com/css?family=Lato:300,300i,400,400i,900&amp;subset=latin-ext" rel="stylesheet">
+		<!-- Cyrillic -->
+		<link href="https://fonts.googleapis.com/css?family=Cormorant+Infant&amp;subset=cyrillic" rel="stylesheet">
+
+		<!-- JS -->
+		<script src="js/d3.v4.min.js"></script>
+		<!-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script> -->
+		<script src="js/vanilla-modal.js"></script>
+		<script src="js/d3-annotation.js"></script>
+		<script src="js/d3-wordcloud.js"></script>
+
+	</head>
+
+    <body>
+    	
+    <!-- Introduction with the most common translated word -->
+    <header>
+    	<div class="container">
+    		<div id="title-section" class="row justify-content-center">
+    			<div class="col-12 col-lg-8">
+    				<div class="title">
+	    				<!-- <h1><span class="quote-lato"> “</span>Beautiful<span class="quote-lato"> ”</span></h1> -->
+	    				<img class="img-fluid" src="img/script_beautiful.png" alt="Beautiful">
+	    				<h3 class="subtitle">is the most common word translated to English with Google</h3>
+	    				<h5 class="subtitle-small">when looking only at nouns and their adjectives</h5>
+	    				<div class="collab flex-wrap-center">
+	    					<div>A collaboration between </div> <a href="http://newslab.withgoogle.com"><div class="logo-google"><span>Google News Lab</span></div></a> <div> and </div> <a href="https://www.visualcinnamon.com/"><div class="logo-vc"><span>Visual Cinnamon</span></div></a>
+	    				</div>
+	    			</div>
+	    		</div>
+	    	</div>
+	    </div>
+	</header>
+
+	<section>
+		<div class="container">
+    		<div id="title-section" class="row justify-content-center">
+    			<div class="col-12 col-lg-7 body-text" style="margin-bottom: 0em;">	
+    				<p>How much does the translation behavior of a language indicate about its culture? Do German speakers seek the same words translated as the Spanish? To investigate, we've <span class="bold">analyzed all the single word translations of nouns<sup class="up-note">1</sup> & adjectives<sup class="up-note">2</sup> into English</span> delivered through Google Translate for 10 of the most popular languages on Google.</p>
+
+    				<p>We find that, for example, the most common noun translated from Russian into English is <i>mama</i>, while for French the translation of <i>bien</i> is very popular. Scroll down to learn more about these and other languages; from the 10 most popular words to the similarities between them.</p> <!-- &#5905; &#8880; &#9758; &#9759; -->
+
+    				<p class="footnote">
+    					<sup class="up-note">1</sup> e.g. <i>house</i>, <i>dog</i>, <i>place</i></br>
+    					<sup class="up-note">2</sup> e.g. <i>easy</i>, <i>intelligent</i>, <i>adorable</i>
+    				</p>
+	    		</div>
+    		</div>
+    	</div>
+    </section>
+
+    <!-- Word snake title image -->
+	<section class="black-block">
+		<div class="handlettering">
+			<img id="word-snake-lettering-title" class="img-fluid subtitle-handlettering" src="img/title_word_snake.png" alt="The most translated nouns or adjectives per language">
+		</div>
+   	</section>
+   	<!-- Word snake section -->
+	<section>
+		<div class="container">
+    		<div id="before-word-snake-text" class="row justify-content-center">
+    			<div class="col-12 col-lg-7 body-text">	
+	    			<p>Let's start by focusing on the most translated word<sup class="ast"><a href="#note">&#8251;</a></sup> for 10 different languages first. There are some rather odd ones that you wouldn't have guessed, such as <i>colleague</i> in Dutch. Even more strange is the fact that it's almost the same word in Dutch: <i>collega</i>, just missing a <i>u</i> and <i>e</i>. Maybe knowing where to place all those vowels compared to the simpler Dutch version makes it difficult ;)</p>
+
+	    			<p>Wonderfully, 6 out of the 10 languages have a positive vibe going on, with 3 of them wanting to know the translation for <i>good</i> while the most often translated word across all languages is <i>beautiful</i>, or, as they say in <span id="beautiful-lang" class="beautiful-rotate">German</span>, <span id="beautiful-word" class="beautiful-rotate" style="font-style: italic; white-space: pre;">schon    </span></p>
+
+	    			<p>Connecting all the languages together is a string of the top translated words<sup class="ast"><a href="#note">&#8251;</a></sup> across all languages, starting with <i>beautiful</i> at the top before going through several days of the week and on. The general trend remains a positive one, with <i>love</i>, <i>great</i> & <i>happy</i> placed very high.</p>
+
+	    			<p><span class="bold"><span class="desktop">Hover over or click on</span><span class="mobile">Tab</span> a language "circle" to see the worldwide search interest & related topics of the English word <span class="desktop">between 2012 and 2016</span></span></p>
+	    		</div>
+    		</div>
+
+    		<!-- Top word per language, with language string -->
+    		<div id="word-snake-section" class="row justify-content-center chart">
+    			<div class="col-12 col-lg-8">
+    				<div id="viz-word-snake-title" class="chart-title"> <!-- &#11089; -->
+    					<div class="chart-top-title" style="margin-bottom: 0.4em;">The most often translated word into English<sup class="ast"><a href="#note">&#8251;</a></sup> for each language</div>
+    				</div>
+    				<!-- Instructions for seeing the tooltip -->
+    				<div id="viz-word-snake-instructions" class="chart-title">
+    					<div class="sub-title bold"><span class="mobile">Tab a language circle to see the word's trends</span></div>
+    				</div>
+    				<!-- The snake like viz -->
+    				<div id="viz-word-snake"></div>
+    				<!-- Create div structure for the tooltip -->
+					<div id="tooltip">
+						<div class="tooltip-container">
+							<span id="tooltip-close">&times;</span>
+							<div id="tooltip-translation">colleague</div>
+							<div class="tooltip-note">worldwide search interest</div>
+							<div id="tooltip-chart"></div>
+							<div class="tooltip-query">related queries & topics</div>
+							<div class="tooltip-rule"></div>
+							<div id="tooltip-word-chart"></div>
+						</div>
+					</div>
+	    		</div>
+    		</div>
+    	</div>
+    </section>
+
+    <!-- Tree ring title image -->
+	<section class="black-block">
+		<div class="handlettering">
+			<img id="tree-ring-lettering-title" class="img-fluid subtitle-handlettering" src="img/title_tree_ring.png" alt="The top 10 per language">
+		</div>
+   	</section>
+   	<!-- Tree ring section -->
+	<section>
+		<div class="container">
+    		<div id="before-tree-ring-text" class="row justify-content-center">
+    			<div class="col-12 col-lg-7 body-text">
+    				<p>Translations for <i>you</i>, <i>hello</i> and <i>thank you</i> into English are three of the most requested words in any language, which isn't unexpected. By focusing on the nouns & adjectives instead, we can get a glimpse into how different non-native English speakers use this language in their everyday lives.</p>
+
+    				<p>Diving a bit deeper, we're now focusing on the 10 most translated words<sup class="ast"><a href="#note">&#8251;</a></sup> per language, which reveal even more interesting differences between the languages. The days of the week are quite popular, especially in Spanish & Italian. And for French, <i>monsieur</i> is on 6th place, which Google translates to <i>gentleman</i>, quite fitting for their culture.</p>
+
+    				<p><span class="bold"><span class="desktop">Click on</span><span class="mobile">Tab</span> a mini language circle further below to see it rotate into place in the big circle, thereby revealing its top 10.</span></p>
+	    		</div>
+    		</div>
+
+    		<!-- Word rings with top 10 per language -->
+    		<div id="tree-ring-section" class="row justify-content-center chart">
+    			<div class="col-12 col-lg-8">
+    				<!-- Title above the main circle -->
+    				<div id="viz-tree-ring-title" class="chart-title"> <!-- &#11089; -->
+    					<div class="chart-top-title">The top 10 words that are translated from <span id="tree-ring-language-title">all 10 languages combined</span> into English<sup class="ast"><a href="#note">&#8251;</a></sup></div>
+    				</div>
+    				<!-- Big chosen language ring -->
+    				<div id="viz-tree-ring" class="tree-ring"></div>
+    				<!-- Instructions for small rings -->
+    				<div id="viz-tree-ring-instructions" class="chart-title">
+    					<div class="sub-title bold"><span class="desktop">Click on</span><span class="mobile">Tab</span> a different language to see its top 10</div>
+    				</div>
+    				<!-- Small language rings -->
+    				<div id="viz-tree-ring-mini" class="tree-ring flex-wrap-center" style="margin-top: 10px;"></div>
+	    		</div>
+    		</div>
+    	</div>
+    </section>
+
+    <!-- Similarity network title image -->
+	<section class="black-block">
+		<div class="handlettering">
+			<img id="network-lettering-title" class="img-fluid subtitle-handlettering" src="img/title_similarity_network.png" alt="Similarity between Languages">
+		</div>
+   	</section>
+   	<!-- Similarity network -->
+    <section>
+		<div class="container">
+    		<div id="before-similarity-network-text" class="row justify-content-center">
+    			<div class="col-12 col-lg-7 body-text">
+    				<p>Now that we've read some of the most translated words for different languages and seen that they can be quite different, what about their similarities? For example, the Spanish top 10 has four words in common with both Portuguese and Italian (although perhaps not surprising since the languages are similar). Russian, on the other hand, is most similar to Polish. While Japanese is quite dissimilar from all others; no word from the Japanese top 10 is even present in the overall top 10.</p>
+
+    				<p>In the network below each word from the top 10 that is similar between two languages is represented by a line. <span class="bold"><span class="desktop">Click on</span><span class="mobile">Tab</span> a word to move it to the center which reveals all the words that language has in common with all others.</span></p>
+	    		</div>
+    		</div>
+
+    		<!-- A network of the similarities between languages -->
+    		<div id="similarity-network-section" class="row justify-content-center chart">
+    			<div class="col-12 col-lg-8">
+    				<div id="viz-similarity-network-title" class="chart-title"> <!-- &#11089; -->
+    					<div class="chart-top-title" style="margin-bottom: 0.4em;">The similarities between the top 10 words<sup class="ast"><a href="#note">&#8251;</a></sup> per language</div>
+    				</div>
+    				<!-- Instructions for switching languages -->
+    				<div id="viz-similarity-network-instructions" class="chart-title">
+    					<div class="sub-title bold"><span class="desktop">Click on</span><span class="mobile">Tab</span> an outside circle to move it to the center</div>
+    				</div>
+    				<!-- The similarity network viz -->
+    				<div id="viz-similarity-network"></div>
+	    		</div>
+    		</div>
+    	</div>
+    </section>
+
+
+	<footer>
+		<div class="container">
+			<!-- Note about what is sometimes meant with "words" -->
+    		<div class="row justify-content-center">
+    			<div class="col-12 col-lg-7">
+    				<div id="note">
+    					<span style="font-size: 1.1em;">&#8251;</span> When talking about the most translated <i>words</i> this only includes nouns & adjectives
+    				</div>
+	    		</div>
+    		</div>
+
+    		<!-- The remaining notes in the footer about team, data, etc. -->
+    		<div class="row justify-content-center">
+    			<div class="col-12 col-sm-6 col-lg-4">
+    				<p class="footer-title">
+    					If you enjoyed this project, please pass it on to others by sharing it on
+
+    					<!-- https://dev.twitter.com/web/tweet-button/web-intent -->
+	    				<a href="http://twitter.com/share?text=What are the most popular words translated through Google Translate?&url=http://www.BeautifulInEnglish.com&via=googlenewslab" onclick="javascript:window.open(this.href, '', 'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=250, width=600'); return false;">Twitter</a> | 
+
+	    				<!-- https://developers.google.com/+/web/share/ --> 
+	    				<a href="https://plus.google.com/share?url=http://www.BeautifulInEnglish.com" onclick="javascript:window.open(this.href, '', 'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=600, width=400'); return false;">Google+</a> | 
+
+	    				<a href="https://www.facebook.com/sharer/sharer.php?u=http://www.BeautifulInEnglish.com" onclick="javascript:window.open(this.href, '', 'menubar=no, toolbar=no, resizable=yes, scrollbars=yes, height=600, width=600'); return false;">Facebook</a>
+    				</p>
+
+	    			<h5 style="margin-top: 1em;">Team</h5>
+	    			<p style="margin-bottom: 1.6em;"><span class="bold">in English</span> was created by <a href="https://twitter.com/nadiehbremer" target="_new">Nadieh Bremer</a> from <a href="https://www.visualcinnamon.com/" target="_new">Visual Cinnamon</a> with the assistance of <a href="http://newslab.withgoogle.com" target="_new">Google News Lab</a>: <a href="https://twitter.com/smfrogers" target="_new">Simon Rogers</a> & <a href="https://twitter.com/albertocairo" target="_new">Alberto Cairo</a> for art direction, and <a href="https://twitter.com/jealee_" target="_new">Jennifer Lee</a> & Rick Genter for the raw data gathering</p>
+
+	    		</div>
+	    		<div class="col-12 col-sm-6 col-lg-4">
+	    			<h5>Methodology</h5>
+	    			<p>If you'd like to know more about what data was used, what choices made and what calculations done, <a href="#methodology-modal" data-modal-open>read on</a></p>
+	    			
+	    			<h5 style="margin-top: 1em;">datasketch|es</h5>
+    				<p>Check out <a href="">Shirley's counterpart</a>, who, in our typical <a href="http://www.datasketch.es/">datasketch|es</a> style, also tackled the <i>Culture</i> topic by looking at what people search for as possible tourist destinations in other countries.</p>
+
+	    		</div>
+    		</div>
+    	</div>
+
+    	<!-- Create a model that pops up giving more information about how things were done -->
+    	<div id="methodology-modal" style="display: none;">
+	      	<h5 style="margin-top: 0.25em;">Methodology</h5>
+			<p>All the single word translations, performed through Google Translate, from the 10 chosen languages to English were taken into account for the period between August - December 2016. To get only the nouns and adjectives each word was tagged with its grammatical form using the English translation (for Dutch, German, Italian and Polish this was also done using the original word).</p> 
+			<p>Getting the correct grammatical form can be difficult when you only have one word to go on (for example, <i>unternehmen</i> in German can be translated to the noun <i>companies</i>, however it can also mean the verb <i>undertake</i>). Therefore, words for which the automatically tagged result wasn't 100% trusted, were manually checked by looking up the original word on <A href="https://www.wiktionary.org/" target="_new">Wiktionary</a> and seeing which translation was the first mentioned.</p>
+			<p>Some languages have multiple words for the same English translation. This can be because they use male and female forms, such as <i>hermosa</i> and <i>hermoso</i> in Spanish, meaning <i>beautiful</i>, or synonyms like <i>bonito</i>, which also means <i>beautiful</i>. Therefore, to make a proper comparison between languages, all the words with the same English translation were combined from which the top 10 was distilled.</p>
+			<p>The ranking for all the languages combined was calculated by adding up the separate language rankings. For example, the number 1 word for each language gets 500 points, the number 2 gets 499 points, etc until the 500th word. By adding up the rankings from all the languages, the word with the most points was marked as the number 1 overall, and so on.</p>
+			<p>As a note: Even when it appeared that perhaps the English translation was probably not the intended meaning, we did not change the data.</p>
+	    </div>
+	    <div class="modal">
+	    	<div class="modal-inner">
+	    		<span data-modal-close>&times;</span>
+	    		<div class="modal-content"></div>
+	    	</div>
+	    </div>
+
+    </footer>
+
+		<script src="js/loopBeautiful.js"></script>
+    	<script src="js/wordsnake.js"></script>
+        <script src="js/treering.js"></script>
+        <script src="js/similarityNetwork.js"></script>
+        <script>
+    		///////////////////////////////////////////////////////////////////////////
+			/////////////////////////// General variables /////////////////////////////
+			///////////////////////////////////////////////////////////////////////////
+
+			var darkgrey = "#161616",
+				middlegrey = "#a7a7a7",
+				lightgrey = "#afafaf";
+
+			var languageMap = [];
+			languageMap["de"] = "German";
+			languageMap["es"] = "Spanish";
+			languageMap["fr"] = "French";
+			languageMap["it"] = "Italian";
+			languageMap["ja"] = "Japanese";
+			languageMap["nl"] = "Dutch";
+			languageMap["pl"] = "Polish";
+			languageMap["pt"] = "Portuguese";
+			languageMap["ru"] = "Russian";
+			languageMap["tr"] = "Turkish";
+			languageMap["all"] = "All languages";
+
+    		///////////////////////////////////////////////////////////////////////////
+			/////////////////////////// General functions /////////////////////////////
+			///////////////////////////////////////////////////////////////////////////
+
+        	window.onload = function() {
+        		loopBeautiful();
+        		createWordSnake();
+        		createTreeRings();
+        		createSimilarityNetwork();
+        		//Initiate the vanilla JS modal
+				var modal = new VanillaModal.default();
+        	}//on load
+
+        	var currentWidth = window.innerWidth;
+        	d3.select(window).on('resize', function() {
+				//Only resize if the width is changed, not the height
+				//Otherwise you get odd behavior on mobile due to URL bar appearing and disappearing
+				if(window.innerWidth !== currentWidth) {
+					currentWidth = window.innerWidth;
+					resizeWordSnake();
+					resizeTreeRings();
+					resizeSimilarityNetwork();
+				};
+			});//on resize
+
+			//Round number to 2 behind the decimal
+			function round2(num) {
+				return (Math.round((num + 0.00001) * 100)/100);
+			}//round2
+
+        	//Endall function for d3v4
+			function endall(transition, callback) { 
+			    if (typeof callback !== "function") throw new Error("Wrong callback in endall");
+			    if (transition.size() === 0) { callback() }
+			    var n = 0; 
+			    transition 
+			        .each(function() { ++n; }) 
+			        .on("end", function() { if (!--n) callback.apply(this, arguments); }); 
+			}//endall 
+        </script>
+    </body>
+</html>

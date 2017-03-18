@@ -6,13 +6,15 @@ if (navigator.userAgent.indexOf('Safari') != -1 && navigator.userAgent.indexOf('
 
 var isMobile = window.matchMedia("only screen and (max-width: 1050px)").matches;
 
-//Function to only run once after the last transition ends
+//Endall function for d3v4
 function endall(transition, callback) { 
-	var n = 0; 
-	transition 
-		.each(function() { ++n; }) 
-		.each("end", function() { if (!--n) callback.apply(this, arguments); }); 
-}//endall
+    if (typeof callback !== "function") throw new Error("Wrong callback in endall");
+    if (transition.size() === 0) { callback() }
+    var n = 0; 
+    transition 
+        .each(function() { ++n; }) 
+        .on("end", function() { if (!--n) callback.apply(this, arguments); }); 
+}//endall 
 
 //Normal random
 //http://jsfiddle.net/guffa/tvt5k/

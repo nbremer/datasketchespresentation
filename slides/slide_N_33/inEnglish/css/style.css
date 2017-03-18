@@ -1,0 +1,769 @@
+html {
+  	line-height: 1.15;
+  	-ms-text-size-adjust: 100%;
+  	-webkit-text-size-adjust: 100%;
+  	font-family: 'Lato', sans-serif;
+}
+
+body {
+  margin: 0;
+  overflow-x: hidden;
+}
+
+section {
+  display: block;
+}
+
+svg {
+	overflow: visible;
+}
+
+section {
+	background-color: white;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  	margin-top: 0;
+  	margin-bottom: .5rem;
+	font-weight: 300;
+}
+
+h1 {
+  font-size: 2.5rem;
+}
+
+h2 {
+  font-size: 2rem;
+}
+
+h3 {
+  font-size: 1.75rem;
+}
+
+h4 {
+  font-size: 1.5rem;
+}
+
+h5 {
+  font-size: 1.25rem;
+}
+
+h6 {
+  font-size: 1rem;
+}
+
+.noselect {
+  -webkit-touch-callout: none; /* iOS Safari */
+    -webkit-user-select: none; /* Safari */
+     -khtml-user-select: none; /* Konqueror HTML */
+       -moz-user-select: none; /* Firefox */
+        -ms-user-select: none; /* Internet Explorer/Edge */
+            user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
+}
+
+.flex-wrap-center {
+  	display: -webkit-box;
+  	display: -webkit-flex;
+  	display: -ms-flexbox;
+  	display: flex;
+  	-webkit-flex-wrap: wrap;
+      	-ms-flex-wrap: wrap;
+          	flex-wrap: wrap;
+  	-webkit-box-pack: center;
+  	-webkit-justify-content: center;
+      	-ms-flex-pack: center;
+          	justify-content: center;
+}
+
+.mobile {
+	display: none;
+}
+@media screen and (max-width: 320px) {
+	.mobile { display: inline-block; }
+	.desktop { display: none; }
+}
+
+/* ------ body text sections ------ */
+
+.body-text {
+	margin-top: 1em;
+	margin-bottom: 1em;
+}
+.body-text.no-margin {
+	margin-top: 0em;
+	margin-bottom: 0em;
+}
+.body-text p {
+	text-align: center;
+	font-size: 16px;
+	line-height: 1.7em;
+}
+.body-text .footnote {
+	font-size: 0.8em; 
+	color: #969696; 
+	line-height: 1.1em; 
+	margin-top: -0.2em;
+	margin-bottom: 0em;
+}
+
+.bold {
+	font-weight: 900;
+}
+
+.cyrillic {
+	font-family: 'Cormorant Infant', serif;
+}
+.ds {
+	font-family: 'Dancing Script', cursive;
+}
+
+.up-note {
+	font-size: 0.6em;
+	font-style: italic;
+}
+.ast {
+	font-size: 0.6em; 
+}
+.ast a, .ast a:link, .ast a:visited, .ast a:active, .ast a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* ------ handlettering section ------ */
+
+img {
+  border-style: none;
+  page-break-inside: avoid;
+  vertical-align: middle;
+}
+
+.img-fluid {
+  width: 100%;
+  max-width: 500px;
+  height: auto;
+}
+
+section.black-block {
+	width: 100%;
+    background-color: black; 
+    background-image: url(../img/background_swirl_long.png);
+    /*background-size: cover; */
+    /*background-repeat: no-repeat; */
+    background-size: auto 100%;
+    background-position: center;
+
+	padding: 1.5em 1em;
+	margin-top: 3em;
+}
+.handlettering {
+	text-align: center;
+}
+.handlettering #word-snake-lettering-title {
+	max-width: 450px;
+}
+.handlettering #tree-ring-lettering-title {
+	max-width: 350px;
+}
+.handlettering #network-lettering-title {
+	max-width: 400px;
+}
+
+/* ------ title section ------ */
+
+header {
+    width: 100%;
+    /* background-color: black; */
+    background-image: url(../img/background_swirl.png);
+    /* background-size: cover; */
+    /* background-repeat: no-repeat; */
+    background-size: auto 100%;
+    background-position: center bottom;
+    padding-bottom: 5em;
+    margin-bottom: -1px; /* to get rid of strange black line */
+}
+
+@media screen and (max-width: 320px) {
+	.quote-lato { display: none; }
+  	.title h1 { font-size: 70px !important; }
+  	.title h3 { font-size: 20px !important; }
+  	.title h5 { font-size: 13px !important; }
+}
+@media screen and (min-width: 1200px) {
+  	.title h1 { font-size: 130px !important; }
+  	.title h3 { font-size: 22px !important; }
+  	.title h5 { font-size: 16px !important; }
+}
+
+.title {
+	text-align: center;
+	margin-top: 2em;
+}
+.title h1 {
+	font-family: 'Dancing Script', cursive;
+	font-size: calc(60px + (130 - 60) * (100vw - 320px)/(1200 - 320));
+	font-weight: 400;
+	margin-top: 0.3em;
+	margin-bottom: 0.25em;
+}
+.quote-lato {
+	font-family: 'Lato', sans-serif;
+	color: #d2d2d2;
+	white-space: pre;
+}
+
+.title h3 {
+	font-size: calc(20px + (22 - 20) * (100vw - 320px)/(1200 - 320));
+}
+.title h5 {
+	font-size: calc(13px + (16 - 13) * (100vw - 320px)/(1200 - 320));
+}
+
+.subtitle {
+    color: #d8d8d8;
+    margin-top: 1.5em;
+    margin-left: 0.5em;
+    margin-right: 0.5em;
+    margin-bottom: 0.2em;
+    line-height: 130%;
+    /* font-weight: 400; */
+    letter-spacing: 0.6px;
+}
+.subtitle-small {
+    color: #989898;
+    margin-top: 0.5em;
+    margin-left: 1em;
+    margin-right: 1em;
+    margin-bottom: 3em;
+    line-height: 130%;
+    /* font-weight: 400; */
+    font-style: italic;
+    letter-spacing: 0.6px;
+}
+
+.collab {
+    font-weight: 300;
+    color: #d8d8d8;
+    margin-bottom: 1em;
+}
+.collab div {
+	height: 24px;
+    font-size: 14px;
+    padding: 2.5px 5px 0 5px;
+}
+.logo-google {
+	width: 150px;
+    background: url(../img/logo_google_news_lab.svg) no-repeat 0 0;
+    background-size: contain;
+}
+.logo-google span, .logo-vc span {
+	visibility: hidden;
+}
+.logo-vc {
+	width: 150px;
+    background: url(../img/logo_visual_cinnamon.svg) no-repeat 0 0;
+    background-size: contain;
+}
+
+/* ------ Beautiful loop ------ */
+
+.beautiful-rotate {
+	/*font-style: italic;*/
+	color: #a7a7a7;
+	/*font-weight: 300;*/
+}
+
+/* ------ Charts in general ------ */
+
+@media screen and (max-width: 320px) {
+  	.chart { font-size: 18px !important; }
+}
+@media screen and (min-width: 1000px) {
+  	.chart { font-size: 22px !important; }
+}
+
+.chart {
+	font-size: calc(18px + (22 - 18) * (100vw - 320px)/(1000 - 320));
+	text-align: center;
+	cursor: default;
+	line-height: 1.2em;
+	margin-bottom: 2em;
+}
+
+.chart-top-title {
+	font-family: 'Lato', sans-serif;
+	color: #696969;
+	line-height: 1.1em;
+	font-weight: 300;
+	/*margin-bottom: 1em;*/
+}
+
+.chart-title .sub-title {
+	font-size: 0.7em;
+    margin-bottom: 1em;
+    /*color: #a7a7a7;*/
+    color: #161616; 
+    /*font-weight: 900;*/
+    /*font-style: italic;*/
+}
+
+/* ------ Word snake chart ------ */
+
+#viz-word-snake {
+	font-size: 14px;
+	white-space: pre;
+	cursor: default;
+}
+
+.node .circle-background {
+	fill: none;
+	pointer-events: all;
+	cursor: pointer;
+}
+
+.circle-center-translation {
+	font-family: 'Lato', sans-serif;
+	font-size: 0.8em;
+	font-weight: 400;
+	text-anchor: middle;
+	pointer-events: none;
+}
+
+.circle-center-original {
+	font-family: 'Dancing Script', cursive;
+	font-size: 1.7em;
+	text-anchor: middle;
+	pointer-events: none;	
+}
+
+.circle-center-language {
+	font-family: 'Lato', sans-serif;
+	font-size: 0.8em;
+	font-weight: 400;
+	font-style: italic;
+	text-anchor: middle;
+	pointer-events: none;
+}
+
+.circle-path {
+	fill: none;
+	pointer-events: none;
+}
+
+.circle-path-text {
+	font-family: 'Dancing Script', cursive;
+	font-size: 1.1em;
+	pointer-events: none;
+}
+
+.circle-path-legend {
+	font-family: 'Lato', sans-serif;
+	font-size: 0.8em;
+	pointer-events: none;
+}
+
+/* --- Word snake tooltip --- */
+
+/*@media screen and (max-width: 320px) {
+  #tooltip { font-size: 8px !important; }
+}
+@media screen and (min-width: 1000px) {
+  #tooltip { font-size: 12px !important; }
+}*/
+#tooltip {
+	font-family: 'Lato', sans-serif;
+  	pointer-events: none;
+  	text-align: center;  
+  	z-index: 5;
+  	position: absolute;
+  	opacity: 0;
+  	font-size: 10px;
+  	/*font-size: calc(8px + (12 - 8) * (100vw - 320px)/(1000 - 320));*/
+  	cursor: default;
+  	/*margin-left: 2.5%;*/
+    max-width: 100%;
+}
+
+.tooltip-container {
+  position: relative;
+  /*top: 50%;*/
+  /*left: 50%;*/
+  /*transform: translate(-50%, -115%);*/
+  max-width: 500px;
+  /*min-width: 100px;*/
+  font-size: 1em;
+  padding: 20px 20px 20px 20px;
+  border-radius: 3px;
+  background: white;
+  color: #000;
+  box-shadow: 0 1px 5px rgba(0,0,0,0.3);
+  -moz-box-shadow: 0 1px 5px rgba(0,0,0,0.3);  
+  border: 1px solid rgba(200,200,200,0.7);
+}
+
+#tooltip-close {
+  	position: absolute;
+  	z-index: 2;
+  	right: 0;
+  	top: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  	font-size: 20px;
+  	cursor: pointer;
+  	text-align: center;
+  	pointer-events: all;
+}
+
+#tooltip-translation {
+	font-family: 'Dancing Script', cursive;
+	font-size: 3.1em;
+	color: #161616;
+}
+
+.tooltip-note {
+	font-family: 'Lato', sans-serif;
+	font-size: 1em;
+	font-weight: 400;
+	font-style: italic;
+	color: #9a9a9a;
+    margin-top: 0.4em;
+    margin-bottom: 0.9em;
+}
+
+.tooltip-query {
+	font-family: 'Lato', sans-serif;
+	font-size: 1.3em;
+	font-weight: 400;
+	font-style: italic;
+	color: #161616;
+	/*padding-bottom: 0.2em;*/
+    padding-top: 0.7em;
+}
+
+
+.tooltip-rule {
+  height: 1px;
+  margin: 1px auto 3px;
+  background: #ddd;
+  width: 100%;
+  max-width: 400px;
+}
+
+/* ------ Tooltip line chart ------ */
+
+.axis {
+	font-family: inherit;
+}
+.axis path {
+	stroke: none;
+}
+.axis line {
+	stroke: #e4e4e4;	
+}
+.axis text {
+	fill: #a7a7a7;
+	font-size: 0.9em;
+}
+.axis-y-title {
+	text-anchor: middle;
+	font-size: 1em;
+	fill: #161616;
+}
+.axis-y text {
+	text-anchor: start;
+}
+
+.tooltip-line {
+	fill: none;
+	stroke-width: 1.5px;
+}
+
+/* ------ Tooltip annotation ------ */
+
+.annotation path, .annotation-circle {
+	fill: none;
+	stroke: #a7a7a7;
+	/*stroke-width: 1px;*/
+}
+
+.annotation text {
+	fill: #161616;
+}
+
+.annotation-note-bg {
+	fill: none;
+}
+
+.annotation .annotation-subject, .annotation-circle {
+	stroke-dasharray: 2,4;
+    stroke-linecap: round;
+    stroke-width: 1.5px;
+}
+
+/* ------ Tooltip word chart ------ */
+
+.word-cloud {
+	font-family: 'Lato', sans-serif;
+	text-anchor: middle;
+}
+
+/* ------ Tree ring chart ------ */
+
+#viz-tree-ring-title {
+	max-width: 500px;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+#tree-ring-language-title {
+	color: #161616;
+	font-weight: 400;
+}
+
+#viz-tree-ring {
+	margin-bottom: 0.5em;
+	overflow: hidden;
+}
+
+@media screen and (max-width: 320px) {
+  	.ring-center-text { font-size: 14px !important; }
+}
+@media screen and (min-width: 800px) {
+  	.ring-center-text { font-size: 16px !important; }
+}
+
+.tree-ring {
+	font-family: 'Dancing Script', cursive;
+	font-weight: 400;
+	fill: #161616;
+	text-align: center;
+	white-space: pre;
+	cursor: default;
+}
+
+.ring-center-text {
+	font-family: 'Lato', sans-serif;
+	font-size: calc(14px + (16 - 14) * (100vw - 320px)/(800 - 320));
+	/*font-weight: 300;*/
+	text-anchor: middle;
+}
+
+.ring-rank {
+	font-family: 'Lato', sans-serif;
+	font-size: 0.75em;
+	font-weight: 400;
+	text-anchor: middle;
+}
+
+.ring-text-normal {
+	font-size: 1em;
+}
+
+.ring-text-bold {
+	font-size: 1.5em;
+	font-weight: 700;
+}
+
+.ring-path {
+	fill: none;
+}
+
+.tree-ring-mini {
+	cursor: pointer;
+}
+
+/* ------ Similarity network chart ------ */
+
+.node-background-circle {
+	cursor: pointer;
+}
+
+.node-language-text {
+	font-family: 'Lato', sans-serif;
+	font-size: 1.2em;
+	font-weight: 400;
+	text-anchor: middle;
+	fill: #161616;
+	pointer-events: none;
+}
+
+.link {
+	font-family: 'Dancing Script', cursive;
+	font-weight: 400;
+	fill: #161616;
+	text-align: center;
+	white-space: pre;
+	cursor: default;
+	pointer-events: none;
+}
+
+.link-path {
+	fill: none;
+}
+
+.link-text {
+	font-size: 0.6em;
+}
+
+.link-text-bold {
+	font-size: 1.5em;
+	font-weight: 700;
+}
+
+/* ------ footer ------ */
+
+@media screen and (max-width: 370px) {
+  	footer { 
+  		padding-top: 4em !important; 
+  		text-align: center !important;
+  	}
+}
+footer {
+  	width: 100%;
+	background-image: url(../img/background_swirl_rev.png);
+	background-size: auto 100%;
+	background-position: center top;
+	padding-top: 3em;
+	padding-bottom: 1em;
+	color: white; 
+	text-align: left;
+	margin-top: -1px; /* to get rid of strange black line */
+}
+
+footer a, footer a:link, footer a:visited, footer a:active {
+  color: white;
+  border-bottom: 1px dotted white;
+  text-decoration: none;
+}
+footer a:hover {
+  text-decoration: none;
+  border-bottom: 1px solid white;
+}
+
+footer #note {
+	font-weight: 300;
+	font-size: 0.9em; 
+	padding-bottom: 1.5em;
+	padding-top: 1.5em;
+	text-align: center;
+}
+
+footer .footer-title {
+	margin-top: 0px; 
+	font-size: 1.2em; 
+	line-height: 1.4em;
+}
+
+footer h5 {
+	font-style: 18px;
+	font-weight: 400;
+	margin-bottom: 0.25em;
+}
+
+footer p {
+	font-size: 12px;
+	line-height: 1.7em;
+	font-weight: 300;
+	margin-top: 0.5em;
+}
+
+/* ------ vanilla modal ------ */
+/*https://github.com/thephuse/vanilla-modal*/
+
+.modal {
+  	display: none;
+}
+
+.vanilla-modal .modal {
+  	display: block;
+  	position: fixed;
+  	content: "";
+  	top: 0;
+  	left: 0;
+  	right: 0;
+  	bottom: 0;
+  	background: rgba(0, 0, 0, 0.6);
+  	z-index: -1;
+  	opacity: 0;
+  	transition: opacity 0.2s, z-index 0s 0.2s;
+  	text-align: center;
+  	overflow: hidden;
+  	overflow-y: auto;
+  	white-space: nowrap;
+  	-webkit-overflow-scrolling: touch;
+}
+
+.vanilla-modal .modal > * {
+  	display: inline-block;
+  	white-space: normal;
+  	vertical-align: middle;
+  	text-align: left;
+}
+
+.vanilla-modal .modal:before {
+  	display: inline-block;
+  	overflow: hidden;
+  	width: 0;
+  	height: 100%;
+  	vertical-align: middle;
+  	content: "";
+}
+
+.vanilla-modal.modal-visible .modal {
+  	z-index: 99;
+  	opacity: 1;
+  	transition: opacity 0.2s;
+}
+
+.modal-inner {
+	position: relative;
+	overflow: hidden;
+	width: 90%;
+  	max-width: 550px;
+	max-height: 90%;
+	overflow-x: hidden;
+	overflow-y: auto;
+	z-index: -1;
+	opacity: 0;
+	transform: scale(0);
+	transition: opacity 0.2s, transform 0.2s, z-index 0s 0.2s;
+
+	background-color: black; 
+	outline: rgba(255,255,255,0.4) 4px solid;
+    padding: 1em;
+}
+.modal-inner:before {
+    content: ' ';
+    display: block;
+    position: absolute;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    z-index: -1;
+    opacity: 0.8;
+
+    background-image: url(../img/background_swirl_long.png);
+    background-size: auto 100%;
+    background-position: center;
+}
+
+.modal-visible .modal-inner {
+  	z-index: 100;
+  	opacity: 1;
+  	transform: scale(1);
+  	transition: opacity 0.2s, transform 0.2s;
+}
+
+[data-modal-close] {
+  	position: absolute;
+  	z-index: 2;
+  	right: 0;
+  	top: 0;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+  	font-size: 20px;
+  	cursor: pointer;
+  	text-align: center;
+}

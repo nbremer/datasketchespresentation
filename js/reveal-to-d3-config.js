@@ -98,6 +98,17 @@ pt.slideIdToFunctions = {
       pt.dbzPathFinal.init(dbzFights);
     }
   },
+  'in-english-network': {
+    'init': function() {
+      pt.inEnglishNetwork.init(networkLinks);
+    },
+    '-1': function() {
+      pt.inEnglishNetwork.doBadSwitch();
+    },
+    0: function() {
+      pt.inEnglishNetwork.doGoodSwitch();
+    },
+  },
 };
 
 function removeSVGs() {
