@@ -1,9 +1,12 @@
 pt.inEnglishNetwork = pt.inEnglishNetwork || {};
 
-pt.inEnglishNetwork.init = function(links) {
+pt.inEnglishNetwork.init = function(links, switching, slideID, chartID) {
 	
 	//Remove any existing svgs
-	d3.select('#in-english-network #inEnglishNetwork svg').remove();
+	d3.select('#in-english-network-bad #inEnglishNetworkBad svg').remove();
+	d3.select('#in-english-network-good #inEnglishNetworkGood svg').remove();
+
+	pt.inEnglishNetwork.goodSwitch = switching;
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////// Set up and initiate svg containers ///////////////////
@@ -22,7 +25,7 @@ pt.inEnglishNetwork.init = function(links) {
 	var radius = Math.min(width/2 * 0.9, height/2 * 0.7, 300);
 	
 	//SVG container
-	pt.inEnglishNetwork.svg = d3.select('#in-english-network #inEnglishNetwork')
+	pt.inEnglishNetwork.svg = d3.select('#' + slideID + ' #' + chartID)
 		.append("svg")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", $(".slides").height() )
@@ -36,7 +39,6 @@ pt.inEnglishNetwork.init = function(links) {
 
 	pt.inEnglishNetwork.middleLang = "all"; //starting language in the middle
 	pt.inEnglishNetwork.middleLangOld = "all";
-	pt.inEnglishNetwork.goodSwitch = false;
 
 	//Scale for the white circles, one for each language
 	var circleScale = d3.scaleLinear()
@@ -259,9 +261,11 @@ pt.inEnglishNetwork.init = function(links) {
 					}
 				 });//forEach
 
+				var dur = 1500;
+
 				//Switch locations of the center and clicked node
 				pt.inEnglishNetwork.svg.selectAll(".node")
-					.transition("change").duration(1000)
+					.transition("change").duration(dur)
 					.attr("transform", function(d) { return "translate(" + d.x + "," + d.y + ")"; })
 					.transition().duration(0).delay(200)
 					.call(endall, fadeIn);
@@ -277,7 +281,7 @@ pt.inEnglishNetwork.init = function(links) {
 						if( pt.inEnglishNetwork.goodSwitch ) return pt.inEnglishNetwork.linkPathCalculationSwitch(d);
 						else return d3.select(this).attr("d"); 
 					})
-					.transition("reform").duration(1000)
+					.transition("reform").duration(dur)
 					.attrTween("d", function(n) {
 			      		//https://bl.ocks.org/mbostock/3916621
 			      		var d1 = pt.inEnglishNetwork.linkPathCalculation(n), 
@@ -307,7 +311,7 @@ pt.inEnglishNetwork.init = function(links) {
 
 				pt.inEnglishNetwork.svg.selectAll(".link-path")
 					.filter(function(d) { return pt.inEnglishNetwork.middle(d) || pt.inEnglishNetwork.middleOld(d); })
-					.transition("changeColor").duration(1000)
+					.transition("changeColor").duration(dur)
 				    .style("opacity", function(d) { return pt.inEnglishNetwork.middle(d) ? middleLinkOpacity : linkOpacity; })
 					.call(endall, pt.inEnglishNetwork.updateLinkTextPaths) //Adjust the text paths
 
@@ -365,16 +369,6 @@ pt.inEnglishNetwork.init = function(links) {
 	}//function neighboring
 
 }//init
-
-pt.inEnglishNetwork.doBadSwitch = function() {
-	d3.select("#in-english-network #network-title").text("not quite right...");
-	pt.inEnglishNetwork.goodSwitch = false;
-}//function doBadSwitch
-
-pt.inEnglishNetwork.doGoodSwitch = function() {
-	d3.select("#in-english-network #network-title").text("better :)");
-	pt.inEnglishNetwork.goodSwitch = true;
-}//function doGoodSwitch
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////////// Extra functions ////////////////////////////

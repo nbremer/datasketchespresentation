@@ -1,0 +1,275 @@
+body {
+	background-color: #101420;
+	font-family: 'Muli', sans-serif;
+	color: #a8a394;
+}
+
+#top-intro {
+	width: 1200px;
+	margin: 0 auto;
+	padding-left: 70px;
+}
+
+#top-title {
+	font-size: 57px;
+	color: #f6f4ef;
+	font-family: 'IM Fell DW Pica', serif;
+	margin-bottom: -12px;
+	margin-top: 20px;
+}
+
+#intro-title {
+	width: 46%;
+	display: inline-block;
+}
+#top-subtitle {
+	font-size: 17px;
+	font-weight: 300;
+	margin-top: 11px;
+	line-height: 150%;
+	padding-bottom: 45px;
+}
+
+#legend {
+	margin-left: 20px;
+}
+
+#top-shortest-path { 
+	margin-top: 43px;
+}
+#top-shortest-path p {
+	font-size: 11px;
+	text-align: justify;
+	line-height: 155%;
+	color: #777777;
+}
+#top-shortest-path h3 {
+    font-size: 16px;
+    color: #c9c6c0;
+    font-family: 'IM Fell DW Pica', serif;
+    margin-bottom: -8px;
+}
+
+#intro-text {
+	width: 45%;
+	display: inline-block;
+	padding-left: 50px;
+	padding-right: 0px;
+	vertical-align: top;
+}
+#top-explanation {
+	font-size: 12px;
+	text-align: justify;
+}
+#top-explanation p {
+	line-height: 160%;
+}
+
+#top-chrome-note {
+	font-size: 17px;
+    color: #f6f4ef;
+    text-align: center;
+    margin-top: 20px;
+    font-weight: 300;
+}
+
+#royal-chart {
+	text-align: center;
+}
+
+#credit {
+	font-family: 'IM Fell DW Pica', serif;
+	margin-top: 30px;
+	margin-bottom: 30px;
+	font-size: 12px;
+	margin-left: 30px;
+	line-height: 150%;
+}
+
+a, a:link, a:visited, a:active {
+    color: #ddece9;
+    border-bottom: 1px dotted rgba(231, 228, 202, .5);
+    text-decoration: none;
+}
+
+/* --- Legend --- */
+
+.legend-node-text,
+.legend-link-text,
+.legend-color-text,
+.legend-color-value {
+	font-size: 12px;
+	fill: #c9c6c0;
+	font-family: 'IM Fell DW Pica', serif;
+}
+.legend-link-text,
+.legend-color-text {
+	text-anchor: middle;
+}
+.legend-color-value {
+	font-size: 15px;
+}
+
+.legend-color-path {
+	fill: none;
+	stroke-linecap: round;
+}
+/* --- Titles --- */
+
+.royal-name {
+	text-anchor: middle;
+	font-size: 16px;
+	fill: #c9c6c0;
+	font-family: 'IM Fell DW Pica', serif;
+}
+
+.interesting-royal-name {
+	font-size: 11px;
+	pointer-events: none;
+	font-family: 'IM Fell DW Pica', serif;
+}
+
+.royal-country {
+	text-anchor: middle;
+	font-size: 11px;
+	fill: #7e7b72;
+}
+
+.birth-year-label {
+	text-anchor: end;
+	font-size: 12px;
+	fill: #7e7b72;
+}
+
+/* --- Tooltip --- */
+
+.tooltip-wrapper {
+	font-size: 11px;
+	pointer-events: none;
+	text-anchor: middle;
+	text-shadow: 0 1px 4px #101420, 1px 0 4px #101420, -1px 0 4px #101420, 0 -1px 4px #101420
+}
+
+.tooltip-name {
+	font-size: 14px;
+	font-family: 'IM Fell DW Pica', serif;
+	fill: #c9c6c0;
+}
+
+.tooltip-title {
+	font-size: 11px;
+	fill: #7e7b72;
+}
+
+.tooltip-extra-info {
+	font-size: 11px;
+	fill: #7e7b72;
+}
+
+/* --- Axes --- */
+
+.axis {
+	font-family: inherit;
+}
+.axis line, .axis path {
+	stroke: none;
+}
+.axis text {
+	fill: #d2d2d2;
+	font-size: 18px;
+	font-family: 'IM Fell DW Pica', serif;
+}
+
+/* --- Network --- */
+
+.link, .link-path-legend {
+  stroke: #d4d4d4;
+  fill: none;
+  opacity: 0.6;
+  stroke-width: 1.5px;
+  pointer-events: none;
+}
+
+.link-couple {
+	stroke-dasharray: 5,5;
+}
+
+.node {
+  opacity: 0.8;
+  pointer-events: none;
+}
+
+.circle-mouse-capture {
+	fill: none;
+	pointer-events: all;
+}
+
+/* --- Pulsing --- */
+
+.node-pulse, .node-pulse-legend {
+	fill: none;
+	pointer-events: none;
+}
+
+.pulse {
+/*  animation: pulse 2s ease infinite;
+  -webkit-animation: pulse 2s ease infinite;
+  animation: pulse pulse 2s ease infinite;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;*/
+}
+
+@keyframes pulse {
+  0% {
+    transform: scale(1);
+    transform-origin: center center;
+    stroke-width: 3px;
+    stroke-opacity: 1;
+  }
+  100% {
+    transform: scale(2.5);
+    transform-origin: center center;
+    stroke-width: 1px;
+    stroke-opacity: 0;
+  }
+}
+
+@-webkit-keyframes "pulse" {
+ 0% {
+    -webkit-transform: scale(1);
+    transform-origin: center center;
+    stroke-width: 3px;
+    stroke-opacity: 1;
+ }
+ 100% {
+    -webkit-transform: scale(2.5);
+    transform-origin: center center;
+    stroke-width: 1px;
+    stroke-opacity: 0.0;
+ }
+}
+
+/* --- Rotating --- */
+
+.node-clicked {
+    stroke: #fff;
+    fill: none;
+    stroke-width: 3px;
+    stroke-linecap: round;
+    stroke-opacity: 0.75;
+    stroke-dasharray: 0,5;
+    pointer-events: none;
+
+    animation-duration: 1s;
+    animation-name: changedash;
+    animation-iteration-count: infinite;
+    animation-direction: normal;
+    animation-timing-function: linear;
+}
+
+
+@keyframes changedash {
+    from { stroke-dashoffset: 5px; }
+    to { stroke-dashoffset: 0px; }
+}
+

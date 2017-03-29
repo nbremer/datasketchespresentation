@@ -3,6 +3,11 @@
 var pt = pt || {};
 
 pt.slideIdToFunctions = {
+  'datasketches-title': {
+    'init': function() {
+      pt.datasketchesTitle.init();
+    }
+  },
   'olympic-intro': {
     'init': function() {
       pt.olympicIntro.init(olympicData);
@@ -29,6 +34,29 @@ pt.slideIdToFunctions = {
     },
     2: function() {
       pt.olympicBuildUp.outwardMedals();
+    },
+  },
+  'royal-network': {
+    'init': function() {
+      pt.royalNetwork.init(royalNetworkNodes, royalNetworkLinks);
+    },
+    '-1': function() {
+      pt.royalNetwork.chaos(royalNetworkNodes, royalNetworkLinks);
+    },
+    0: function() {
+      pt.royalNetwork.hairball(royalNetworkNodes, royalNetworkLinks);
+    },
+    1: function() {
+      pt.royalNetwork.colorBirthYear();
+    },
+    2: function() {
+      pt.royalNetwork.stretchX(royalNetworkNodes, royalNetworkLinks);
+    },
+    3: function() {
+      pt.royalNetwork.stretchY(royalNetworkNodes, royalNetworkLinks);
+    },
+    4: function() {
+      pt.royalNetwork.updateDesign(royalNetworkNodes, royalNetworkLinks);
     },
   },
   'lotr-intro': {
@@ -98,16 +126,15 @@ pt.slideIdToFunctions = {
       pt.dbzPathFinal.init(dbzFights);
     }
   },
-  'in-english-network': {
+  'in-english-network-bad': {
     'init': function() {
-      pt.inEnglishNetwork.init(networkLinks);
-    },
-    '-1': function() {
-      pt.inEnglishNetwork.doBadSwitch();
-    },
-    0: function() {
-      pt.inEnglishNetwork.doGoodSwitch();
-    },
+      pt.inEnglishNetwork.init(networkLinks, false, "in-english-network-bad", "inEnglishNetworkBad");
+    }
+  },
+  'in-english-network-good': {
+    'init': function() {
+      pt.inEnglishNetwork.init(networkLinks, true, "in-english-network-good", "inEnglishNetworkGood");
+    }
   },
 };
 
@@ -115,7 +142,14 @@ function removeSVGs() {
 
   //Remove (heavy) all existing svg currently running
 
+  //Intro
+  clearInterval(pt.datasketchesTitle.loop);
+
+  //data - nadieh
   d3.select('#olympic-intro #olympicIntro svg').remove();
   d3.select('#olympic-buildup #olympicBuildUp svg').remove();
+
+  //sketch - nadieh
+  d3.select('#royal-network #royalNetwork svg').remove();
 
 }//removeSVGs
