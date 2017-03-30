@@ -6,6 +6,9 @@ pt.datasketchesTitle.init = function() {
 	var counter = 0;
 	var dur = 1000;
 
+	d3.selectAll("#datasketches-title .loop-months img").style("opacity", 0);
+	d3.select("#datasketches-title #ds-" + ids[0]).style("opacity", 1);
+
 	pt.datasketchesTitle.loop = setInterval(loopMonths,dur*1.5);
 	loopMonths();
 
