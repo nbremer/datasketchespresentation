@@ -136,6 +136,11 @@ pt.slideIdToFunctions = {
       pt.inEnglishNetwork.init(networkLinks, true, "in-english-network-good", "inEnglishNetworkGood");
     }
   },
+  'end-slide': {
+    'init': function() {
+      pt.endSlide.init();
+    }
+  },
 };
 
 function removeSVGs() {
@@ -151,5 +156,8 @@ function removeSVGs() {
 
   //sketch - nadieh
   d3.select('#royal-network #royalNetwork svg').remove();
+
+  //End
+  clearInterval(pt.endSlide.loop);
 
 }//removeSVGs

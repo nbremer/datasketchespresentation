@@ -83,7 +83,7 @@
     margin-right: auto;
     margin-top: 35px;
     max-width: 60%;
-    line-height: 1.1em;
+    line-height: 1.3em;
 }
 
 .reveal .divider {
@@ -112,6 +112,10 @@
 }
 .dark-grey {
   color: #33383b !important;
+}
+
+.reveal .slides > section, .reveal .slides > section > section {
+  padding-top: 0px;
 }
 
 /*********************************************
