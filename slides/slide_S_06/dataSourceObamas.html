@@ -1,0 +1,56 @@
+<style>
+	#data-source-obamas {
+    position: relative;
+	}
+
+	#data-source-obamas .slide-images {
+		height: 1080px;
+		position: relative;
+		margin: 0 auto;
+	}
+	#data-source-obamas .slide-texts {
+		position: absolute;
+    width: 60%;
+    margin-left: 20%;
+		top: 20%;
+	}
+	#data-source-obamas .slide-texts span {
+		background: rgba(255, 255, 255, 1);
+		padding: 2px 5px;
+	}
+</style>
+
+<section id="data-source-obamas" class='quicksand'>
+	<div class="slide-images">
+		<img class='center-fix fragment fade-out' data-fragment-index='0'
+			data-src='slides/slide_S_06/all_appearances.png' />
+
+		<span class='fragment fade-in' data-fragment-index='0'>
+			<img class='center-fix fragment fade-out' data-fragment-index='1'
+				data-src='slides/slide_S_06/all_videos.png' />
+		</span>
+
+		<!-- <span class='fragment fade-in' data-fragment-index='1'>
+			<img class='center-fix fragment fade-out' data-fragment-index='2'
+				data-src='slides/slide_S_06/themes_meta.png' />
+		</span> -->
+
+		<span class='fragment fade-in' data-fragment-index='3'>
+			<img class='center-fix fragment fade-out' data-fragment-index='4'
+				data-src='slides/slide_S_06/google_vision.png' />
+		</span>
+
+		<!-- <span class='fragment fade-in' data-fragment-index='3'>
+			<img data-src='slides/slide_S_06/aggregated.png' />
+		</span> -->
+	</div>
+
+	<div class='slide-texts'>
+		<p><span>1. manually gather all late-night talk show appearances</span></p>
+		<p class='fragment fade-in' data-fragment-index='0'><span>2. use <span class='light-grey'>Youtube Search API</span> to get all videos from host channels</span></p>
+		<p class='fragment fade-in' data-fragment-index='1'><span>3. use <span class='light-grey'>youtube-dl</span> to download all videos and their captions</span></p>
+		<p class='fragment fade-in' data-fragment-index='2'><span>4. get timestamps from captions, use <span class='light-grey'>fluent-ffmpeg</span> to take a screenshot everytime someone talked</span></p>
+		<p class='fragment fade-in' data-fragment-index='3'><span>5. upload each screenshot to <span class='light-grey'>Google Vision API</span></span></p>
+		<p class='fragment fade-in' data-fragment-index='4'><span>6. aggregate annotated image data with caption data</span></p>
+	</div>
+</section>
