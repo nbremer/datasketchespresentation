@@ -19,23 +19,6 @@ pt.slideIdToFunctions = {
       pt.olympicIntro.bigEnd();
     },
   },
-  'olympic-buildup': {
-    'init': function() {
-      pt.olympicBuildUp.init(olympicData);
-    },
-    '-1': function() {
-      pt.olympicBuildUp.initializeCircles();
-    },
-    0: function() {
-      pt.olympicBuildUp.rotateFeathers();
-    },
-    1: function() {
-      pt.olympicBuildUp.outwardEditions();
-    },
-    2: function() {
-      pt.olympicBuildUp.outwardMedals();
-    },
-  },
   'royal-network': {
     'init': function() {
       pt.royalNetwork.init(royalNetworkNodes, royalNetworkLinks);
@@ -98,42 +81,67 @@ pt.slideIdToFunctions = {
       pt.chordToLoom2.moveApart(lotrWords);
     },
   },
-  'dbz-path-simple': {
+  // 'dbz-path-simple': {
+  //   'init': function() {
+  //     pt.dbzPathSimple.init(dbzFights);
+  //   },
+  //   '-1': function() {
+  //     pt.dbzPathSimple.showCirclesOnly();
+  //   },
+  //   0: function() {
+  //     pt.dbzPathSimple.showSimplePaths();
+  //   },
+  //   1: function() {
+  //     pt.dbzPathSimple.showAnchorPoints();
+  //   },
+  //   2: function() {
+  //     pt.dbzPathSimple.addSwoop();
+  //   },
+  //   3: function() {
+  //     pt.dbzPathSimple.addChangeSide();
+  //   },
+  //   4: function() {
+  //     pt.dbzPathSimple.hideAnchors();
+  //   },
+  // },
+  // 'dbz-path-final': {
+  //   'init': function() {
+  //     pt.dbzPathFinal.init(dbzFights);
+  //   }
+  // },
+  // 'in-english-network-bad': {
+  //   'init': function() {
+  //     pt.inEnglishNetwork.init(networkLinks, false, "in-english-network-bad", "inEnglishNetworkBad");
+  //   }
+  // },
+  // 'in-english-network-good': {
+  //   'init': function() {
+  //     pt.inEnglishNetwork.init(networkLinks, true, "in-english-network-good", "inEnglishNetworkGood");
+  //   }
+  // },
+  'olympic-buildup': {
     'init': function() {
-      pt.dbzPathSimple.init(dbzFights);
+      pt.olympicBuildUp.init(olympicData);
     },
     '-1': function() {
-      pt.dbzPathSimple.showCirclesOnly();
+      pt.olympicBuildUp.initializeCircles();
     },
     0: function() {
-      pt.dbzPathSimple.showSimplePaths();
+      pt.olympicBuildUp.rotateCircles();
     },
     1: function() {
-      pt.dbzPathSimple.showAnchorPoints();
+      pt.olympicBuildUp.rotateFeathers();
     },
     2: function() {
-      pt.dbzPathSimple.addSwoop();
+      pt.olympicBuildUp.outwardEditions();
     },
     3: function() {
-      pt.dbzPathSimple.addChangeSide();
-    },
-    4: function() {
-      pt.dbzPathSimple.hideAnchors();
+      pt.olympicBuildUp.outwardMedals();
     },
   },
-  'dbz-path-final': {
+  'magic-legend': {
     'init': function() {
-      pt.dbzPathFinal.init(dbzFights);
-    }
-  },
-  'in-english-network-bad': {
-    'init': function() {
-      pt.inEnglishNetwork.init(networkLinks, false, "in-english-network-bad", "inEnglishNetworkBad");
-    }
-  },
-  'in-english-network-good': {
-    'init': function() {
-      pt.inEnglishNetwork.init(networkLinks, true, "in-english-network-good", "inEnglishNetworkGood");
+      pt.magicLegend.init();
     }
   },
   'end-slide': {
@@ -252,6 +260,11 @@ function removeSVGs() {
 
   //sketch - nadieh
   d3.select('#royal-network #royalNetwork svg').remove();
+
+  //code - nadieh
+  d3.select('#lotr-intro #lotrIntro svg').remove();
+  //d3.select('#chord-to-loom-1 #chordToLoom svg').remove();
+  //d3.select('#chord-to-loom-2 #chordToLoom2 svg').remove();
 
   //End
   clearInterval(pt.endSlide.loop);

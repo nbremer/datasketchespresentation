@@ -26,7 +26,7 @@ pt.olympicIntro.init = function(data) {
     medalDegree = 320/(50.5*2),
     arcHeight = 5 * chartScale;
 
-  pt.olympicIntro.startPos = [719,382];
+  pt.olympicIntro.startPos = [719,372];
   pt.olympicIntro.startScale = 0.293;
   pt.olympicIntro.endPos = [width/2, height/2];
   pt.olympicIntro.endScale = chartScale;
