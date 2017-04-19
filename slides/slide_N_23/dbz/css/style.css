@@ -1,3 +1,6 @@
+@import url(../fonts/pt-sans/pt-sans.css);
+@import url(../fonts/pt-sans-narrow/pt-sans-narrow.css);
+
 body {
 	font-size: 14px;
 	font-family: 'PT Sans', sans-serif;

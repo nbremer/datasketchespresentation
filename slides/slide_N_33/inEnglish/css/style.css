@@ -1,3 +1,7 @@
+@import url(../fonts/lato/lato.css);
+@import url(../fonts/dancing-script/dancing-script.css);
+@import url(../fonts/cormorant-infant/cormorant-infant.css);
+
 html {
   	line-height: 1.15;
   	-ms-text-size-adjust: 100%;

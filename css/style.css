@@ -13,6 +13,10 @@
 
 @import url(../lib/font/quicksand/quicksand.css);
 @import url(../lib/font/tinos/tinos.css);
+@import url(../lib/font/open-sans/open-sans.css);
+@import url(../lib/font/roboto/roboto.css);
+/*@import url(../lib/font/dancing-script/dancing-script.css);*/
+/*@import url(../lib/font/lato/lato.css);*/
 @font-face {
   font-family: "King Basil";
   src: url("../lib/font/king-basil/King-Basil.ttf");
