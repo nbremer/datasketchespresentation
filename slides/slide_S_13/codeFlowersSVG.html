@@ -1,12 +1,53 @@
 <style>
 	#code-flowers-svg #codeFlowers svg {
 		overflow: visible;
+		display: inline-block;
+	}
+
+	#code-flowers-svg .green {
+		color: #55e851;
+		/*color: #fff;*/
+	}
+	#code-flowers-svg .blue {
+		color: #51aae8;
+		/*color: #fff;*/
+	}
+	#code-flowers-svg .pink {
+		color: #a651e8;
+		/*color: #fff;*/
+	}
+
+	#code-flowers-svg #codeFlowers, #code-flowers-svg .slide-texts {
+		display: inline-block;
+	}
+	#code-flowers-svg .slide-texts {
+		vertical-align: top;
+		text-align: left;
 	}
 </style>
 
 <section id="code-flowers-svg">
 	<div id='codeFlowers'></div>
-	<div>
-
+	<div class='slide-texts quicksand'>
+    <!-- 'M0,0',
+    'C50,40 50,70 20,100',
+    'L0,85',
+    'L-20,100',
+    'C-50,70 -50,40 0,0' -->
+		M0,0
+		<span class='fragment'>
+			C<span class='blue'>50,40</span> <span class='green'>50,70</span> <span class='pink'>20,100</span>
+		</span>
+		<br />
+		<span class='fragment'>
+			L0,85
+		</span>
+		<span class='fragment'>
+			L-20,100
+		</span>
+		<br />
+		<span class='fragment'>
+			C<span class='blue'>-50,70</span> <span class='green'>-50,40</span> <span class='pink'>0,0</span>
+		</span>
 	</div>
 </section>
