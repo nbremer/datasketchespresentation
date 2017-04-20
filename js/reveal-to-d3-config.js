@@ -244,7 +244,12 @@ pt.slideIdToFunctions = {
       pt.sketchLines.drawCurves(hamiltonFinalThemes);
       pt.sketchLines.drawStaffs([]);
     },
-  }
+  },
+  'code-flowers-svg': {
+    init: () => {
+      pt.codeFlowers.init();
+    }
+  },
 };
 
 function removeSVGs() {
