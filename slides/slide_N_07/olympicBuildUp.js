@@ -428,6 +428,14 @@ pt.olympicBuildUp.initializeCircles = function() {
   pt.olympicBuildUp.tails
       .transition().duration(1000)
       .attr("transform", function(d,i) { return "translate(" + d.x + "," + d.y + ")"; });
+
+  pt.olympicBuildUp.previousstep = "initializeCircles";
+
+}//function initializeCircles
+
+pt.olympicBuildUp.rotateCircles = function() {
+
+  //In case you move backward
   pt.olympicBuildUp.feathers
       .transition().duration(1000)
       .attr("transform", "rotate(0)");
@@ -435,7 +443,13 @@ pt.olympicBuildUp.initializeCircles = function() {
     .transition().duration(1000).delay(1000)
     .attr("transform", "rotate(0)");
 
-}//function initializeCircles
+  //Rotate the tails into the right angle
+  pt.olympicBuildUp.tails
+      .transition().duration(2000)
+      .attr("transform", function(d,i) { return "translate(" + d.x + "," + d.y + ")" + "rotate(" + d.circleRotation + ")"; });
+
+  pt.olympicBuildUp.previousstep = "rotateCircles";
+}//function rotateCircles
 
 pt.olympicBuildUp.rotateFeathers = function() {
 
@@ -451,20 +465,32 @@ pt.olympicBuildUp.rotateFeathers = function() {
       .attr("y", 0);
   pt.olympicBuildUp.feathers.selectAll(".time-line, .year-outline, .war-arc")
       .transition().duration(500)
-      .style("opacity", 0)
+      .style("opacity", 0);
 
-  //Rotate the tails into the right angle
-  pt.olympicBuildUp.tails
-      .transition().duration(2000)
-      .attr("transform", function(d,i) { return "translate(" + d.x + "," + d.y + ")" + "rotate(" + d.circleRotation + ")"; });
+  //Simple scale to make the rotation duration depend on initial angle
+  var rotateSpeed = d3.scaleLinear()
+    .domain([0, 360])
+    .range([0, 1500]);
+
   //Rotate the feathers into the right angle afterwards
-  pt.olympicBuildUp.feathers
-      .transition().duration(1000).delay(2000)
-      .attr("transform", function(d) { return "rotate(" + d.angle + ")"; });
+  if(pt.olympicBuildUp.previousstep === "rotateCircles") {
+    pt.olympicBuildUp.feathers
+        .transition().duration(function(d) { return 2000 + rotateSpeed(d.angle); })
+        .attrTween("transform", function(d) { 
+          var interpolate = d3.interpolateString("rotate(0)", "rotate(" + d.angle + ")");
+          return function(t) {
+              return interpolate(t);
+          };
+        });
+        //.attr("transform", function(d) { return "rotate(" + d.angle + ")"; });
+  }//if
+
   //Rotate the year axes into the right angle
   pt.olympicBuildUp.timeAxes
-    .transition().duration(1000).delay(2000)
+    .transition().duration(1000)
     .attr("transform", function(d,i) { return "rotate(" + -d.circleRotation + ")"; });
+
+  pt.olympicBuildUp.previousstep = "rotateFeathers"
 
 }//function rotateFeathers
 
@@ -490,8 +516,10 @@ pt.olympicBuildUp.outwardEditions = function() {
 
   //Show the year arcs
   pt.olympicBuildUp.feathers.selectAll(".time-line, .year-outline, .war-arc")
-      .transition().duration(500).delay(1000)
+      .transition().duration(1000).delay(1500)
       .style("opacity", 1);
+
+  pt.olympicBuildUp.previousstep = "outwardEditions";
 
 }//function outwardEditions
 
