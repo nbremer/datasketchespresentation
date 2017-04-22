@@ -4,17 +4,20 @@
 	var height = 500;
 	var scale = 2.5;
 	var strokeColor = '#444';
-	var svg, petalLines;
+	var svg, petals, petalLines, annotations, directions;
+
+	// animations
+	var timeline = new TimelineMax();
+	var duration = 1.5;
 
 	var colors = {green: '#55e851', blue: '#51aae8', pink: '#a651e8'}
 	var linesDraw = [
-    'M0,0',
     'M0,0 C50,40 50,70 20,100',
     'M20,100 L0,85',
     'M0,85 L-20,100',
     'M-20,100 C-50,70 -50,40 0,0'
   ];
-	var annotations = [
+	var annotationsData = [
 		{
 		  x: 50, y: 40,
 		  dx: -50, dy: -40,
@@ -65,7 +68,7 @@
 	];
 	var makeAnnotations = d3.annotation()
 	 .type(d3.annotationCalloutCircle)
-	 .annotations(annotations);
+	 .annotations(annotationsData);
 
 	pt.codeFlowers = pt.codeFlowers || {};
 
@@ -79,32 +82,67 @@
 			.append('g')
 			.attr('transform', 'translate(' + [width / 2, height / 2] + ')scale(' + scale + ')');
 
-		var petals = svg.selectAll('.petal')
+		// petals
+		petals = svg.selectAll('.petal')
 			.data(_.times(6, () => linesDraw))
 			.enter().append('g')
-			.classed('petal', true)
-			.attr('transform', (d, i) => 'rotate(' + (i * 60) + ', 0, 0)');
-		var petalLines = petals.selectAll('.petalLine')
+			.classed('petal', true);
+		petals.selectAll('.petalLine')
 			.data(d => d).enter().append('path')
 			.classed('petalLine', true)
 			.attr('d', d => d)
     	.attr('stroke', strokeColor)
     	.attr('stroke-width', 2)
-    	.attr('fill', 'none');
+    	.attr('fill', 'none')
+			.attr('stroke-dasharray', function(d) {return this.getTotalLength()})
+			.attr('stroke-dashoffset', function(d) {return this.getTotalLength()});
+		// petalLines of first petal
+		petalLines = d3.select(petals.node()).selectAll('.petalLine');
 
-		svg.append("g")
+		// annotations
+		annotations = svg.append("g")
 		  .classed("annotation-group", true)
 		  .call(makeAnnotations)
 			.selectAll('.annotation')
 			.attr('fill', 'none')
     	.attr('stroke-width', 1.5)
 			.attr('stroke-dasharray', '2 2')
-			.attr('stroke', d => d.data.color);
+			.attr('stroke', d => d.data.color)
+			.style('opacity', 0);
 
+		// code directions
+		directions = d3.selectAll('#code-flowers-svg .code')
+			.style('opacity', 0);
+
+		// get animations ready
+		timeline.add(animateSceneOne(), 'one');
+	}
+
+	pt.codeFlowers.animateOne = function() {
+		// timeline.tweenTo('one');
 	}
 
 	///////////////////////////////////////////////////////////////////////////
 	////////// helper functions ///////////////////////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
+	function animateSceneOne() {
+		// animate first curve in
+		var tl = new TimelineLite();
+		tl.add('show');
+
+		// animate petal offset
+		var petal0 = petalLines.node();
+		tl.to(petal0, duration, {attr: {'stroke-dashoffset': 0}});
+		// show annotations
+		var annotationDuration = duration / 4;
+		var [a1, a2, a3] = annotations.nodes();
+		tl.to(a1, annotationDuration, {opacity: 1}, 'show');
+		tl.to(a2, annotationDuration, {opacity: 1}, 'show+=' + duration / 2);
+		tl.to(a3, annotationDuration, {opacity: 1}, 'show+=' + (duration - annotationDuration));
+		// show direction
+		tl.to(directions.node(), duration / 2, {opacity: 1}, 'show+=' + duration / 4);
+
+		return tl;
+	}
 
 })();
