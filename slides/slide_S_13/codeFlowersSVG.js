@@ -79,8 +79,13 @@
 			.append('g')
 			.attr('transform', 'translate(' + [width / 2, height / 2] + ')scale(' + scale + ')');
 
-		var petalLines = svg.selectAll('.petalLine')
-			.data(linesDraw).enter().append('path')
+		var petals = svg.selectAll('.petal')
+			.data(_.times(6, () => linesDraw))
+			.enter().append('g')
+			.classed('petal', true)
+			.attr('transform', (d, i) => 'rotate(' + (i * 60) + ', 0, 0)');
+		var petalLines = petals.selectAll('.petalLine')
+			.data(d => d).enter().append('path')
 			.classed('petalLine', true)
 			.attr('d', d => d)
     	.attr('stroke', strokeColor)
