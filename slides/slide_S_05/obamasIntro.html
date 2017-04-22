@@ -3,11 +3,20 @@
     position: relative;
 	}
 
-	#obamas-intro .slide-images {
+	#obamas-intro .iframe-container {
+		width: 1720px;
 		height: 1080px;
-		position: relative;
-		margin: 0 auto;
+		/*margin: 0 auto;*/
+		overflow: hidden;
 	}
+
+	#obamas-intro iframe {
+		width: 1920px;
+		height: 1080px;
+		max-width: none;
+		margin-top: -100px;
+	}
+
 	#obamas-intro .slide-texts {
 		position: absolute;
     width: 80%;
@@ -26,15 +35,14 @@
 </style>
 
 <section id="obamas-intro" class='quicksand'>
-	<div class="slide-images">
-		<img class='center-fix fragment fade-out' data-fragment-index='0'
-			data-src='slides/slide_S_05/final.gif' />
+	<div class="iframe-container">
+		<iframe data-src="slides/slide_S_05/obamas/index.html" height="1080px"></iframe>
 	</div>
 
 	<div class='slide-texts'>
 		<!-- <p class='lesson-sub-title dark-grey'>Hamilton the Musical</p> -->
 		<p class='lesson-sub-title dark-grey fragment' data-fragment-index='0'>
-			<span>"Wouldn't it be cool if you could run facial detection on the video and correlate their emotions with what they're saying?"</span><br />
+			<span>"Wouldn't it be cool if you could run facial detection on the video and correlate their <strong>emotions</strong> with what they're <strong>saying</strong>?"</span><br />
 			<span>- Erik (<a href='https://twitter.com/trinary' target='_new'>@trinary</a>)</span>
 		</p>
 	</div>
