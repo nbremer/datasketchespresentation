@@ -258,6 +258,8 @@ pt.slideIdToFunctions = {
     1: () => {
       pt.codeFlowers.timeline.tweenTo('two+=' + pt.codeFlowers.duration);
     },
+    2: () => {
+      pt.codeFlowers.timeline.tweenTo('three+=' + pt.codeFlowers.duration);
     }
   },
 };

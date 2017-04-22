@@ -97,7 +97,8 @@
     	.attr('stroke-width', 2)
     	.attr('fill', 'none')
 			.attr('stroke-dasharray', function(d) {return this.getTotalLength()})
-			.attr('stroke-dashoffset', function(d) {return this.getTotalLength()});
+			.attr('stroke-dashoffset', function(d) {return this.getTotalLength()})
+			.style('opacity', 1);
 		// petalLines of first petal
 		petalLines = d3.select(petals.node()).selectAll('.petalLine');
 
@@ -119,6 +120,7 @@
 		// get animations ready
 		timeline.add(animateSceneOne(), 'one');
 		timeline.add(animateSceneTwo(), 'two');
+		timeline.add(animateSceneThree(), 'three');
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -150,8 +152,9 @@
 		tl.add('show');
 
 		// animate petal offset
+		tl.to(petalLines.node(), duration / 2, {opacity: 0.25}, 'show');
 		tl.staggerTo(petalLines.nodes().slice(1, 3), duration / 2,
-			{attr: {'stroke-dashoffset': 0}}, duration / 2);
+			{attr: {'stroke-dashoffset': 0}}, duration / 2, 'show');
 
 		// fade away annotations
 		tl.to(annotations.nodes().slice(0, 3), duration / 2, {opacity: 0}, 'show');
@@ -160,6 +163,29 @@
 		tl.to(directions.nodes().slice(0, 2), duration / 2, {opacity: 0.25}, 'show');
 		tl.staggerTo(directions.nodes().slice(2, 4), duration / 2,
 			{opacity: 1}, duration / 2, 'show');
+
+		return tl;
+	}
+
+	function animateSceneThree() {
+		// animate last curve
+		var tl = new TimelineLite();
+		tl.add('show');
+
+		// animate petal offset
+		var petal3 = petalLines.nodes()[3];
+		tl.to(petalLines.nodes().slice(1, 3), duration / 2, {opacity: 0.25}, 'show');
+		tl.to(petal3, duration, {attr: {'stroke-dashoffset': 0}}, 'show');
+		// show annotations
+		var annotationDuration = duration / 4;
+		var [a1, a2, a3] = annotations.nodes().slice(3, 6);
+		tl.to(a1, annotationDuration, {opacity: 1}, 'show');
+		tl.to(a2, annotationDuration, {opacity: 1}, 'show+=' + duration / 2);
+		tl.to(a3, annotationDuration, {opacity: 1}, 'show+=' + (duration - annotationDuration));
+
+		// show direction
+		tl.to(directions.nodes().slice(0, 4), duration / 2, {opacity: 0.25}, 'show');
+		tl.to(directions.nodes()[4], duration / 2, {opacity: 1}, 'show');
 
 		return tl;
 	}
