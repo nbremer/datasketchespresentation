@@ -7,7 +7,7 @@
 	var svg, petals, petalLines, annotations, directions;
 
 	// animations
-	var timeline = new TimelineMax();
+	var timeline = new TimelineMax({paused: true});
 	var duration = 1.5;
 
 	var colors = {green: '#55e851', blue: '#51aae8', pink: '#a651e8'}
@@ -120,7 +120,11 @@
 	}
 
 	pt.codeFlowers.animateOne = function() {
-		// timeline.tweenTo('one');
+		// timeline.seek('one');
+		timeline.tweenTo('one+=' + duration);
+	}
+	pt.codeFlowers.animateTwo = function() {
+		timeline.tweenTo('two+=' + duration);
 	}
 
 	///////////////////////////////////////////////////////////////////////////

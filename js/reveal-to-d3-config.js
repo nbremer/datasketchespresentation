@@ -248,6 +248,12 @@ pt.slideIdToFunctions = {
   'code-flowers-svg': {
     init: () => {
       pt.codeFlowers.init();
+    },
+    0: () => {
+      pt.codeFlowers.animateOne();
+    },
+    1: () => {
+      pt.codeFlowers.animateTwo();
     }
   },
 };
