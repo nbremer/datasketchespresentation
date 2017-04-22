@@ -112,10 +112,11 @@
 
 		// code directions
 		directions = d3.selectAll('#code-flowers-svg .code')
-			.style('opacity', 0);
+			.style('opacity', (d, i) => i === 0 ? 1 : 0);
 
 		// get animations ready
 		timeline.add(animateSceneOne(), 'one');
+		timeline.add(animateSceneTwo(), 'two');
 	}
 
 	pt.codeFlowers.animateOne = function() {
@@ -140,7 +141,27 @@
 		tl.to(a2, annotationDuration, {opacity: 1}, 'show+=' + duration / 2);
 		tl.to(a3, annotationDuration, {opacity: 1}, 'show+=' + (duration - annotationDuration));
 		// show direction
-		tl.to(directions.node(), duration / 2, {opacity: 1}, 'show+=' + duration / 4);
+		tl.to(directions.nodes()[1], duration / 2, {opacity: 1}, 'show');
+
+		return tl;
+	}
+
+	function animateSceneTwo() {
+		// animate the two lines
+		var tl = new TimelineLite();
+		tl.add('show');
+
+		// animate petal offset
+		tl.staggerTo(petalLines.nodes().slice(1, 3), duration / 2,
+			{attr: {'stroke-dashoffset': 0}}, duration / 2);
+
+		// fade away annotations
+		tl.to(annotations.nodes().slice(0, 3), duration / 2, {opacity: 0}, 'show');
+
+		// show direction
+		tl.to(directions.nodes().slice(0, 2), duration / 2, {opacity: 0.25}, 'show');
+		tl.staggerTo(directions.nodes().slice(2, 4), duration / 2,
+			{opacity: 1}, duration / 2, 'show');
 
 		return tl;
 	}
