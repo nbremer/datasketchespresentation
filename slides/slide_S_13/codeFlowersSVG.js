@@ -4,7 +4,7 @@
 	var height = 500;
 	var scale = 2.5;
 	var strokeColor = '#444';
-	var svg, petals, petalLines, annotations, directions;
+	var svg, petals, allPetalLines, petalLines, annotations, directions;
 
 	// animations
 	var timeline = new TimelineMax({paused: true});
@@ -88,8 +88,9 @@
 		petals = svg.selectAll('.petal')
 			.data(_.times(6, () => linesDraw))
 			.enter().append('g')
-			.classed('petal', true);
-		petals.selectAll('.petalLine')
+			.classed('petal', true)
+			.attr('transform', 'rotate(0, 0, 0)');
+		allPetalLines = petals.selectAll('.petalLine')
 			.data(d => d).enter().append('path')
 			.classed('petalLine', true)
 			.attr('d', d => d)
@@ -121,6 +122,7 @@
 		timeline.add(animateSceneOne(), 'one');
 		timeline.add(animateSceneTwo(), 'two');
 		timeline.add(animateSceneThree(), 'three');
+		timeline.add(animateSceneFour(), 'four');
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -186,6 +188,24 @@
 		// show direction
 		tl.to(directions.nodes().slice(0, 4), duration / 2, {opacity: 0.25}, 'show');
 		tl.to(directions.nodes()[4], duration / 2, {opacity: 1}, 'show');
+
+		return tl;
+	}
+
+	function animateSceneFour() {
+		// animate rotation
+		var tl = new TimelineLite();
+		tl.add('show');
+
+		// 1. animate annotations away
+		// 2. set all petals to dashoffset 0, opacity 1
+		// 3. rotate all petals
+		tl.to(annotations.nodes(), duration / 4, {opacity: 0})
+			.to(allPetalLines.nodes(), duration / 2, {opacity: 1, attr: {'stroke-dashoffset': 0}})
+			.to(directions.nodes().slice(0, 5), duration / 2, {opacity: 0.25}, '-=' + duration / 2)
+			.staggerTo(petals.nodes(), duration / 2, {
+				cycle: {attr: function(i) {return {transform: 'rotate(' + (i * 80) + ',0,0)'}}},
+			}).to(directions.nodes()[5], duration / 2, {opacity: 1}, '-=' + duration / 2);
 
 		return tl;
 	}
