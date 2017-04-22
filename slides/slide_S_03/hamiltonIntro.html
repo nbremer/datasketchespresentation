@@ -3,16 +3,25 @@
     position: relative;
 	}
 
-	#hamilton-intro .slide-images {
+	#hamilton-intro .iframe-container {
+		width: 1720px;
 		height: 1080px;
-		position: relative;
-		margin: 0 auto;
+		/*margin: 0 auto;*/
+		overflow: hidden;
 	}
+
+	#hamilton-intro iframe {
+		width: 1920px;
+		height: 1080px;
+		max-width: none;
+	}
+
 	#hamilton-intro .slide-texts {
 		position: absolute;
     width: 60%;
     margin-left: 20%;
 		top: 30%;
+		pointer-events: none;
 	}
 	#hamilton-intro .slide-texts span {
 		background: rgba(255, 255, 255, 1);
@@ -26,9 +35,8 @@
 </style>
 
 <section id="hamilton-intro" class='quicksand'>
-	<div class="slide-images">
-		<img class='center-fix fragment fade-out' data-fragment-index='0'
-			data-src='slides/slide_S_03/final.gif' />
+	<div class="iframe-container">
+		<iframe data-src="slides/slide_S_03/hamilton/index.html" height="1080px"></iframe>
 	</div>
 
 	<div class='slide-texts'>
