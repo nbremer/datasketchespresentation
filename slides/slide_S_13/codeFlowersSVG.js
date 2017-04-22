@@ -71,6 +71,8 @@
 	 .annotations(annotationsData);
 
 	pt.codeFlowers = pt.codeFlowers || {};
+	pt.codeFlowers.timeline = timeline;
+	pt.codeFlowers.duration = duration;
 
 	pt.codeFlowers.init = function() {
 		// remove existing svg
@@ -117,14 +119,6 @@
 		// get animations ready
 		timeline.add(animateSceneOne(), 'one');
 		timeline.add(animateSceneTwo(), 'two');
-	}
-
-	pt.codeFlowers.animateOne = function() {
-		// timeline.seek('one');
-		timeline.tweenTo('one+=' + duration);
-	}
-	pt.codeFlowers.animateTwo = function() {
-		timeline.tweenTo('two+=' + duration);
 	}
 
 	///////////////////////////////////////////////////////////////////////////

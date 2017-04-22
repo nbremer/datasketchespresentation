@@ -249,11 +249,15 @@ pt.slideIdToFunctions = {
     init: () => {
       pt.codeFlowers.init();
     },
+    '-1': () => {
+      pt.codeFlowers.timeline.tweenTo('one');
+    },
     0: () => {
-      pt.codeFlowers.animateOne();
+      pt.codeFlowers.timeline.tweenTo('one+=' + pt.codeFlowers.duration);
     },
     1: () => {
-      pt.codeFlowers.animateTwo();
+      pt.codeFlowers.timeline.tweenTo('two+=' + pt.codeFlowers.duration);
+    },
     }
   },
 };
