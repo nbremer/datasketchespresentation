@@ -105,7 +105,7 @@
 			.attr('cy', 40)
 			.attr('r', 60)
 			.attr('fill', d => d)
-			.style('opacity', 0)
+			.style('opacity', 1)
 			.style('mix-blend-mode', 'multiply')
 			.style("filter", "url(#motionFilter)");
 		// petals
@@ -113,7 +113,7 @@
 			.data(_.times(6, () => linesDraw))
 			.enter().append('g')
 			.classed('petal', true)
-			.attr('transform', 'rotate(0, 0, 0)');
+			.attr('transform', (d, i) => 'rotate(' + (i * 60) + ', 0, 0)');
 		allPetalLines = petals.selectAll('.petalLine')
 			.data(d => d).enter().append('path')
 			.classed('petalLine', true)
@@ -122,7 +122,7 @@
     	.attr('stroke-width', 2)
     	.attr('fill', 'none')
 			.attr('stroke-dasharray', function(d) {return this.getTotalLength()})
-			.attr('stroke-dashoffset', function(d) {return this.getTotalLength()})
+			.attr('stroke-dashoffset', 0)
 			.style('opacity', 1);
 		// petalLines of first petal
 		petalLines = d3.select(petals.node()).selectAll('.petalLine');
@@ -158,9 +158,19 @@
 		var tl = new TimelineLite();
 		tl.add('show');
 
+		// set everything to starting point
+		// all petal lines should have stroke-dashoffset equal to their length
+		allPetalLines.each(function() {
+			tl.set(this, {attr: {'stroke-dashoffset': this.getTotalLength()}}, 'show+=0.01');
+		});
+		// set the rotation back to 0
+		tl.set(petals.nodes(), {attr: {transform: 'rotate(0, 0, 0)'}}, 'show+=0.01');
+		// set colors to 0
+		tl.set(petalColors.nodes(), {opacity: 0}, 'show+=0.01');
+
 		// animate petal offset
 		var petal0 = petalLines.node();
-		tl.to(petal0, duration, {attr: {'stroke-dashoffset': 0}});
+		tl.to(petal0, duration, {attr: {'stroke-dashoffset': 0}}, 'show+=0.01');
 		// show annotations
 		var annotationDuration = duration / 4;
 		var [a1, a2, a3] = annotations.nodes();
