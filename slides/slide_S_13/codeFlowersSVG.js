@@ -4,7 +4,7 @@
 	var height = 500;
 	var scale = 2.5;
 	var strokeColor = '#444';
-	var svg, petals, allPetalLines, petalLines, annotations, directions;
+	var svg, petals, allPetalLines, petalLines, petalColors, annotations, directions;
 
 	// animations
 	var timeline = new TimelineMax({paused: true});
@@ -82,8 +82,32 @@
 			.append('svg')
 			.attr('width', width).attr('height', height)
 			.append('g')
-			.attr('transform', 'translate(' + [width / 2, height / 2] + ')scale(' + scale + ')');
+			.attr('transform', 'translate(' + [width / 2, height / 2] + ')scale(' + scale + ')')
+			.style('isolation', 'isolate');
 
+		// blur effect taken from visualcinnamon:
+    // http://www.visualcinnamon.com/2016/05/real-life-motion-effects-d3-visualization.html
+    var defs = svg.append("defs");
+    defs.append("filter")
+      .attr("id", "motionFilter") 	//Give it a unique ID
+      .attr("width", "300%")		//Increase the width of the filter region to remove blur "boundary"
+      .attr("x", "-100%") 			//Make sure the center of the "width" lies in the middle of the element
+      .append("feGaussianBlur")	//Append a filter technique
+      .attr("in", "SourceGraphic")	//Perform the blur on the applied element
+      .attr("stdDeviation", "8 8");	//Do a blur of 8 standard deviations in the horizontal and vertical direction
+
+		// add in colors
+		petalColors = svg.selectAll('.petalColor')
+			.data(['#CBF2BD', '#AFE9FF', '#FFC8F0'])
+			.enter().append('circle')
+			.classed('petalColor', true)
+			.attr('transform', (d, i) => 'rotate(' + [i * 120] + ')')
+			.attr('cy', 40)
+			.attr('r', 60)
+			.attr('fill', d => d)
+			.style('opacity', 0)
+			.style('mix-blend-mode', 'multiply')
+			.style("filter", "url(#motionFilter)");
 		// petals
 		petals = svg.selectAll('.petal')
 			.data(_.times(6, () => linesDraw))
@@ -123,6 +147,7 @@
 		timeline.add(animateSceneTwo(), 'two');
 		timeline.add(animateSceneThree(), 'three');
 		timeline.add(animateSceneFour(), 'four');
+		timeline.add(animateSceneFive(), 'five');
 	}
 
 	///////////////////////////////////////////////////////////////////////////
@@ -199,13 +224,23 @@
 
 		// 1. animate annotations away
 		// 2. set all petals to dashoffset 0, opacity 1
-		// 3. rotate all petals
+		// 3. make all directions opacity 1
+		// 4. rotate all petals
+		// 5. add in colors
 		tl.to(annotations.nodes(), duration / 4, {opacity: 0})
 			.to(allPetalLines.nodes(), duration / 2, {opacity: 1, attr: {'stroke-dashoffset': 0}})
-			.to(directions.nodes().slice(0, 5), duration / 2, {opacity: 0.25}, '-=' + duration / 2)
+			.to(directions.nodes().slice(0, 5), duration / 2, {opacity: 1}, '-=' + duration / 2)
 			.staggerTo(petals.nodes(), duration / 2, {
-				cycle: {attr: function(i) {return {transform: 'rotate(' + (i * 80) + ',0,0)'}}},
-			}).to(directions.nodes()[5], duration / 2, {opacity: 1}, '-=' + duration / 2);
+				cycle: {attr: function(i) {return {transform: 'rotate(' + (i * 60) + ',0,0)'}}},
+			});
+
+		return tl;
+	}
+
+	function animateSceneFive() {
+		// animate rotation
+		var tl = new TimelineLite();
+		tl.to(petalColors.nodes(), duration / 2, {opacity: 1});
 
 		return tl;
 	}

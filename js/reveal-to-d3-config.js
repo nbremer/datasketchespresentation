@@ -262,7 +262,10 @@ pt.slideIdToFunctions = {
       pt.codeFlowers.timeline.tweenTo('three+=' + pt.codeFlowers.duration);
     },
     3: () => {
-      pt.codeFlowers.timeline.tweenTo('four+=' + pt.codeFlowers.duration);
+      pt.codeFlowers.timeline.tweenTo('five');
+    },
+    4: () => {
+      pt.codeFlowers.timeline.tweenTo('five+=' + (pt.codeFlowers.duration / 2));
     }
   },
 };
