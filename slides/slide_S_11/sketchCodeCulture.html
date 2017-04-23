@@ -8,6 +8,20 @@
 		position: relative;
 		margin: 0 auto;
 	}
+
+	#sketch-code-culture .iframe-container {
+		width: 1720px;
+		height: 1080px;
+		/*margin: 0 auto;*/
+		overflow: hidden;
+	}
+
+	#sketch-code-culture iframe {
+		width: 1920px;
+		height: 1080px;
+		max-width: none;
+	}
+
 	#sketch-code-culture .slide-texts {
 		position: absolute;
     width: 60%;
@@ -49,8 +63,9 @@
 			data-src='slides/slide_S_11/13.png' />
 		<img class='center-fix fragment fade-in' data-fragment-index='12'
 			data-src='slides/slide_S_11/14.png' />
-		<img class='center-fix fragment fade-in' data-fragment-index='13'
-			data-src='slides/slide_S_11/15.png' />
+		<div class='center-fix iframe-container fragment fade-in' data-fragment-index='13'>
+			<iframe data-src="slides/slide_S_11/culture/index.html" height="800px"></iframe>
+		</div>
 	</div>
 
 	<div class='slide-texts'>
