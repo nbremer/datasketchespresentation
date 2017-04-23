@@ -1,0 +1,41 @@
+<style>
+	#data-source-culture {
+    position: relative;
+	}
+
+	#culture-details .iframe-container {
+		width: 1920px;
+		height: 1080px;
+		/*margin: 0 auto;*/
+		overflow: hidden;
+	}
+
+	#culture-details iframe {
+		width: 1920px;
+		height: 1080px;
+		max-width: none;
+	}
+
+	#culture-details .slide-texts {
+		position: absolute;
+    width: 60%;
+    margin-left: 20%;
+		top: 30%;
+		pointer-events: none;
+	}
+	#culture-details .slide-texts span {
+		background: rgba(255, 255, 255, 1);
+		padding: 10px;
+		line-height: 1.6;
+	}
+	#culture-details .lesson-sub-title {
+		background: rgba(255, 255, 255, 1);
+		padding: 20px 10px;
+	}
+</style>
+
+<section id="culture-details" class='quicksand'>
+	<div class="iframe-container">
+		<iframe data-src="slides/slide_S_16/culture/index.html" height="1080px"></iframe>
+	</div>
+</section>
