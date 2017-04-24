@@ -410,7 +410,7 @@ pt.royalNetwork.updateDesign = function(nodes, links) {
 ///////////////////////////////////////////////////////////////////////////
 
 pt.royalNetwork.tickedStraight = function(e) {
-	console.log(pt.royalNetwork.simulation.alpha());
+	//console.log(pt.royalNetwork.simulation.alpha());
 
 	pt.royalNetwork.link
 		.attr("d", function(d) { return "M" + d.source.x + "," + d.source.y + " L" + d.target.x + "," + d.target.y; });
@@ -421,7 +421,7 @@ pt.royalNetwork.tickedStraight = function(e) {
 }//tickedStraight
 
 pt.royalNetwork.tickedCurved = function() {
-	console.log(pt.royalNetwork.simulation.alpha());
+	//console.log(pt.royalNetwork.simulation.alpha());
 
 	pt.royalNetwork.link
 		.attr("d", function(d) { 
