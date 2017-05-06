@@ -109,16 +109,16 @@ pt.slideIdToFunctions = {
   //     pt.dbzPathFinal.init(dbzFights);
   //   }
   // },
-  // 'in-english-network-bad': {
-  //   'init': function() {
-  //     pt.inEnglishNetwork.init(networkLinks, false, "in-english-network-bad", "inEnglishNetworkBad");
-  //   }
-  // },
-  // 'in-english-network-good': {
-  //   'init': function() {
-  //     pt.inEnglishNetwork.init(networkLinks, true, "in-english-network-good", "inEnglishNetworkGood");
-  //   }
-  // },
+  'in-english-network-bad': {
+    'init': function() {
+      pt.inEnglishNetwork.init(networkLinks, false, "in-english-network-bad", "inEnglishNetworkBad");
+    }
+  },
+  'in-english-network-good': {
+    'init': function() {
+      pt.inEnglishNetwork.init(networkLinks, true, "in-english-network-good", "inEnglishNetworkGood");
+    }
+  },
   'olympic-buildup': {
     'init': function() {
       pt.olympicBuildUp.init(olympicData);
