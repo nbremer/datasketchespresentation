@@ -42,6 +42,26 @@ pt.slideIdToFunctions = {
       pt.royalNetwork.updateDesign(royalNetworkNodes, royalNetworkLinks);
     },
   },
+  'extra-detail-top-2000': {
+    'init': function() {
+      pt.extraDetailTop2000.init();
+    },
+    '-1': function() {
+      pt.extraDetailTop2000.resetSVG();
+    },
+    0: function() {
+      pt.extraDetailTop2000.showColorLegend();
+    },
+    1: function() {
+      pt.extraDetailTop2000.showBowie();
+    },
+    2: function() {
+      pt.extraDetailTop2000.showRed();
+    },
+    3: function() {
+      pt.extraDetailTop2000.showAll();
+    },
+  },
   'lotr-intro': {
     'init': function() {
       pt.lotrIntro.init(lotrWords);
