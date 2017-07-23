@@ -53,14 +53,22 @@ pt.slideIdToFunctions = {
       pt.extraDetailTop2000.showColorLegend();
     },
     1: function() {
-      pt.extraDetailTop2000.showBowie();
+      pt.extraDetailTop2000.showSketch();
     },
     2: function() {
-      pt.extraDetailTop2000.showRed();
+      pt.extraDetailTop2000.showBowie();
     },
     3: function() {
+      pt.extraDetailTop2000.showRed();
+    },
+    4: function() {
       pt.extraDetailTop2000.showAll();
     },
+  },
+  'magic-name-arcs': {
+    'init': function() {
+      pt.magicNameArcs.init();
+    }
   },
   'lotr-intro': {
     'init': function() {
@@ -123,6 +131,13 @@ pt.slideIdToFunctions = {
     4: function() {
       pt.dbzPathSimple.hideAnchors();
     },
+  },
+  'dbz-svg-path-sketch': {
+    'init': function() {
+      setTimeout(function() {
+      	pt.dbzPathFinal.init(dbzFights)
+      }, 500);
+    }
   },
   'dbz-path-final': {
     'init': function() {

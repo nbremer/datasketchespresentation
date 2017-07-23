@@ -2,8 +2,12 @@ pt.dbzPathFinal = pt.dbzPathFinal || {};
 
 pt.dbzPathFinal.init = function(data) {
 	
+	//If the chart already exists, do nothing and return
+	var chartDBZ = document.getElementById("dbzPathFinal").getElementsByClassName("svg-canvas");
+	if(chartDBZ.length > 0) { return; }
+
 	//Remove any existing svgs
-	d3.select('#dbz-path-final #dbzPathFinal svg').remove();
+	//d3.select('#dbz-path-final #dbzPathFinal svg').remove();
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////// Set up and initiate svg containers ///////////////////
@@ -21,6 +25,7 @@ pt.dbzPathFinal.init = function(data) {
 	//SVG container
 	pt.dbzPathSimple.svg = d3.select('#dbz-path-final #dbzPathFinal')
 		.append("svg")
+		.attr("class", "svg-canvas")
 		.attr("width", width + margin.left + margin.right)
 		.attr("height", $(".slides").height() )
 		.append("g")

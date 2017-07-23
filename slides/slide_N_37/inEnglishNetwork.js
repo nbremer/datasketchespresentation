@@ -77,7 +77,7 @@ pt.inEnglishNetwork.init = function(links, switching, slideID, chartID) {
 	///////////////////////////////////////////////////////////////////////////
 
 	//Filter for the outside glow
-	var filter = pt.inEnglishNetwork.svg.append("defs").append("filter").attr("id","shadow");
+	var filter = pt.inEnglishNetwork.svg.append("defs").append("filter").attr("id","shadow-circle");
 
 	filter.append("feColorMatrix")
 		.attr("type", "matrix")
@@ -196,7 +196,7 @@ pt.inEnglishNetwork.init = function(links, switching, slideID, chartID) {
 		.attr("class", "node-background-circle")
 		.attr("r", circleScale(radius))
 		.style("fill", "white")
-		.style("filter", "url(#shadow)");
+		.style("filter", "url(#shadow-circle)");
 
 	//Append the language text in the circle
 	node.append("text")

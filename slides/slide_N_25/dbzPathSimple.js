@@ -270,7 +270,7 @@ pt.dbzPathSimple.createDbzFights = function(svg, width, height, data) {
 		.style("fill", function(d,i) { return d.color; })
 		.style("opacity", function(d) { 
 				d.opacity = d.key === "Goku" ? 1 : 0.4;
-				//return d.opacity; 
+				return 0; 
 		})
 		.each(function(d,k) { 
 			var el = d3.select(this);
@@ -595,7 +595,6 @@ pt.dbzPathSimple.fightMouseOut = function(svg, d, el, simple, chosen) {
     	.style("opacity", 1);
 }//function fightMouseOut
 
-
 ///////////////////////////////////////////////////////////////////////////
 /////////////////////////////// Fragments /////////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
@@ -623,7 +622,7 @@ pt.dbzPathSimple.showCirclesOnly = function() {
 	pt.dbzPathSimple.characterLines
 		.on("mouseover", null)
 		.on("mouseout", null)
-		.transition().duration(500)
+		.transition().duration(0)
 		.style("opacity", 0);
 
 }//showCirclesOnly
