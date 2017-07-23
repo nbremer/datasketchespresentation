@@ -174,6 +174,16 @@ pt.slideIdToFunctions = {
       pt.olympicBuildUp.outwardMedals();
     },
   },
+  'word-snake-sizes': {
+    'init': function() {
+      pt.wordSnakeSizes.init(top100Overall, top1);
+    }
+  },
+  'marble-butterflies-final': {
+    'init': function() {
+      pt.marbleButterfliesFinal.init(butterflies);
+    }
+  },
   'magic-legend': {
     'init': function() {
       pt.magicLegend.init();
@@ -204,6 +214,9 @@ function removeSVGs() {
   d3.select('#lotr-intro #lotrIntro svg').remove();
   //d3.select('#chord-to-loom-1 #chordToLoom svg').remove();
   //d3.select('#chord-to-loom-2 #chordToLoom2 svg').remove();
+
+  pt.marbleButterfliesFinal.stop = true;
+  d3.select('#marble-butterflies-final #marbleButterfliesFinal canvas').remove();
 
   //End
   clearInterval(pt.endSlide.loop);

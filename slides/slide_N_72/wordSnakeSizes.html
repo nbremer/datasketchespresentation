@@ -1,0 +1,30 @@
+<style>
+	#word-snake-sizes {
+		padding-top: 0px;
+		height: 1080px;
+		margin-top: -10px;
+		text-align: center;
+		cursor: default;
+	}
+
+	#word-snake-sizes .chart-top-title {
+		font-family: 'Lato', sans-serif;
+		font-size: calc(18px + (22 - 18) * (100vw - 320px)/(1000 - 320));
+		color: #696969;
+		line-height: 1.1em;
+		font-weight: 300;
+	}
+</style>
+
+<section id="word-snake-sizes">
+
+	<!-- Top word per language, with language string -->
+	<div id="word-snake-section" class="row justify-content-center chart">
+		<div id="viz-word-snake-title" class="chart-title">
+			<div class="chart-top-title" style="margin-bottom: 0.4em;">The most often translated word into English for each language</div>
+		</div>
+		<!-- The snake like viz -->
+		<div id="wordSnakeSizes"></div>
+	</div>
+			
+</section>
