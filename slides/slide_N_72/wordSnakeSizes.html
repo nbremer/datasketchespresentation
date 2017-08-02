@@ -1,29 +1,80 @@
 <style>
 	#word-snake-sizes {
-		padding-top: 0px;
-		height: 1080px;
-		margin-top: -10px;
 		text-align: center;
+	}
+
+	#word-snake-sizes #wordSnakeSizes {
+		font-size: 14px;
+		white-space: pre;
 		cursor: default;
 	}
 
-	#word-snake-sizes .chart-top-title {
+	#word-snake-sizes svg {
+		overflow: visible;
+	}
+
+	#word-snake-sizes .node .circle-background {
+		fill: none;
+	}
+
+	#word-snake-sizes .circle-center-translation {
 		font-family: 'Lato', sans-serif;
-		font-size: calc(18px + (22 - 18) * (100vw - 320px)/(1000 - 320));
-		color: #696969;
-		line-height: 1.1em;
-		font-weight: 300;
+		font-size: 0.8em;
+		font-weight: 400;
+		text-anchor: middle;
+	}
+
+	#word-snake-sizes .circle-center-original {
+		font-family: 'Dancing Script', cursive;
+		font-size: 1.7em;
+		text-anchor: middle;	
+	}
+
+	#word-snake-sizes .circle-center-language {
+		font-family: 'Lato', sans-serif;
+		font-size: 0.8em;
+		font-weight: 400;
+		font-style: italic;
+		text-anchor: middle;
+	}
+
+	#word-snake-sizes .circle-path {
+		fill: none;
+	}
+
+	#word-snake-sizes .circle-path-text {
+		font-family: 'Dancing Script', cursive;
+		font-size: 1.1em;
+	}
+
+	#word-snake-sizes .circle-path-legend {
+		font-family: 'Lato', sans-serif;
+		font-size: 0.8em;
+	}
+
+	#word-snake-sizes .boundary-triangle {
+		fill: #ADADAD;
+	}
+	#word-snake-sizes .boundary-line {
+		stroke: #545454;
+		stroke-width: 3;
+		stroke-linecap: round;
+		stroke-dasharray: 0,9;
+	}
+
+	.noselect {
+		-webkit-touch-callout: none; /* iOS Safari */
+			-webkit-user-select: none; /* Safari */
+			-khtml-user-select: none; /* Konqueror HTML */
+			-moz-user-select: none; /* Firefox */
+				-ms-user-select: none; /* Internet Explorer/Edge */
+					user-select: none; /* Non-prefixed version, currently supported by Chrome and Opera */
 	}
 </style>
 
 <section id="word-snake-sizes">
 
-	<!-- Top word per language, with language string -->
-	<div id="word-snake-section" class="row justify-content-center chart">
-		<div id="viz-word-snake-title" class="chart-title">
-			<div class="chart-top-title" style="margin-bottom: 0.4em;">The most often translated word into English for each language</div>
-		</div>
-		<!-- The snake like viz -->
+	<div id="word-snake-section">
 		<div id="wordSnakeSizes"></div>
 	</div>
 			

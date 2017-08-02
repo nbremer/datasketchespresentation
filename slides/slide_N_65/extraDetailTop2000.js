@@ -13,19 +13,27 @@ pt.extraDetailTop2000.resetSVG = function() {
         .style("opacity", 0);
 
     //Move the legends to different position and make them bigger
-    pt.extraDetailTop2000.svg.select("#legendSize").attr("transform","scale(2)translate(0,-350)");
+    pt.extraDetailTop2000.svg.select("#legendSize")
+        .attr("transform","scale(2)translate(0,-350)")
+        .style("opacity", 0);
     pt.extraDetailTop2000.svg.select("#legendColor")
         .attr("transform","scale(2)translate(550,-150)")
         .style("opacity", 0);
 }//resetSVG
 
-
-pt.extraDetailTop2000.showColorLegend = function() {
+pt.extraDetailTop2000.showSizeLegend = function() {
     //In case you move backward
+    pt.extraDetailTop2000.svg.select("#legendColor")
+        .style("opacity", 0);
+
+    //Show the size legend
     pt.extraDetailTop2000.svg.select("#legendSize")
         .transition().duration(750)
-        .attr("transform","scale(2)translate(0,-350)");
+        .style("opacity", 1);
+}//showSizeLegend
 
+
+pt.extraDetailTop2000.showColorLegend = function() {
     //Show the color legend
     pt.extraDetailTop2000.svg.select("#legendColor")
         .transition().duration(750)
@@ -41,6 +49,14 @@ pt.extraDetailTop2000.showSketch = function() {
 
     pt.extraDetailTop2000.svg.selectAll("#beatles *, #annotation #beatlesText, #unique *, #annotation #uniqueText g, #topText g, #legendVinyl")
         .style("opacity", 0);
+
+    pt.extraDetailTop2000.svg.select("#legendSize")
+        .transition().duration(750)
+        .attr("transform","scale(2)translate(0,-350)");
+
+    pt.extraDetailTop2000.svg.select("#legendColor")
+        .transition().duration(750)
+        .attr("transform","scale(2)translate(550,-150)")
 
 }//showSketch
 

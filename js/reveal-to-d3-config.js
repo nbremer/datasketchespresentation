@@ -19,6 +19,33 @@ pt.slideIdToFunctions = {
       pt.olympicIntro.bigEnd();
     },
   },
+  'olympic-rings': {
+    'init': function() {
+      setTimeout(function() {
+      	pt.olympicBuildUp.init(olympicData);
+      }, 500);
+    }
+  },
+  'olympic-buildup': {
+    'init': function() {
+      pt.olympicBuildUp.init(olympicData);
+    },
+    '-1': function() {
+      pt.olympicBuildUp.initializeCircles();
+    },
+    0: function() {
+      pt.olympicBuildUp.rotateCircles();
+    },
+    1: function() {
+      pt.olympicBuildUp.rotateFeathers();
+    },
+    2: function() {
+      pt.olympicBuildUp.outwardEditions();
+    },
+    3: function() {
+      pt.olympicBuildUp.outwardMedals();
+    },
+  },
   'royal-network': {
     'init': function() {
       pt.royalNetwork.init(royalNetworkNodes, royalNetworkLinks);
@@ -42,6 +69,17 @@ pt.slideIdToFunctions = {
       pt.royalNetwork.updateDesign(royalNetworkNodes, royalNetworkLinks);
     },
   },
+  'travel-intro': {
+    'init': function() {
+      pt.travelIntro.init();
+    },
+    '-1': function() {
+      pt.travelIntro.setBack();
+    },
+    0: function() {
+      pt.travelIntro.move();
+    },
+  },
   'extra-detail-top-2000': {
     'init': function() {
       pt.extraDetailTop2000.init();
@@ -50,18 +88,21 @@ pt.slideIdToFunctions = {
       pt.extraDetailTop2000.resetSVG();
     },
     0: function() {
-      pt.extraDetailTop2000.showColorLegend();
+      pt.extraDetailTop2000.showSizeLegend();
     },
     1: function() {
-      pt.extraDetailTop2000.showSketch();
+      pt.extraDetailTop2000.showColorLegend();
     },
     2: function() {
-      pt.extraDetailTop2000.showBowie();
+      pt.extraDetailTop2000.showSketch();
     },
     3: function() {
-      pt.extraDetailTop2000.showRed();
+      pt.extraDetailTop2000.showBowie();
     },
     4: function() {
+      pt.extraDetailTop2000.showRed();
+    },
+    5: function() {
       pt.extraDetailTop2000.showAll();
     },
   },
@@ -154,26 +195,6 @@ pt.slideIdToFunctions = {
       pt.inEnglishNetwork.init(networkLinks, true, "in-english-network-good", "inEnglishNetworkGood");
     }
   },
-  'olympic-buildup': {
-    'init': function() {
-      pt.olympicBuildUp.init(olympicData);
-    },
-    '-1': function() {
-      pt.olympicBuildUp.initializeCircles();
-    },
-    0: function() {
-      pt.olympicBuildUp.rotateCircles();
-    },
-    1: function() {
-      pt.olympicBuildUp.rotateFeathers();
-    },
-    2: function() {
-      pt.olympicBuildUp.outwardEditions();
-    },
-    3: function() {
-      pt.olympicBuildUp.outwardMedals();
-    },
-  },
   'word-snake-sizes': {
     'init': function() {
       pt.wordSnakeSizes.init(top100Overall, top1);
@@ -205,7 +226,6 @@ function removeSVGs() {
 
   //data - nadieh
   d3.select('#olympic-intro #olympicIntro svg').remove();
-  d3.select('#olympic-buildup #olympicBuildUp svg').remove();
 
   //sketch - nadieh
   d3.select('#royal-network #royalNetwork svg').remove();
@@ -214,6 +234,10 @@ function removeSVGs() {
   d3.select('#lotr-intro #lotrIntro svg').remove();
   //d3.select('#chord-to-loom-1 #chordToLoom svg').remove();
   //d3.select('#chord-to-loom-2 #chordToLoom2 svg').remove();
+
+  clearInterval(pt.wordSnakeSizes.loopWordsnakeWords);
+  clearInterval(pt.wordSnakeSizes.squeezeInterval);
+  d3.select('#word-snake-sizes #wordSnakeSizes svg').remove();
 
   pt.marbleButterfliesFinal.stop = true;
   d3.select('#marble-butterflies-final #marbleButterfliesFinal canvas').remove();
