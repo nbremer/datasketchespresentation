@@ -1,0 +1,57 @@
+<style>
+	#top-2000-background {
+		padding-top: 0px;
+		height: 1080px;
+		margin-top: -10px;
+	}
+
+	#top-2000-background .filter {
+		-webkit-filter: contrast(150%) saturate(110%);
+		filter: contrast(150%) saturate(110%);
+	}
+	#top-2000-background .filter::after {
+		content: "";
+		display: block;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		position: absolute;
+		pointer-events: none;
+		mix-blend-mode: multiply;
+		background: -webkit-radial-gradient(center center, circle closest-corner, rgba(0, 0, 0, 0) 70%, rgb(34, 34, 34) 100%);
+		background: radial-gradient(50% 50%, circle closest-corner, rgba(0, 0, 0, 0) 70, rgba(34, 34, 34, 1));
+	}  
+
+	/* #top-2000-background .filter {
+		-webkit-filter: contrast(150%) brightness(90%);
+		filter: contrast(150%) brightness(90%);
+	}
+	#top-2000-background .filter::after {
+		content: "";
+		display: block;
+		height: 100%;
+		width: 100%;
+		top: 0;
+		left: 0;
+		position: absolute;
+		pointer-events: none;
+		mix-blend-mode: screen;
+		opacity: 0.5;
+		background: -webkit-radial-gradient(center center, circle closest-corner, rgb(15, 78, 128) 1%, rgb(59, 0, 59) 100%);
+		background: radial-gradient(50% 50%, circle closest-corner, rgba(15, 78, 128, 1) 1, rgba(59, 0, 59, 1));
+	}  */
+</style>
+
+<section id="top-2000-background" > <!--data-background="#000000">-->
+
+	<!-- <div class="slide-images"> -->
+		<!-- <img class="center-fix" style="max-width: 80%;" data-src="slides/slide_N_79/top_2000_background.jpg" /> -->
+		<!-- <img class="center-fix" data-src="slides/slide_N_79/top_2000_background_full.png" />
+	</div>  -->
+
+	<figure class="filter">
+		<img class="center-fix" data-src="slides/slide_N_79/top_2000_background_full.png" />
+	</figure>
+
+</section>
