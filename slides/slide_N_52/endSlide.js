@@ -2,9 +2,9 @@ pt.endSlide = pt.endSlide || {};
 
 pt.endSlide.init = function() {
 
-	var n = 7;
+	var n = 20;
 	var counter = 0;
-	var dur = 1000;
+	var dur = 600;
 
 	d3.selectAll("#end-slide .loop-bloopers img").style("opacity", 0);
 	d3.select("#end-slide #blooper-1").style("opacity", 1);
