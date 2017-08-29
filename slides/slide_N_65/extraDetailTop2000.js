@@ -110,15 +110,15 @@ pt.extraDetailTop2000.showRed = function() {
 
     //Show the songs with red
     pt.extraDetailTop2000.svg.selectAll("#unique *")
-        .transition().duration(700).delay(function(d,i) { return 3000 + i*600; })
+        .transition().duration(700).delay(function(d,i) { return 6000 + i*900; })
         .style("opacity", 1);
     pt.extraDetailTop2000.svg.selectAll("#annotation #uniqueText g")
-        .transition().duration(700).delay(function(d,i) { return 3000 + i*600; })
+        .transition().duration(700).delay(function(d,i) { return 6000 + i*900; })
         .style("opacity", 1);
 
     //Show the top 10
     pt.extraDetailTop2000.svg.selectAll("#topText g, #legendVinyl")
-        .transition().duration(500).delay(function(d,i) { return 8000 + i*100; })
+        .transition().duration(500).delay(function(d,i) { return 13000 + i*200; })
         .style("opacity", 1);
 }//showRed
 

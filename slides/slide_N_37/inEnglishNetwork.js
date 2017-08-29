@@ -18,11 +18,11 @@ pt.inEnglishNetwork.init = function(links, switching, slideID, chartID) {
 		bottom: 0,
 		left: 0
 	};
-	var width = $(".slides").width()*0.95 - margin.left - margin.right;
-	var height = $(".slides").height()*0.8 - margin.top - margin.bottom;
+	var width = $(".slides").width() - margin.left - margin.right;
+	var height = $(".slides").height() - margin.top - margin.bottom;
 	
 	//The radius of the network in circular shape
-	var radius = Math.min(width/2 * 0.9, height/2 * 0.7, 300);
+	var radius = Math.min(width/2 * 0.8, height/2 * 0.6, 300);
 	
 	//SVG container
 	pt.inEnglishNetwork.svg = d3.select('#' + slideID + ' #' + chartID)

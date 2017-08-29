@@ -106,11 +106,11 @@ pt.slideIdToFunctions = {
       pt.extraDetailTop2000.showAll();
     },
   },
-  'magic-name-arcs': {
-    'init': function() {
-      pt.magicNameArcs.init();
-    }
-  },
+  // 'magic-name-arcs': {
+  //   'init': function() {
+  //     pt.magicNameArcs.init();
+  //   }
+  // },
   // 'lotr-intro': {
   //   'init': function() {
   //     pt.lotrIntro.init(lotrWords);
