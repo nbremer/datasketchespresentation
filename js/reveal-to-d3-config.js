@@ -106,16 +106,6 @@ pt.slideIdToFunctions = {
       pt.extraDetailTop2000.showAll();
     },
   },
-  // 'magic-name-arcs': {
-  //   'init': function() {
-  //     pt.magicNameArcs.init();
-  //   }
-  // },
-  // 'lotr-intro': {
-  //   'init': function() {
-  //     pt.lotrIntro.init(lotrWords);
-  //   }
-  // },
   'chord-to-loom-1': {
     'init': function() {
       pt.chordToLoom.init();
@@ -185,6 +175,11 @@ pt.slideIdToFunctions = {
       pt.dbzPathFinal.init(dbzFights);
     }
   },
+  'word-snake-sizes': {
+    'init': function() {
+      pt.wordSnakeSizes.init(top100Overall, top1);
+    }
+  },
   'in-english-network-bad': {
     'init': function() {
       pt.inEnglishNetwork.init(networkLinks, false, "in-english-network-bad", "inEnglishNetworkBad");
@@ -193,11 +188,6 @@ pt.slideIdToFunctions = {
   'in-english-network-good': {
     'init': function() {
       pt.inEnglishNetwork.init(networkLinks, true, "in-english-network-good", "inEnglishNetworkGood");
-    }
-  },
-  'word-snake-sizes': {
-    'init': function() {
-      pt.wordSnakeSizes.init(top100Overall, top1);
     }
   },
   'marble-butterflies-final': {
@@ -224,23 +214,36 @@ function removeSVGs() {
   //Intro
   clearInterval(pt.datasketchesTitle.loop);
 
+  
   //data - nadieh
   d3.select('#olympic-intro #olympicIntro svg').remove();
+  //d3.select('#olympic-buildup #olympicBuildUp svg').remove();
+
 
   //sketch - nadieh
   d3.select('#royal-network #royalNetwork svg').remove();
 
+  //d3.select("#extra-detail-top-2000 #top_2000_svg");
+
+
   //code - nadieh
-  d3.select('#lotr-intro #lotrIntro svg').remove();
-  //d3.select('#chord-to-loom-1 #chordToLoom svg').remove();
+  d3.select('#chord-to-loom-1 #chordToLoom svg').remove();
   //d3.select('#chord-to-loom-2 #chordToLoom2 svg').remove();
+
+  d3.select('#dbz-path-simple #dbzPathSimple svg').remove();
+  d3.select('#dbz-path-diff-width #dbzPathDiffWidth svg').remove();
+  //d3.select('#dbz-path-final #dbzPathFinal svg').remove();
 
   clearInterval(pt.wordSnakeSizes.loopWordsnakeWords);
   clearInterval(pt.wordSnakeSizes.squeezeInterval);
   d3.select('#word-snake-sizes #wordSnakeSizes svg').remove();
 
+  d3.select('#in-english-network-bad #inEnglishNetworkBad svg').remove();
+	d3.select('#in-english-network-good #inEnglishNetworkGood svg').remove();
+
   pt.marbleButterfliesFinal.stop = true;
   d3.select('#marble-butterflies-final #marbleButterfliesFinal canvas').remove();
+
 
   //End
   clearInterval(pt.endSlide.loop);
