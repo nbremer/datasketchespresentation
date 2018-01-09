@@ -214,7 +214,7 @@ function removeSVGs() {
   //Intro
   clearInterval(pt.datasketchesTitle.loop);
 
-  
+
   //data - nadieh
   d3.select('#olympic-intro #olympicIntro svg').remove();
   //d3.select('#olympic-buildup #olympicBuildUp svg').remove();
@@ -223,12 +223,13 @@ function removeSVGs() {
   //sketch - nadieh
   d3.select('#royal-network #royalNetwork svg').remove();
 
-  //d3.select("#extra-detail-top-2000 #top_2000_svg");
+  //d3.select("#extra-detail-top-2000 #top_2000_svg").remove();
 
 
   //code - nadieh
-  d3.select('#chord-to-loom-1 #chordToLoom svg').remove();
-  //d3.select('#chord-to-loom-2 #chordToLoom2 svg').remove();
+  // Cannot delete this, otherwise the title text seems to jump during slide change
+  // d3.select('#chord-to-loom-1 #chordToLoom svg').remove();
+  // d3.select('#chord-to-loom-2 #chordToLoom2 svg').remove();
 
   d3.select('#dbz-path-simple #dbzPathSimple svg').remove();
   d3.select('#dbz-path-diff-width #dbzPathDiffWidth svg').remove();
