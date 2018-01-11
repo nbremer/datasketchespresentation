@@ -2,7 +2,7 @@ pt.endSlide = pt.endSlide || {};
 
 pt.endSlide.init = function() {
 
-	var n = 20;
+	var n = 22;
 	var counter = 0;
 	var dur = 600;
 
