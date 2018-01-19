@@ -245,6 +245,7 @@ function removeSVGs() {
   pt.marbleButterfliesFinal.stop = true;
   d3.select('#marble-butterflies-final #marbleButterfliesFinal canvas').remove();
 
+  //iframes: DBZ, Beautiful in English (slide 33), Royal Constellations (slide 43)
 
   //End
   clearInterval(pt.endSlide.loop);
