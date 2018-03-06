@@ -57,7 +57,7 @@ pt.slideIdToFunctions = {
       pt.royalNetwork.hairball(royalNetworkNodes, royalNetworkLinks);
     },
     1: function() {
-      pt.royalNetwork.colorBirthYear();
+      pt.royalNetwork.colorBirthYear(royalNetworkNodes, royalNetworkLinks);
     },
     2: function() {
       pt.royalNetwork.stretchX(royalNetworkNodes, royalNetworkLinks);

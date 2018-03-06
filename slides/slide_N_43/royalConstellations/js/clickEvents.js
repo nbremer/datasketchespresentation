@@ -69,39 +69,53 @@ function clickedOnNode(d) {
 function highlightRoute(path) {
 
   var distanceNum = 1;
-  var dur = 200;
 
   //Make all nodes in route bright and visual and rest transparent
   var nodesInPath = path.map(function(d) { return d.source; });
   nodesInPath = nodesInPath.concat( path.map(function(d) { return d.target; }) );
   nodesInPath = uniq(nodesInPath);
 
-  d3.selectAll(".node-pulse")
-    .transition().duration(dur)
-    .style("stroke", function(o) { return nodesInPath.indexOf(o.id) > -1 ? colorScale(distanceNum) : colorScale(1000); })
-    .style("opacity", function(o) { return nodesInPath.indexOf(o.id) > -1 ? opacityScaleHover(distanceNum) : 0; });
-       
-  d3.selectAll(".node")
-    .transition().duration(dur)
-    .style("fill", function(o) { return nodesInPath.indexOf(o.id) > -1 ? colorScale(distanceNum) : colorScale(1000); })
-    .style("opacity", function(o) { return nodesInPath.indexOf(o.id) > -1 ? opacityScaleHover(distanceNum) : 0.1; });
+  clearCanvas();
+
+  //Highlight the links between the nodes
+  linkSave
+    .forEach(function(d) {
+      d.inPath = false;
+      var closeSource = nodesInPath.indexOf(d.source.id),
+          closeTarget = nodesInPath.indexOf(d.target.id);
+      if (closeSource > -1 && closeTarget > -1) { d.inPath = true; }
+
+      ctxLinks.lineWidth = d.inPath ? 2 : 0.5; 
+      ctxLinks.globalAlpha = d.inPath ? 0.7 : 0.01;
+      ctxLinks.setLineDash(d.lineDash);
+      ctxLinks.beginPath();
+      drawCircleArc(d.center, d.r, d.source, d.target, d.sign);
+      ctxLinks.stroke();
+      ctxLinks.closePath();
+    })//forEach
+
+  //Draw the nodes
+  nodesSave
+    .forEach(function(d) {
+      
+      ctxNodes.globalAlpha = nodesInPath.indexOf(d.id) > -1 ? opacityScaleHover(distanceNum) : 0.1;
+      var col = nodesInPath.indexOf(d.id) > -1 ? colorScale(distanceNum) : colorScale(1000);
+      ctxNodes.fillStyle = col;
+      ctxNodes.shadowBlur = royals.indexOf(d.id) > -1 || royalsInteresting.indexOf(d.id) > -1 ? 30 : 15;
+      ctxNodes.shadowColor = col;
+
+      ctxNodes.beginPath();
+      ctxNodes.moveTo(d.x + d.radius, d.y);
+      ctxNodes.arc(d.x, d.y, d.radius, 0, 2 * Math.PI);
+      ctxNodes.fill();
+      ctxNodes.closePath();
+    });
+  ctxNodes.shadowBlur = 0;
 
   //Highlight title if (interesting) royal
   labelWrapper.selectAll(".royal-label, .interesting-royal-label")
-      .transition().duration(dur)
+      .transition().duration(200)
       .style("opacity", function(l,i) { return nodesInPath.indexOf(l.id) > -1 ? 1 : 0.1; });
-
-  //Highlight the links between these nodes
-  d3.selectAll(".link")
-      .each(function(o) {           
-          o.inPath = false;
-          var closeSource = nodesInPath.indexOf(o.source.id),
-              closeTarget = nodesInPath.indexOf(o.target.id);
-          if (closeSource > -1 && closeTarget > -1) { o.inPath = true; }
-      })
-      .style("stroke-width", function(o) { return o.inPath ? 2 : 0.5; })
-      .transition().duration(dur)
-      .style("opacity", function(o) { return o.inPath ? 0.7 : 0.01; });
 
 }//highlightRoute
 

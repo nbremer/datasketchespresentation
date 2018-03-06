@@ -78,6 +78,18 @@ body {
 
 #royal-chart {
 	text-align: center;
+	position: relative;
+}
+
+#royal-chart canvas {
+	position: absolute;
+	top: 0;
+	pointer-events: none;
+	z-index: -1;
+}
+
+#royal-chart svg {
+	z-index: 2;
 }
 
 #credit {
@@ -144,6 +156,13 @@ a, a:link, a:visited, a:active {
 	fill: #7e7b72;
 }
 
+/* --- Hovering --- */
+
+.hoverRect {
+	fill: none;
+	pointer-events: all;
+}
+
 /* --- Tooltip --- */
 
 .tooltip-wrapper {
@@ -186,11 +205,11 @@ a, a:link, a:visited, a:active {
 /* --- Network --- */
 
 .link, .link-path-legend {
-  stroke: #d4d4d4;
-  fill: none;
-  opacity: 0.6;
-  stroke-width: 1.5px;
-  pointer-events: none;
+	stroke: #d4d4d4;
+	fill: none;
+	opacity: 0.6;
+	stroke-width: 1.5px;
+	pointer-events: none;
 }
 
 .link-couple {
@@ -198,15 +217,10 @@ a, a:link, a:visited, a:active {
 }
 
 .node {
-  opacity: 0.8;
-  pointer-events: none;
+	opacity: 0.8;
+	pointer-events: none;
 }
-
-.circle-mouse-capture {
-	fill: none;
-	pointer-events: all;
-}
-
+  
 /* --- Pulsing --- */
 
 .node-pulse, .node-pulse-legend {
@@ -275,4 +289,3 @@ a, a:link, a:visited, a:active {
     from { stroke-dashoffset: 5px; }
     to { stroke-dashoffset: 0px; }
 }
-

@@ -22,6 +22,47 @@ function createLegend(hoverColors, colorScale, interestingRoyalColor) {
     .attr("transform", "translate(" + (margin.left) + "," + (margin.top) + ")");
 
   ///////////////////////////////////////////////////////////////////////////
+  //////////////////////////// Create glow filter ///////////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+
+  //Container for the gradients
+  var defs = svg.append("defs");
+
+  //Code taken from http://stackoverflow.com/questions/9630008/how-can-i-create-a-glow-around-a-rectangle-with-svg
+  //Filter for the outside glow
+  var filter = defs.append("filter")
+    .attr("width", "300%")
+    .attr("x", "-100%")
+    .attr("height", "300%")
+    .attr("y", "-100%")
+    .attr("id","glow");
+
+  filter.append("feGaussianBlur")
+    .attr("class", "blur")
+    .attr("stdDeviation","3")
+    .attr("result","coloredBlur");
+
+  var feMerge = filter.append("feMerge");
+  feMerge.append("feMergeNode")
+    .attr("in","coloredBlur");
+  feMerge.append("feMergeNode")
+    .attr("in","SourceGraphic");
+
+
+  //Blur for the royal leaders
+  var filterIntense = defs.append("filter")
+    .attr("width", "300%")
+    .attr("x", "-100%")
+    .attr("height", "300%")
+    .attr("y", "-100%")
+    .attr("id","glow-intense");
+
+  filterIntense.append("feGaussianBlur")
+    .attr("class", "blur")
+    .attr("stdDeviation","3")
+    .attr("result","coloredBlur");
+
+  ///////////////////////////////////////////////////////////////////////////
   ////////////////////// Create (interesting) royals ////////////////////////
   ///////////////////////////////////////////////////////////////////////////
 

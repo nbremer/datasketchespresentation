@@ -4,30 +4,45 @@ pt.royalNetwork.init = function(nodes, links) {
 	
 	//Remove any existing svgs
 	d3.select('#royal-network #royalNetwork svg').remove();
+	d3.select('#royal-network #royalNetwork canvas').remove();
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////// Set up and initiate svg containers ///////////////////
 	///////////////////////////////////////////////////////////////////////////	
 
-	var margin = {
+	pt.royalNetwork.margin = {
 		top: 150,
 		right: 100,
 		bottom: 150,
 		left: 150
 	};
-	pt.royalNetwork.width = $(".slides").width() - margin.left - margin.right;
-	pt.royalNetwork.height = $(".slides").height() - margin.top - margin.bottom;
+	pt.royalNetwork.width = $(".slides").width() - pt.royalNetwork.margin.left - pt.royalNetwork.margin.right;
+	pt.royalNetwork.height = $(".slides").height() - pt.royalNetwork.margin.top - pt.royalNetwork.margin.bottom;
 	
+	pt.royalNetwork.total_width = pt.royalNetwork.width + pt.royalNetwork.margin.left + pt.royalNetwork.margin.right,
+	pt.royalNetwork.total_height = pt.royalNetwork.height + pt.royalNetwork.margin.top + pt.royalNetwork.margin.bottom;
+
+	//Canvas
+	pt.royalNetwork.canvas = d3.select('#royal-network #royalNetwork')
+		.append("canvas")
+		.attr('width', 2 * pt.royalNetwork.total_width)
+		.attr('height', 2 * pt.royalNetwork.total_height)
+		.style('width', pt.royalNetwork.total_width + "px")
+		.style('height', pt.royalNetwork.total_height + "px")
+	pt.royalNetwork.ctx = pt.royalNetwork.canvas.node().getContext("2d")
+	pt.royalNetwork.ctx.scale(2,2);
+	pt.royalNetwork.ctx.translate(pt.royalNetwork.margin.left, pt.royalNetwork.margin.top + pt.royalNetwork.height/2);
+
 	//SVG container
 	pt.royalNetwork.svg = d3.select('#royal-network #royalNetwork')
 		.append("svg")
-		.attr("width", pt.royalNetwork.width + margin.left + margin.right)
-		.attr("height", pt.royalNetwork.height + margin.top + margin.bottom )
+		.attr("width", pt.royalNetwork.total_width)
+		.attr("height", pt.royalNetwork.total_height)
 		.append("g")
-	    .attr("transform", "translate(" + (margin.left) + "," + (margin.top + pt.royalNetwork.height/2) + ")");
+	    .attr("transform", "translate(" + (pt.royalNetwork.margin.left) + "," + (pt.royalNetwork.margin.top + pt.royalNetwork.height/2) + ")");
 
-	var linkWrapper = pt.royalNetwork.svg.append("g").attr("class", "link-wrapper");
-	var nodeWrapper = pt.royalNetwork.svg.append("g").attr("class", "node-wrapper");
+	// var linkWrapper = pt.royalNetwork.svg.append("g").attr("class", "link-wrapper");
+	// var nodeWrapper = pt.royalNetwork.svg.append("g").attr("class", "node-wrapper");
 
 	///////////////////////////////////////////////////////////////////////////
 	///////////////////// Figure out variables for layout /////////////////////
@@ -66,27 +81,11 @@ pt.royalNetwork.init = function(nodes, links) {
 	];
 	pt.royalNetwork.royalsInteresting = interestingRoyal.map(function(d) { return d.id; });
 
-	///////////////////////////////////////////////////////////////////////////
-	//////////////////////////// Create glow filter ///////////////////////////
-	///////////////////////////////////////////////////////////////////////////
+	// ///////////////////////////////////////////////////////////////////////////
+	// //////////////////////////// Create glow filter ///////////////////////////
+	// ///////////////////////////////////////////////////////////////////////////
 
-	//Code taken from http://stackoverflow.com/questions/9630008/how-can-i-create-a-glow-around-a-rectangle-with-svg
-	//Filter for the outside glow
-	var filter = pt.royalNetwork.svg.append("defs").append("filter")
-	  .attr("width", "300%")
-	  .attr("x", "-100%")
-	  .attr("height", "300%")
-	  .attr("y", "-100%")
-	  .attr("id","glow-royals");
 
-	filter.append("feGaussianBlur")
-	  .attr("class", "blur")
-	  .attr("stdDeviation","3")
-	  .attr("result","coloredBlur");
-
-	var feMerge = filter.append("feMerge");
-	feMerge.append("feMergeNode").attr("in","coloredBlur");
-	feMerge.append("feMergeNode").attr("in","SourceGraphic");
 
 	///////////////////////////////////////////////////////////////////////////
 	////////////////////////// Create year scale //////////////////////////////
@@ -127,26 +126,41 @@ pt.royalNetwork.init = function(nodes, links) {
     	.domain( d3.extent(nodes, function(d) { return d.birth_date; }) )
     	.range([1,0]);	
 
+	var colorScale = d3.scaleLinear()
+	    .range(['#fff7b9','#fff196','#ffea72','#ffe348','#fddc18'])
+	    .domain([0,1,2,4,6])
+	    .clamp(true);
+	var interestingRoyalColor = "#C6E2E7";
+
+	var opacityScale = d3.scaleLinear()
+	      .range([ 1,0.9,0.4,0.1,0.1])
+	      .domain([0,3,  4,  6,  10])
+		  .clamp(true);
+
 	///////////////////////////////////////////////////////////////////////////
 	////////////////////////////// Create links ///////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-	pt.royalNetwork.link = linkWrapper.selectAll(".link")
-  		.data(links)
-    	.enter().append("path")
-    	.attr("class", function(d) { return "link " + (d.type === "wife-husband" ? " link-couple" : ""); })
-    	.style("stroke", "#c4c4c4");
+	links.forEach(function(d,i) {
+		d.sign = Math.random() > 0.5 ? 1 : -1;
+		d.opacity = opacityScale(d.min_dist_to_royal)*0.1;
+	})
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////////// Create nodes /////////////////////////////
 	///////////////////////////////////////////////////////////////////////////
 
-  	pt.royalNetwork.node = nodeWrapper.selectAll(".node")
-		.data(nodes)
-    	.enter().append("circle")
-        .attr("class", "node")
-        .attr("r", function(d) { d.radius = 3; return d.radius; })
-      	.style("fill", "#4f4f4f");
+	nodes.forEach(function(d,i) {
+		d.radius = 3;
+
+		d.color = d3.interpolateViridis( pt.royalNetwork.color(d.birth_date) );
+
+		d.opacity = opacityScale(d.min_dist_to_royal);
+		if (pt.royalNetwork.royalsInteresting.indexOf(d.id) > -1) { d.opacity = 1; }
+
+		d.fill = colorScale(d.min_dist_to_royal);
+		if (pt.royalNetwork.royalsInteresting.indexOf(d.id) > -1) { d.fill = interestingRoyalColor; } 
+	})
 
 	///////////////////////////////////////////////////////////////////////////
 	//////////////////////////// Run force simulation /////////////////////////
@@ -157,12 +171,16 @@ pt.royalNetwork.init = function(nodes, links) {
 	    .force("charge", d3.forceManyBody() )
 	    .force("center", d3.forceCenter(0, pt.royalNetwork.height/2) );
 
-	pt.royalNetwork.simulation
-      	.nodes(nodes)
-      	.on("tick", pt.royalNetwork.tickedStraight);
+	pt.royalNetwork.simulation.nodes(nodes);
 
   	pt.royalNetwork.simulation.force("link")
-      	.links(links);
+		  .links(links);
+		 
+	pt.royalNetwork.ctx.fillStyle = "#4f4f4f";
+	pt.royalNetwork.ctx.strokeStyle = "#c4c4c4";
+
+	pt.royalNetwork.simulation
+		  .on("tick", pt.royalNetwork.tickedStraight.bind(this, nodes, links));
 
 }//init
 
@@ -185,7 +203,7 @@ pt.royalNetwork.chaos = function(nodes, links) {
        	.restart();
 
   	pt.royalNetwork.simulation.force("link")
-      	.links(links);
+		  .links(links);
 
 }//function chaos
 
@@ -193,9 +211,8 @@ pt.royalNetwork.chaos = function(nodes, links) {
 pt.royalNetwork.hairball = function(nodes, links) {
 
 	//In case you move backward
-	pt.royalNetwork.node
-		.transition().duration(300)
-    	.style("fill", "#4f4f4f");
+	pt.royalNetwork.ctx.fillStyle = "#4f4f4f";
+	pt.royalNetwork.ctx.strokeStyle = "#c4c4c4";
 
 	///////////////////////////////////////////////////////////////////////////
 	/////////////////////////// Initiate simulation ///////////////////////////
@@ -211,7 +228,8 @@ pt.royalNetwork.hairball = function(nodes, links) {
 	    .force("y", d3.forceY().strength(0.1) );
 
 	pt.royalNetwork.simulation
-      	.alpha(0.7)
+		.alpha(0.7)
+		.on("tick", pt.royalNetwork.tickedStraight.bind(this, nodes, links))
       	.restart();
 
   	pt.royalNetwork.simulation.force("link")
@@ -220,27 +238,25 @@ pt.royalNetwork.hairball = function(nodes, links) {
 }//function hairball
 
 //Color the circles according to birth year
-pt.royalNetwork.colorBirthYear = function() {
+pt.royalNetwork.colorBirthYear = function(nodes, links) {
 
 	//Hide axis in case you move backwards
 	pt.royalNetwork.xAxis
 	    .transition().duration(300)
-	    .style("opacity", 0);
-
-	//Change the color
-	pt.royalNetwork.node
-		.transition().duration(500)
-	    .style("fill", function(d) { return d3.interpolateViridis( pt.royalNetwork.color(d.birth_date)); });
+		.style("opacity", 0);
+		
+	pt.royalNetwork.simulation
+		.on("tick", pt.royalNetwork.tickedStraightColor.bind(this, nodes, links));
 
 }//function colorBirthYear
 
 //Create a stretched along birth year
 pt.royalNetwork.stretchX = function(nodes, links) {
 
-	//In case you move backwards
-	pt.royalNetwork.node
-		.transition().duration(300)
-		.attr("r", function(d) { d.radius = 3; return d.radius; });
+	//In case you move backward
+	nodes.forEach(function(d,i) {
+		d.radius = 3;
+	})
 
 	///////////////////////////////////////////////////////////////////////////
 	/////////////////////////// Initiate simulation ///////////////////////////
@@ -256,7 +272,8 @@ pt.royalNetwork.stretchX = function(nodes, links) {
 	    .force("y", d3.forceY().strength(0.1) );
 
 	pt.royalNetwork.simulation
-      	.alpha(0.5)
+		.alpha(0.5)
+		.on("tick", pt.royalNetwork.tickedStraightColor.bind(this, nodes, links))
       	.restart();
 
   	pt.royalNetwork.simulation.force("link")
@@ -274,26 +291,16 @@ pt.royalNetwork.stretchX = function(nodes, links) {
 pt.royalNetwork.stretchY = function(nodes, links) {
 
 	//In case you move backwards
+	pt.royalNetwork.ctx.strokeStyle = "#c4c4c4";
+	// pt.royalNetwork.ctx.shadowBlur = 0;
+
 	d3.select(".slide-background.stack.present").selectAll(".slide-background.present")
 		.style("background", "#FFFFFF");
-	pt.royalNetwork.link
-		.transition().duration(300).delay(1000)
-		.style("opacity", 0.6);
-	pt.royalNetwork.node
-		.style("filter","none")
-		.transition("design").duration(300).delay(1000)
-		.style("fill", function(d) { return d3.interpolateViridis( pt.royalNetwork.color(d.birth_date)); })
-		.style("opacity", 0.8);
 
-	//Update the node sizes
-	pt.royalNetwork.node
-		.style("filter","none")
-		.transition("size").duration(500)
-		.attr("r", function(d) { 
-		    if (pt.royalNetwork.royals.indexOf(d.id) > -1) { d.radius = 10; }
-		    if (pt.royalNetwork.royalsInteresting.indexOf(d.id) > -1) { d.radius = 6; }
-		    return d.radius; 
-		});;
+	nodes.forEach(function(d,i) {
+		if (pt.royalNetwork.royals.indexOf(d.id) > -1) { d.radius = 10; }
+		if (pt.royalNetwork.royalsInteresting.indexOf(d.id) > -1) { d.radius = 6; }
+	});
 
 	///////////////////////////////////////////////////////////////////////////
 	/////////////////////////// Initiate simulation ///////////////////////////
@@ -313,7 +320,7 @@ pt.royalNetwork.stretchY = function(nodes, links) {
 
 	pt.royalNetwork.simulation
       	.alpha(0.7)
-      	.on("tick", pt.royalNetwork.tickedStraight)
+      	.on("tick", pt.royalNetwork.tickedStraightColor.bind(this, nodes, links))
       	.restart();
 
   	pt.royalNetwork.simulation.force("link")
@@ -328,42 +335,6 @@ pt.royalNetwork.stretchY = function(nodes, links) {
 
 
 pt.royalNetwork.updateDesign = function(nodes, links) {
-
-	//Create color and opacity scale for "starry" design
-	var colorScale = d3.scaleLinear()
-	    .range(['#fff7b9','#fff196','#ffea72','#ffe348','#fddc18'])
-	    .domain([0,1,2,4,6])
-	    .clamp(true);
-	var interestingRoyalColor = "#C6E2E7";
-
-	var opacityScale = d3.scaleLinear()
-	      .range([ 1,0.9,0.4,0.1,0.1])
-	      .domain([0,3,  4,  6,  10])
-	      .clamp(true);
-
-	//Adjust link opacity
-	pt.royalNetwork.link
-		.style("opacity", function(d) { return opacityScale(d.min_dist_to_royal)*0.1; });
-
-	//Adjust node style
-	pt.royalNetwork.node
-		.style("filter","url(#glow-royals)")
-		.transition().duration(1500).delay(500)
-		.attr("r", function(d) { 
-		    if (pt.royalNetwork.royals.indexOf(d.id) > -1) { d.radius = 10; }
-		    if (pt.royalNetwork.royalsInteresting.indexOf(d.id) > -1) { d.radius = 6; }
-		    return d.radius; 
-		})
-		.style("fill", function(d) { 
-			d.fill = colorScale(d.min_dist_to_royal);
-			if (pt.royalNetwork.royalsInteresting.indexOf(d.id) > -1) { d.fill = interestingRoyalColor; }
-			return d.fill; 
-		})
-		.style("opacity", function(d) { 
-			d.opacity = opacityScale(d.min_dist_to_royal);
-			if (pt.royalNetwork.royalsInteresting.indexOf(d.id) > -1) { d.opacity = 1; }
-			return d.opacity; 
-		});
 
 	//Update slide background
 	d3.select(".slide-background.stack.present").selectAll(".slide-background.present")
@@ -385,9 +356,11 @@ pt.royalNetwork.updateDesign = function(nodes, links) {
 	    		.strength(function(d) { return pt.royalNetwork.strengthScale(d.birth_date); }) 
 	    );
 
+	// pt.royalNetwork.ctx.shadowBlur = 20;
+
 	pt.royalNetwork.simulation
       	.alpha(0.4)
-      	.on("tick", pt.royalNetwork.tickedCurved)
+      	.on("tick", pt.royalNetwork.tickedCurved.bind(this, nodes, links))
       	.restart();
 
     setTimeout(function() { 
@@ -409,30 +382,90 @@ pt.royalNetwork.updateDesign = function(nodes, links) {
 ///////////////////////// Simulation tick versions ////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
-pt.royalNetwork.tickedStraight = function(e) {
-	//console.log(pt.royalNetwork.simulation.alpha());
+pt.royalNetwork.tickedStraight = function(nodes, links) {	
+	//Clear canvas
+	pt.royalNetwork.ctx.clearRect(-pt.royalNetwork.margin.left, -pt.royalNetwork.margin.top - pt.royalNetwork.height/2, pt.royalNetwork.total_width, pt.royalNetwork.total_height);
 
-	pt.royalNetwork.link
-		.attr("d", function(d) { return "M" + d.source.x + "," + d.source.y + " L" + d.target.x + "," + d.target.y; });
-
-	pt.royalNetwork.node
-		.attr("cx", function(d) { return d.x; })
-		.attr("cy", function(d) { return d.y; });
+	//Draw links
+	pt.royalNetwork.ctx.globalAlpha = 0.6;
+	pt.royalNetwork.ctx.beginPath();
+	links.forEach(pt.royalNetwork.drawLink);
+	pt.royalNetwork.ctx.stroke();
+	pt.royalNetwork.ctx.closePath();
+	
+	//Draw nodes
+	pt.royalNetwork.ctx.globalAlpha = 0.8;
+	pt.royalNetwork.ctx.beginPath();
+	nodes.forEach(function(d,i) {
+		pt.royalNetwork.ctx.moveTo(d.x + d.radius, d.y);
+		pt.royalNetwork.ctx.arc(d.x, d.y, d.radius, 0, 2 * Math.PI);
+	});
+	pt.royalNetwork.ctx.fill();
+	pt.royalNetwork.ctx.closePath();
 }//tickedStraight
 
-pt.royalNetwork.tickedCurved = function() {
-	//console.log(pt.royalNetwork.simulation.alpha());
+pt.royalNetwork.tickedStraightColor = function(nodes, links) {	
+	//Clear canvas
+	pt.royalNetwork.ctx.clearRect(-pt.royalNetwork.margin.left, -pt.royalNetwork.margin.top - pt.royalNetwork.height/2, pt.royalNetwork.total_width, pt.royalNetwork.total_height);
 
-	pt.royalNetwork.link
-		.attr("d", function(d) { 
-            var dx = d.target.x - d.source.x,
-                dy = d.target.y - d.source.y;
-            var dr = Math.sqrt(dx * dx + dy * dy) * 2;
-            return "M" + d.source.x + "," + d.source.y + " A" + dr + "," + dr + " 0 0 1 " + d.target.x + "," + d.target.y;
-		});
+	//Draw links
+	pt.royalNetwork.ctx.globalAlpha = 0.6;
+	pt.royalNetwork.ctx.beginPath();
+	links.forEach(pt.royalNetwork.drawLink);
+	pt.royalNetwork.ctx.stroke();
+	pt.royalNetwork.ctx.closePath();
+	
+	//Draw nodes
+	pt.royalNetwork.ctx.globalAlpha = 0.8;
+	nodes.forEach(function(d,i) {
+		pt.royalNetwork.ctx.beginPath();
+		pt.royalNetwork.ctx.moveTo(d.x + d.radius, d.y);
+		pt.royalNetwork.ctx.arc(d.x, d.y, d.radius, 0, 2 * Math.PI);
+		pt.royalNetwork.ctx.fillStyle = d.color;
+		pt.royalNetwork.ctx.fill();
+		pt.royalNetwork.ctx.closePath();
+	});
+}//tickedStraightColor
 
-	pt.royalNetwork.node
-		.attr("cx", function(d) { return d.x; })
-		.attr("cy", function(d) { return d.y; });
+pt.royalNetwork.tickedCurved = function(nodes, links) {
+	//Clear canvas
+	pt.royalNetwork.ctx.clearRect(-pt.royalNetwork.margin.left, -pt.royalNetwork.margin.top - pt.royalNetwork.height/2, pt.royalNetwork.total_width, pt.royalNetwork.total_height);
+			
+	//Draw links
+	links.forEach(function(d,i) {
+
+		//Find the anchor point
+		var dx = d.target.x - d.source.x,
+			dy = d.target.y - d.source.y,
+			dist = Math.sqrt(dx * dx + dy * dy);
+		var angle_1 = Math.atan(dy/dx),
+			angle_2 = Math.atan((dist*0.2)/(dist/2)),
+			dist_2 =  (dist/2) / Math.cos(angle_2);
+		var c_x = Math.cos(angle_1 + d.sign * angle_2) * dist_2,
+			c_y = Math.sin(angle_1 + d.sign * angle_2) * dist_2;
+
+		pt.royalNetwork.ctx.globalAlpha = d.opacity;
+		pt.royalNetwork.ctx.beginPath();
+		pt.royalNetwork.ctx.moveTo(d.source.x, d.source.y);
+		pt.royalNetwork.ctx.quadraticCurveTo(d.source.x + c_x, d.source.y + c_y, d.target.x, d.target.y);
+		pt.royalNetwork.ctx.stroke();
+		pt.royalNetwork.ctx.closePath();
+	});
+	
+	//Draw nodes
+	nodes.forEach(function(d,i) {
+		pt.royalNetwork.ctx.beginPath();
+		pt.royalNetwork.ctx.moveTo(d.x + d.radius, d.y);
+		pt.royalNetwork.ctx.arc(d.x, d.y, d.radius, 0, 2 * Math.PI);
+		pt.royalNetwork.ctx.globalAlpha = d.opacity;
+		pt.royalNetwork.ctx.fillStyle = d.fill;
+		// pt.royalNetwork.ctx.shadowColor = d.fill;
+		pt.royalNetwork.ctx.fill();
+		pt.royalNetwork.ctx.closePath();
+	});
 }//tickedCurved
 
+pt.royalNetwork.drawLink = function(d) {
+	pt.royalNetwork.ctx.moveTo(d.source.x, d.source.y);
+	pt.royalNetwork.ctx.lineTo(d.target.x, d.target.y);
+}

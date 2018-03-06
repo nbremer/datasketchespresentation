@@ -1,31 +1,3 @@
-// http://stackoverflow.com/questions/4565112/javascript-how-to-find-out-if-the-user-browser-is-chrome
-// please note, 
-// that IE11 now returns undefined again for window.chrome
-// and new Opera 30 outputs true for window.chrome
-// and new IE Edge outputs to true now for window.chrome
-// and if not iOS Chrome check
-// so use the below updated condition
-var isChromium = window.chrome,
-    winNav = window.navigator,
-    vendorName = winNav.vendor,
-    isOpera = winNav.userAgent.indexOf("OPR") > -1,
-    isIEedge = winNav.userAgent.indexOf("Edge") > -1,
-    isIOSChrome = winNav.userAgent.match("CriOS");
-
-var isChrome;
-if(isIOSChrome){
-   isChrome = true;
-} else if(isChromium !== null && isChromium !== undefined && vendorName === "Google Inc." && isOpera == false && isIEedge == false) {
-   isChrome = true;
-} else { 
-   isChrome = false;
-}//else
-
-//Hide Chrome notification if it is already Chrome
-if(isChrome) {
-  d3.select("#top-chrome-note").style("display", "none");
-}
-
 ///////////////////////////////////////////////////////////////////////////
 //////////////////// Set up and initiate svg containers ///////////////////
 ///////////////////////////////////////////////////////////////////////////	
@@ -37,10 +9,10 @@ d3.select("body")
 
     //Hide the tooltip
     tooltipWrapper
-      .transition("transp").duration(300)
+      .transition("transp").duration(200)
       .style("opacity", 0);
 
-    mouseOut()
+    if(mouseOverDone) mouseOut();
   });
 
 var margin = {
@@ -49,22 +21,49 @@ var margin = {
   bottom: 60,
   left: 120
 };
-var width = 1250 - margin.left - margin.right;
-var height = 1600 - margin.top - margin.bottom;
+var totalWidth = 1250;
+var totalHeight = 1600;
+var width = totalWidth - margin.left - margin.right;
+var height = totalHeight - margin.top - margin.bottom;
+
+//Canvas
+var canvasLinks = d3.select('#royal-chart')
+  .append("canvas")
+  .attr('width', 2 * totalWidth)
+  .attr('height', 2 * totalHeight)
+  .style('width', totalWidth + "px")
+  .style('height', totalHeight + "px")
+var ctxLinks = canvasLinks.node().getContext("2d")
+ctxLinks.scale(2,2);
+ctxLinks.translate(margin.left + width/2, margin.top);
+
+var canvasNodes = d3.select('#royal-chart')
+  .append("canvas")
+  .attr('width', 2 * totalWidth)
+  .attr('height', 2 * totalHeight)
+  .style('width', totalWidth + "px")
+  .style('height', totalHeight + "px")
+var ctxNodes = canvasNodes.node().getContext("2d")
+ctxNodes.scale(2,2);
+ctxNodes.translate(margin.left + width/2, margin.top);
 			
 //SVG container
 var svg = d3.select('#royal-chart')
 	.append("svg")
-	.attr("width", width + margin.left + margin.right)
-	.attr("height", height + margin.top + margin.bottom)
+	.attr("width", totalWidth)
+	.attr("height", totalHeight)
   .append("g")
 	.attr("transform", "translate(" + (margin.left + width/2) + "," + (margin.top) + ")")
-	.style("isolation", "isolate");
+  .style("isolation", "isolate");
+  
+var hoverRect = svg.append("rect")
+  .attr("class","hoverRect")
+  .attr("x", -width/2 - margin.left)
+  .attr("y", -margin.top)
+  .attr("width", totalWidth)
+  .attr("height", totalHeight);
 
 //Initiate a group element for each major thing
-var circleClipGroup = svg.append("g").attr("class", "circle-clip-wrapper"); 
-var linkWrapper = svg.append("g").attr("class", "link-wrapper");
-var nodeWrapper = svg.append("g").attr("class", "node-wrapper");
 var labelWrapper = svg.append("g").attr("class", "label-wrapper");
 
 var linkedByIndex = {},
@@ -169,50 +168,6 @@ var thicknessScaleHover = d3.scaleLinear()
       .domain([0,6]);
 
 ///////////////////////////////////////////////////////////////////////////
-//////////////////////////// Create glow filter ///////////////////////////
-///////////////////////////////////////////////////////////////////////////
-
-//Container for the gradients
-var defs = svg.append("defs");
-
-//Create wrapper for the voronoi clip paths
-var clipWrapper = defs.append("g").attr("class", "clip-group-wrapper");
-
-//Code taken from http://stackoverflow.com/questions/9630008/how-can-i-create-a-glow-around-a-rectangle-with-svg
-//Filter for the outside glow
-var filter = defs.append("filter")
-  .attr("width", "300%")
-  .attr("x", "-100%")
-  .attr("height", "300%")
-  .attr("y", "-100%")
-  .attr("id","glow");
-
-filter.append("feGaussianBlur")
-  .attr("class", "blur")
-  .attr("stdDeviation","3")
-  .attr("result","coloredBlur");
-
-var feMerge = filter.append("feMerge");
-feMerge.append("feMergeNode")
-  .attr("in","coloredBlur");
-feMerge.append("feMergeNode")
-  .attr("in","SourceGraphic");
-
-
-//Blur for the royal leaders
-var filterIntense = defs.append("filter")
-  .attr("width", "300%")
-  .attr("x", "-100%")
-  .attr("height", "300%")
-  .attr("y", "-100%")
-  .attr("id","glow-intense");
-
-filterIntense.append("feGaussianBlur")
-  .attr("class", "blur")
-  .attr("stdDeviation","3")
-  .attr("result","coloredBlur");
-
-///////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Set-up voronoi //////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
 
@@ -220,6 +175,8 @@ var voronoi = d3.voronoi()
   .x(function(d) { return d.x; })
   .y(function(d) { return d.y; })
   .extent([[-margin.left - width/2, -margin.top], [width/2 + margin.right, height + margin.bottom]]);
+
+var diagram;
 
 ///////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Create legend ///////////////////////////////
@@ -303,6 +260,7 @@ var startSearch;
 var doMouseOut = true;
 var stopMouseout;
 var counter = 0;
+var mouseOverDone = false;
 
 var selectedNodes = {},
     selectedNodeIDs = [],
@@ -379,7 +337,7 @@ d3.queue()
 
 function draw(error, links, nodes) {
 
-	if (error) throw error;
+  if (error) throw error;
 
   ///////////////////////////////////////////////////////////////////////////
   /////////// Set the interesting royal labels to their locations ///////////
@@ -404,50 +362,22 @@ function draw(error, links, nodes) {
     if(!linkedToID[d.target.id]) linkedToID[d.target.id] = [];
     linkedToID[d.source.id].push(d.target.id); 
     linkedToID[d.target.id].push(d.source.id); 
+
+    d.opacity = opacityScale(d.min_dist_to_royal)*0.1;
+    d.sign = Math.random() > 0.5;
+
+    //Find a good radius
+    d.r = Math.sqrt(sq(d.target.x - d.source.x) + sq(d.target.y - d.source.y)) * 2;
+    //Find center of the arc function
+    var centers = findCenters(d.r, d.source, d.target);
+    d.center = d.sign ? centers.c2 : centers.c1;
+    d.lineDash = (d.type === "wife-husband" ? [5,5] : []);
   });
 
-	var link = linkWrapper.selectAll(".link")
-  		.data(links)
-    	.enter().append("path")
-    	.attr("class", function(d) { return "link" + (d.type === "wife-husband" ? " link-couple" : ""); })
-      .style("opacity", function(d) { return opacityScale(d.min_dist_to_royal)*0.1; })
-      .attr( "d", function ( d ) {
-            var dx = d.target.x - d.source.x,
-                dy = d.target.y - d.source.y;
-            var dr = Math.sqrt(dx * dx + dy * dy) * 2;
-            //Curved lines
-            return [ "M", d.source.x, d.source.y, "A", dr, dr, "0 0 1", d.target.x, d.target.y ].join( " " );
-      });
-
   linkSave = links;
-
-  ///////////////////////////////////////////////////////////////////////////
-  ////////////////// Circles to capture close mouse event ///////////////////
-  ///////////////////////////////////////////////////////////////////////////
- 
-  //Calculate the voronoi paths
-  clipWrapper.selectAll(".clip")
-      .data(voronoi.polygons(nodes).filter(function(v) { return v.data; }))
-      .enter().append("clipPath")
-      .attr("class", "clip")
-      .attr("id", function(d,i) { return "clip-" + d.data.id; })
-      .append("path")
-      .attr("class", "clip-path-circle")
-      .attr("d", function(d) { return "M" + d.join(",") + "Z"; });
-
-  //Place the larger circles to eventually capture the mouse
-  var circlesOuter = circleClipGroup.selectAll(".circle-mouse-capture")
-    .data(nodes)
-    .enter().append("circle")
-    .attr("class", "circle-mouse-capture")
-    .attr("clip-path", function(d) { return "url(#clip-" + d.id + ")"; })
-    .style("clip-path", function(d) { return "url(#clip-" + d.id + ")"; })
-    .attr("cx", function(d) { return d.x; })
-    .attr("cy", function(d) { return d.y; })
-    .attr("r", 20)
-    .on("mouseenter", function(d) { mouseOvered(d, nodes); })
-    .on("mouseout", mouseOut)
-    .on("click", clickedOnNode);
+  ctxLinks.strokeStyle = "#d4d4d4";
+  ctxLinks.lineWidth = 1.5;
+  drawLinks(links);
 
   ///////////////////////////////////////////////////////////////////////////
   ////////////////////////////// Create nodes ///////////////////////////////
@@ -458,53 +388,63 @@ function draw(error, links, nodes) {
     d.birth_date = d.birth_date === "" ? NaN : +d.birth_date;
     d.death_date = d.death_date === "" ? NaN : +d.death_date;
 
+    d.radius = 3;
+    if (royals.indexOf(d.id) > -1) { d.radius = 10; }
+    if (royalsInteresting.indexOf(d.id) > -1) { d.radius = 6; }
+
+    d.fill = colorScale(d.min_dist_to_royal);
+    if (royalsInteresting.indexOf(d.id) > -1) { d.fill = interestingRoyalColor; }
+
+    d.opacity = opacityScale(d.min_dist_to_royal);
+    if (royalsInteresting.indexOf(d.id) > -1) { d.opacity = 1; }
+
     nodeByID[d.id] = d;
   });
 
+  diagram = voronoi(nodes);
   nodesSave = nodes;
+  drawNodes(nodes);
 
-  var nodePulse = nodeWrapper.selectAll(".node-pulse")
-    .data(nodes.filter(function(d) { return royals.indexOf(d.id) > -1 || royalsInteresting.indexOf(d.id) > -1; }))
-      .enter().append("circle")
-        .attr("class", "node-pulse pulse")
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; })
-        .attr("r", function(d) {
-          d.radius = 18;
-          if (royalsInteresting.indexOf(d.id) > -1) { d.radius = 14; }
-          return d.radius; 
-        })
-        .style("stroke", function(d) { 
-          d.stroke = colorScale(0);
-          if (royalsInteresting.indexOf(d.id) > -1) { d.stroke = interestingRoyalColor; }
-          return d.stroke; 
-        })
-        //.style("stroke-width", 1)
-        .style("filter","url(#glow-intense)");
+  ///////////////////////////////////////////////////////////////////////////
+  /////////////////////// Capture close mouse events ///////////////////////
+  ///////////////////////////////////////////////////////////////////////////
+ 
+  var currentHover = null;
 
-  var node = nodeWrapper.selectAll(".node")
-		.data(nodes)
-    	.enter().append("circle")
-        .attr("class", "node")
-        .attr("cx", function(d) { return d.x; })
-        .attr("cy", function(d) { return d.y; })
-      	.attr("r", function(d) { 
-      		d.radius = 3;
-      		if (royals.indexOf(d.id) > -1) { d.radius = 10; }
-          if (royalsInteresting.indexOf(d.id) > -1) { d.radius = 6; }
-      		return d.radius; 
-      	})
-      	.style("fill", function(d) { 
-          d.fill = colorScale(d.min_dist_to_royal);
-          if (royalsInteresting.indexOf(d.id) > -1) { d.fill = interestingRoyalColor; }
-          return d.fill; 
-        })
-        .style("opacity", function(d) { 
-          d.opacity = opacityScale(d.min_dist_to_royal);
-          if (royalsInteresting.indexOf(d.id) > -1) { d.opacity = 1; }
-          return d.opacity ; 
-        })
-        .style("filter","url(#glow)");
+  hoverRect.on("mousemove", function() {
+    d3.event.stopPropagation();
+
+    //Find the nearest person to the mouse, within a distance of X pixels
+    var m = d3.mouse(this);
+    var found = diagram.find(m[0], m[1], 10);
+
+    if(currentHover === found) {
+      //do nothing
+    }
+    else if (found) { 
+      d3.event.preventDefault();
+      mouseOvered(found.data, nodes); 
+    } else { 
+      mouseOut() 
+    } 
+
+    currentHover = found;
+  })//on mousemove
+
+  //Select the person
+  hoverRect.on("click", function() {
+      d3.event.stopPropagation();
+
+      //Find the nearest person to the mouse, within a distance of X pixels
+      var m = d3.mouse(this);
+      var found = diagram.find(m[0], m[1], 20);
+
+      if (found) {
+        clickedOnNode(found.data);  
+      } else {
+        clickedToNormal();
+      }
+  })//on click
 
   ///////////////////////////////////////////////////////////////////////////
   //////////////////////// Set-up shortest path finder //////////////////////
@@ -515,8 +455,85 @@ function draw(error, links, nodes) {
 }//draw
 
 ///////////////////////////////////////////////////////////////////////////
+////////////////////////////// Canvas functions ///////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+function clearCanvas() {
+  //Clear the canvas
+  ctxLinks.clearRect(-margin.left - width/2, -margin.top, totalWidth, totalHeight);
+  ctxNodes.clearRect(-margin.left - width/2, -margin.top, totalWidth, totalHeight);
+}//function clearCanvas
+
+///////////////////////////////////////////////////////////////////////////
+/////////////////////////////// Draw the nodes ////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+function drawNodes(nodes, opacity, fill) {
+  nodes.forEach(function(d) {
+		ctxNodes.beginPath();
+		ctxNodes.moveTo(d.x + d.radius, d.y);
+		ctxNodes.arc(d.x, d.y, d.radius, 0, 2 * Math.PI);
+		ctxNodes.globalAlpha = opacity ? opacity : d.opacity;
+    ctxNodes.fillStyle = fill ? fill : d.fill;
+    ctxNodes.shadowBlur = royals.indexOf(d.id) > -1 || royalsInteresting.indexOf(d.id) > -1 ? 30 : 15;
+    ctxNodes.shadowColor = d.fill;
+		ctxNodes.fill();
+		ctxNodes.closePath();
+  });
+  ctxNodes.shadowBlur = 0;
+}//function drawNodes
+
+///////////////////////////////////////////////////////////////////////////
+/////////////////////////////// Draw the links ////////////////////////////
+///////////////////////////////////////////////////////////////////////////
+
+function drawLinks(links) {
+	links.forEach(function(d) {
+    ctxLinks.setLineDash(d.lineDash);
+    ctxLinks.globalAlpha = d.opacity;
+    ctxLinks.beginPath();
+    drawCircleArc(d.center, d.r, d.source, d.target, d.sign);
+    ctxLinks.stroke();
+  })//forEach
+}//function drawLinks
+
+//https://stackoverflow.com/questions/26030023/draw-arc-initial-point-radius-and-final-point-in-javascript-canvas
+//http://jsbin.com/jutidigepeta/3/edit?html,js,output
+function findCenters(r, p1, p2) {
+  // pm is middle point of (p1, p2)
+  var pm = { x : 0.5 * (p1.x + p2.x) , y: 0.5*(p1.y+p2.y) } ;
+  // compute leading vector of the perpendicular to p1 p2 == C1C2 line
+  var perpABdx= - ( p2.y - p1.y );
+  var perpABdy = p2.x - p1.x;
+  // normalize vector
+  var norm = Math.sqrt(sq(perpABdx) + sq(perpABdy));
+  perpABdx/=norm;
+  perpABdy/=norm;
+  // compute distance from pm to p1
+  var dpmp1 = Math.sqrt(sq(pm.x-p1.x) + sq(pm.y-p1.y));
+  // sin of the angle between { circle center,  middle , p1 } 
+  var sin = dpmp1 / r ;
+  // is such a circle possible ?
+  if (sin<-1 || sin >1) return null; // no, return null
+  // yes, compute the two centers
+  var cos = Math.sqrt(1-sq(sin));   // build cos out of sin
+  var d = r*cos;
+  var res1 = { x : pm.x + perpABdx*d, y: pm.y + perpABdy*d };
+  var res2 = { x : pm.x - perpABdx*d, y: pm.y - perpABdy*d };
+  return { c1 : res1, c2 : res2} ;  
+}//function findCenters
+
+function drawCircleArc(c, r, p1, p2, side) {
+  var ang1 = Math.atan2(p1.y-c.y, p1.x-c.x);
+  var ang2 = Math.atan2(p2.y-c.y, p2.x-c.x);
+  ctxLinks.arc(c.x, c.y, r, ang1, ang2, side);
+}//function drawCircleArc
+
+///////////////////////////////////////////////////////////////////////////
 ///////////////////////////// Helper functions ////////////////////////////
 ///////////////////////////////////////////////////////////////////////////
+
+function sq(x) { return x*x ; }
 
 //Check if node a and b are connected
 function isConnected(a, b) {
