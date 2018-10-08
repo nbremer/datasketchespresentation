@@ -2,7 +2,7 @@ pt.datasketchesTitle = pt.datasketchesTitle || {};
 
 pt.datasketchesTitle.init = function() {
 
-	var ids = ["july","august","september","october","november","december","january","february","march","april","june"];
+	var ids = ["july","august","september","october","november","december","january","february","march","april","may","june"];
 	var counter = 0;
 	var dur = 1000;
 
